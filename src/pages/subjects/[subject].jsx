@@ -1,7 +1,11 @@
-import React from 'react';
+import { Layout } from '@/src/components';
 
 const Subject = () => {
-  return <div>Subject</div>;
+  return (
+    <Layout>
+      <div>Subject</div>
+    </Layout>
+  );
 };
 
 export default Subject;
