@@ -17,25 +17,27 @@ const Navbar = () => {
         <Link href={'/'}>LessonFeed</Link>
       </h1>
       <NavProfile />
-      <ul className='flex flex-col  text-lg font-medium'>
-        <li className='pl-6 py-4 rounded-lg duration-300 ease-out hover:bg-white hover:shadow-md'>
-          <Link href='/'>Home</Link>
+      <ul className='flex flex-col gap-4 text-lg font-medium'>
+        <li className='pl-6 py-2 rounded-lg ease-out hover:bg-white hover:shadow-md'>
+          <Link href='/' className='block'>
+            Home
+          </Link>
         </li>
         {subjects.map(subject => (
           <li
             key={subject}
-            className='capitalize py-4 pl-6 rounded-lg duration-300 ease-in-out hover:bg-white hover:shadow-md'
+            className='capitalize py-2 pl-6 rounded-lg ease-in-out hover:bg-white hover:shadow-md'
           >
             <Link
               href={`/subject/${subject.split(' ').join('-')}`}
-              className='w-full block'
+              className='block'
             >
               {subject}
             </Link>
           </li>
         ))}
       </ul>
-      <button className='mt-auto text-lg mb-10 flex items-center gap-4 text-red-600 font-semibold pl-6'>
+      <button className='mt-auto text-lg mb-6 flex items-center gap-4 text-red-600 font-semibold pl-6 py-2 rounded-lg hover:bg-red-200 hover:shadow-md'>
         <IoLogOutOutline className='text-2xl' />
         <span>Logout</span>
       </button>
