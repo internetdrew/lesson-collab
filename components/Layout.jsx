@@ -2,11 +2,13 @@ import { Footer, Navbar } from '../components';
 
 const Layout = ({ children }) => {
   return (
-    <>
-      <Navbar />
-      <main>{children}</main>
-      <Footer />
-    </>
+    <div className='grid grid-cols-6'>
+      <Navbar className='col-span-1 h-screen' />
+      <div className='col-span-5 bg-green-200'>
+        <main>{children}</main>
+        <Footer />
+      </div>
+    </div>
   );
 };
 
