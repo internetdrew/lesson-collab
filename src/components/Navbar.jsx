@@ -11,7 +11,7 @@ const Navbar = () => {
         {subjects.map(subject => (
           <Link
             key={subject}
-            href={`/${subject}`}
+            href={`/subjects/${subject.split(' ').join('-')}`}
             className='text-lg capitalize border-b pb-2 border-slate-200'
           >
             {subject}
