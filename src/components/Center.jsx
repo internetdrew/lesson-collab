@@ -1,13 +1,8 @@
-import { SearchBar, Feed } from '.';
-
-const Center = () => {
+const Center = ({ children }) => {
   return (
-    <main className='flex flex-col pt-10'>
-      <div className='w-[90%] md:w-1/2 mx-auto'>
-        <SearchBar />
-        <Feed />
-      </div>
-    </main>
+    <section className='flex pt-10 w-screen'>
+      <div className='w-[90%] md:w-1/2 mx-auto bg-green-200'>{children}</div>
+    </section>
   );
 };
 

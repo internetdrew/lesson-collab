@@ -1,10 +1,14 @@
-import { Layout } from '@/src/components';
+import { Center, Layout, SearchBar, Feed } from '@/src/components';
 
 const Subject = () => {
   return (
-    <Layout>
-      <div>Subject</div>
-    </Layout>
+    <div className='flex flex-col'>
+      <Layout>
+        <Center>
+          <h1>This </h1>
+        </Center>
+      </Layout>
+    </div>
   );
 };
 

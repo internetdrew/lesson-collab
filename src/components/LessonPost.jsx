@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AiOutlineUser, AiOutlineComment, AiFillEye } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineComment } from 'react-icons/ai';
 import { BsArrowUpShort, BsArrowDownShort } from 'react-icons/bs';
 
 const LessonPost = () => {
