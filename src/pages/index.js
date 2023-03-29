@@ -1,11 +1,10 @@
-import { Layout } from '../components';
+import { Layout, Feed } from '../components';
 
 export default function Home() {
   return (
-    <div>
+    <div className='flex flex-col'>
       <Layout>
-        <h1>hello world</h1>
-        <h2>This is home</h2>
+        <Feed />
       </Layout>
     </div>
   );

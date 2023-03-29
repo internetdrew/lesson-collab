@@ -29,7 +29,7 @@ const Navbar = () => {
             className='capitalize py-2 pl-6 rounded-lg ease-in-out hover:bg-white hover:shadow-md'
           >
             <Link
-              href={`/subject/${subject.split(' ').join('-')}`}
+              href={`/lesson-plans/${subject.split(' ').join('-')}`}
               className='block'
             >
               {subject}
