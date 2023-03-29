@@ -20,9 +20,10 @@ const Navbar = () => {
       <ul className='flex flex-col gap-4 text-lg font-medium'>
         <li className='pl-6 py-2 rounded-lg ease-out hover:bg-white hover:shadow-md'>
           <Link href='/' className='block'>
-            Home
+            Show All
           </Link>
         </li>
+        <hr />
         {subjects.map(subject => (
           <li
             key={subject}
