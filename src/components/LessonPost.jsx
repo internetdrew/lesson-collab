@@ -29,7 +29,7 @@ const LessonPost = () => {
             Posted by <span className='text-purple-600'>Someone Special</span>
           </span>
           <span className='flex items-center ml-auto'>
-            <AiOutlineComment />
+            <AiOutlineComment className='text-lg' />
             <span className='ml-1'>50+</span>
           </span>
         </div>

@@ -12,7 +12,7 @@ const Navbar = () => {
   ].sort();
 
   return (
-    <nav className='h-screen flex flex-col px-6 bg-slate-100 fixed z-10 overflow-y-scroll lg:overflow-auto'>
+    <nav className='fixed w-64 h-screen flex flex-col px-6 bg-slate-100 z-10 overflow-y-scroll lg:overflow-auto'>
       <h1 className='text-center font-semibold text-2xl my-8'>
         <Link href={'/'}>LessonFeed</Link>
       </h1>

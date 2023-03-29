@@ -7,6 +7,12 @@ const Feed = () => {
       <LessonPost />
       <LessonPost />
       <LessonPost />
+      <LessonPost />
+      <LessonPost />
+      <LessonPost />
+      <LessonPost />
+      <LessonPost />
+      <LessonPost />
     </section>
   );
 };
