@@ -1,10 +1,11 @@
-import { SearchBar } from '.';
+import { SearchBar, Feed } from '.';
 
 const Center = () => {
   return (
-    <section className='align-middle mx-auto flex justify-center pt-10 bg-red-500'>
+    <main className='flex flex-col pt-10'>
       <SearchBar />
-    </section>
+      <Feed />
+    </main>
   );
 };
 

@@ -4,3 +4,5 @@ export { default as Layout } from './Layout';
 export { default as NavProfile } from './NavProfile';
 export { default as Center } from './Center';
 export { default as SearchBar } from './SearchBar';
+export { default as Feed } from './Feed';
+export { default as LessonPost } from './LessonPost';
