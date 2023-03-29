@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { AiOutlineUser, AiOutlineComment } from 'react-icons/ai';
 import { BsArrowUpShort, BsArrowDownShort } from 'react-icons/bs';
 
-const LessonPost = () => {
+const LessonPost = ({ post }) => {
   return (
     <article className='bg-gray-100 py-6 rounded-xl border border-slate-300 relative mb-4'>
       <div className='absolute left-6 top-10 text-md font-medium flex flex-col items-center'>

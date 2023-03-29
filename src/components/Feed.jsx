@@ -1,6 +1,6 @@
 import { LessonPost } from './';
 
-const Feed = () => {
+const Feed = ({ posts }) => {
   return (
     <section>
       <LessonPost />

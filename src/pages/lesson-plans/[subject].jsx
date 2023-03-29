@@ -1,12 +1,13 @@
 import { Center, Layout, SearchBar, Feed } from '@/src/components';
 
-const Subject = () => {
+const Subject = ({ posts }) => {
   return (
     <div className='flex flex-col'>
       <Layout>
-        <Center>
-          <h1>This </h1>
-        </Center>
+        <h1 className='text-center text-2xl font-bold mb-10'>
+          Params Lesson Plans
+        </h1>
+        <SearchBar />
       </Layout>
     </div>
   );

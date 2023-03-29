@@ -4,10 +4,8 @@ export default function Home() {
   return (
     <div>
       <Layout>
-        <Center>
-          <SearchBar />
-          <Feed />
-        </Center>
+        <SearchBar />
+        <Feed />
       </Layout>
     </div>
   );

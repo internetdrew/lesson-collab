@@ -1,10 +1,12 @@
-import { Footer, Navbar } from '.';
+import { Navbar, Center } from '.';
 
 const Layout = ({ children }) => {
   return (
     <div className='flex'>
       <Navbar />
-      <main>{children}</main>
+      <main>
+        <Center>{children}</Center>
+      </main>
     </div>
   );
 };
