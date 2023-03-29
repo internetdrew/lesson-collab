@@ -11,7 +11,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className='w-1/2 duration-300 mx-auto mb-10'>
+    <div className='duration-300 mx-auto mb-10'>
       <div className='flex px-4 py-2 items-center gap-2 bg-gray-100 border rounded-full shadow-sm focus-within:shadow-xl'>
         <AiOutlineSearch className='text-xl text-gray-600' />
         <input

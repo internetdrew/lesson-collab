@@ -2,7 +2,7 @@ import { LessonPost } from './';
 
 const Feed = () => {
   return (
-    <section className='w-1/2 mx-auto'>
+    <section>
       <LessonPost />
       <LessonPost />
       <LessonPost />
