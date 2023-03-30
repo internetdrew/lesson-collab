@@ -1,20 +1,24 @@
 import Link from 'next/link';
-import { AiOutlineUser } from 'react-icons/ai';
 
 const NavProfile = () => {
   return (
-    <Link href='/profile/user'>
-      <div className='flex items-center my-10 bg-white px-4 py-2 rounded-lg border hover:shadow-lg duration-300'>
-        <div className=' h-14 w-14 bg-blue-400 flex items-center justify-center rounded-full mr-4'>
-          <AiOutlineUser className='text-2xl' />
-        </div>
-        <div className='flex flex-col'>
-          <span className='text-md font-semibold'>Test User</span>
-          <span className='text-sm text-gray-600'>History Teacher</span>
-          <span className='text-sm text-gray-600'>12 Upvotes</span>
-        </div>
+    <div className='flex items-center'>
+      <Link href={'/profile/user'}>
+        <span className='inline-flex h-12 w-12 items-center justify-center rounded-full bg-gray-500'>
+          <span className='font-medium leading-none text-white'>TU</span>
+        </span>
+      </Link>
+      <div className='ml-4'>
+        <p className='text-lg font-medium text-gray-700 group-hover:text-gray-900'>
+          Test User
+        </p>
+        <Link href='/profile/user'>
+          <p className='text-md font-medium text-blue-500 group-hover:text-gray-700'>
+            View profile
+          </p>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

@@ -6,3 +6,4 @@ export { default as Center } from './Center';
 export { default as SearchBar } from './SearchBar';
 export { default as Feed } from './Feed';
 export { default as LessonPost } from './LessonPost';
+export { default as SubjectsNav } from './SubjectsNav';
