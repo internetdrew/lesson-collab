@@ -25,7 +25,7 @@ const LessonPost = ({ post }) => {
           <hr className='mt-4' />
         </div>
 
-        <div className='px-4 flex items-center gap-2 text-gray-600 text-sm mt-4 sm:px-6'>
+        <div className='px-4 flex items-center gap-2 text-gray-600 text-sm mt-1 sm:mt-0 sm:px-6'>
           <span className='inline-flex shrink-0 h-8 w-8 items-center justify-center rounded-full bg-gray-500'>
             <span className='font-medium leading-none text-white'>TU</span>
           </span>
