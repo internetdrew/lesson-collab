@@ -1,47 +1,84 @@
+import { Fragment } from 'react';
 import Link from 'next/link';
-import { NavProfile } from '.';
-import { IoLogOutOutline } from 'react-icons/io5';
+import { BellIcon } from '@heroicons/react/24/outline';
+import { Menu, Transition } from '@headlessui/react';
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
 
 const Navbar = () => {
-  const subjects = [
-    'math',
-    'science',
-    'social studies',
-    'art',
-    'history',
-  ].sort();
-
   return (
-    <nav className='fixed w-64 h-screen flex flex-col px-6 bg-slate-100 z-10 overflow-y-scroll lg:overflow-auto'>
-      <h1 className='text-center font-semibold text-2xl my-8'>
-        <Link href={'/'}>LessonFeed</Link>
-      </h1>
-      <NavProfile />
-      <ul className='flex flex-col gap-4 text-lg font-medium'>
-        <li className='pl-6 py-2 rounded-lg ease-out hover:bg-white hover:shadow-md'>
-          <Link href='/' className='block'>
-            Show All
-          </Link>
-        </li>
-        <hr />
-        {subjects.map(subject => (
-          <li
-            key={subject}
-            className='capitalize py-2 pl-6 rounded-lg ease-in-out hover:bg-white hover:shadow-md'
+    <nav className='shrink-0 border-b border-gray-200 bg-white'>
+      <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
+        <Link href={'/'} className='font-bold text-2xl text-blue-500'>
+          LessonFeed
+        </Link>
+        <div className='flex items-center gap-x-4'>
+          <button
+            type='button'
+            className='-m-2.5 p-2.5 text-gray-500 hover:text-gray-300'
           >
-            <Link
-              href={`/lesson-plans/${subject.split(' ').join('-')}`}
-              className='block'
+            <span className='sr-only'>View notifications</span>
+            <BellIcon className='h-6 w-6' aria-hidden='true' />
+          </button>
+          <Menu as='div' className='relative'>
+            <Menu.Button>
+              <span className='sr-only'>Your profile</span>
+              <span className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
+                <span className='font-medium leading-none text-white'>TU</span>
+              </span>
+            </Menu.Button>
+            <Transition
+              as={Fragment}
+              enter='transition ease-out duration-100'
+              enterFrom='transform opacity-0 scale-95'
+              enterTo='transform opacity-100 scale-100'
+              leave='transition ease-in duration-75'
+              leaveFrom='transform opacity-100 scale-100'
+              leaveTo='transform opacity-0 scale-95'
             >
-              {subject}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <button className='mt-auto text-lg mb-6 flex items-center gap-4 text-red-600 font-semibold pl-6 py-2 rounded-lg hover:bg-red-200 hover:shadow-md'>
-        <IoLogOutOutline className='text-2xl' />
-        <span>Logout</span>
-      </button>
+              <Menu.Items className='absolute right-0 z-10 mt-4 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                <div className='py-1'>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <a
+                        href='/profile/edit'
+                        className={classNames(
+                          active
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-700',
+                          'block px-4 py-2'
+                        )}
+                      >
+                        Edit profile
+                      </a>
+                    )}
+                  </Menu.Item>
+
+                  <form method='POST' action='#'>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          type='submit'
+                          className={classNames(
+                            active
+                              ? 'bg-gray-100 text-gray-900'
+                              : 'text-gray-700',
+                            'block w-full px-4 py-2 text-left'
+                          )}
+                        >
+                          Sign out
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </form>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+      </div>
     </nav>
   );
 };
