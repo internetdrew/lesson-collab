@@ -6,7 +6,7 @@ const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 
 const SideNav = () => {
   return (
-    <nav className='fixed w-64 h-screen flex flex-col px-6 bg-slate-100 z-10 overflow-y-scroll lg:overflow-auto'>
+    <nav className='fixed w-64 h-screen flex flex-col px-6 bg-white z-10 overflow-y-scroll lg:overflow-auto'>
       <h1 className='text-center font-semibold text-2xl my-8'>
         <Link href={'/'}>LessonFeed</Link>
       </h1>
