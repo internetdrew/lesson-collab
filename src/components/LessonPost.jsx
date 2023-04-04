@@ -32,7 +32,7 @@ const LessonPost = ({ post }) => {
           <p className='hidden sm:inline-block'>
             Posted by{' '}
             <span className='text-blue-500'>
-              <Link href={`/user/${'id'}`}>Someone Special</Link>
+              <Link href={`/profile/${'id'}`}>Someone Special</Link>
             </span>
           </p>
           <div className='flex items-center ml-auto gap-4'>
