@@ -1,4 +1,4 @@
-import { Layout, Center, SearchBar, Feed } from '../components';
+import { Layout, Feed } from '../components';
 
 export default function Home() {
   return (

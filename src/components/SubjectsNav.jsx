@@ -10,8 +10,6 @@ const subjects = [
 
 const navigation = subjects.map(sub => sub.name).sort();
 
-console.log(navigation);
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }

@@ -1,5 +1,4 @@
 export { default as Footer } from './Footer';
-export { default as SideNav } from './SideNav';
 export { default as Layout } from './Layout';
 export { default as NavProfile } from './NavProfile';
 export { default as Center } from './Center';
