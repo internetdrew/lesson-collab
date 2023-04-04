@@ -1,5 +1,10 @@
 import { Layout, Comment, AddCommentForm } from '@/src/components';
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import {
+  EllipsisVerticalIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import { AiOutlineUser } from 'react-icons/ai';
 
 const PostDetails = () => {
@@ -18,6 +23,12 @@ const PostDetails = () => {
             <h1 className='font-bold text-gray-900'>Test User</h1>
             <span className='text-gray-500 text-sm'>6 Hours Ago</span>
           </div>
+          <Link href='/lesson-plan/id/edit'>
+            <PencilSquareIcon className='w-6 h-6 text-green-500' />
+          </Link>
+          <button>
+            <TrashIcon className='w-6 h-6 text-red-500' />
+          </button>
           <button className='ml-auto'>
             <EllipsisVerticalIcon className='w-6 h-6 text-gray-500' />
           </button>
@@ -32,7 +43,7 @@ const PostDetails = () => {
           <h1 className='text-xl font-semibold mb-2'>
             Post title made by user
           </h1>
-          <p className='mb-4'>
+          <p className='mb-4 text-justify'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nam
             aut provident ad quidem. Quaerat dolorem velit soluta, quia ex rerum
             tenetur incidunt excepturi optio odio dolore aperiam fugiat enim
@@ -49,7 +60,7 @@ const PostDetails = () => {
         </div>
         <div className='px-4 py-4 sm:px-6'>
           <AddCommentForm />
-          <p className='text-gray-500 mb-2'>Comments</p>
+          <p className='text-gray-500 mb-2'>Feedback</p>
           {/* Content goes here */}
           {/* We use less vertical padding on card footers at all sizes than on headers or body sections */}
           <Comment />

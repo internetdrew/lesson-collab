@@ -11,3 +11,4 @@ export { default as Comment } from './Comment';
 export { default as Reply } from './Reply';
 export { default as AddCommentForm } from './AddCommentForm';
 export { default as Navbar } from './Navbar';
+export { default as NewPostForm } from './NewPostForm';

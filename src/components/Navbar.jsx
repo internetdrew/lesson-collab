@@ -75,6 +75,12 @@ const Navbar = () => {
               </Menu.Items>
             </Transition>
           </Menu>
+          <Link
+            href={'/create'}
+            className='rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+          >
+            New Post
+          </Link>
         </div>
       </div>
     </nav>
