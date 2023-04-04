@@ -37,7 +37,8 @@ export default function UserProfile() {
             </button>
           </div>
         </SinglePanelContainer>
-        <div className='sticky mx-auto max-w-screen-md px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16'>
+
+        <div className='mx-auto max-w-screen-md px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16'>
           <h2 className='text-xl font-semibold mb-2 bg-white w-max px-4 py-2 rounded-lg'>
             Whitley's Posts
           </h2>
