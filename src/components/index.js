@@ -12,3 +12,4 @@ export { default as AddCommentForm } from './AddCommentForm';
 export { default as Navbar } from './Navbar';
 export { default as NewPostForm } from './NewPostForm';
 export { default as SinglePanelContainer } from './SinglePanelContainer';
+export { default as SignInForm } from './SignInForm';

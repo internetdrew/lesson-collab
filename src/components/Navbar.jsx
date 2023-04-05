@@ -2,12 +2,18 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
-
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
+  const supabase = useSupabaseClient();
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
     <nav className='shrink-0 border-b border-gray-200 bg-white'>
       <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
@@ -59,13 +65,14 @@ const Navbar = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        type='submit'
+                        type='button'
                         className={classNames(
                           active
                             ? 'bg-gray-100 text-gray-900'
                             : 'text-gray-700',
                           'block w-full px-4 py-2 text-left'
                         )}
+                        onClick={logout}
                       >
                         Sign out
                       </button>
