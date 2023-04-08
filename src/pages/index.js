@@ -1,9 +1,16 @@
 import { Layout, Feed, SignInForm } from '../components';
 import { useSession } from '@supabase/auth-helpers-react';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../atoms/userAtom';
+import { useEffect } from 'react';
 
 export default function Home() {
   const session = useSession();
-  console.log(session?.user);
+  const setUser = useSetRecoilState(userState);
+
+  useEffect(() => {
+    if (session) setUser(session?.user);
+  }, [session]);
 
   return (
     <div>

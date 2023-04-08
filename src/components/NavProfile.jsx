@@ -1,6 +1,10 @@
 import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms/userAtom';
 
 const NavProfile = () => {
+  const user = useRecoilValue(userState);
+  console.log(user);
   return (
     <div className='flex items-center'>
       <Link href={'/profile/user'}>
@@ -10,7 +14,7 @@ const NavProfile = () => {
       </Link>
       <div className='ml-4'>
         <p className='text-lg font-medium text-gray-700 group-hover:text-gray-900'>
-          Test User
+          {user.user_metadata.full_name}
         </p>
         <Link href='/profile/user'>
           <p className='text-md font-medium text-blue-500 group-hover:text-gray-700'>
