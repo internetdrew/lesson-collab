@@ -5,7 +5,6 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { AiOutlineUser } from 'react-icons/ai';
 
 const PostDetails = () => {
   return (
@@ -61,8 +60,6 @@ const PostDetails = () => {
         <div className='px-4 py-4 sm:px-6'>
           <AddCommentForm />
           <p className='text-gray-500 mb-2'>Feedback</p>
-          {/* Content goes here */}
-          {/* We use less vertical padding on card footers at all sizes than on headers or body sections */}
           <Comment />
         </div>
       </div>
