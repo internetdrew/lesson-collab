@@ -33,7 +33,7 @@ const SignInForm = () => {
             message: { color: 'rgb(220 38 38)' },
           },
         }}
-        providers={['google', 'facebook', 'linkedin']}
+        providers={['google']}
       />
     </div>
   );
