@@ -3,15 +3,19 @@ import Link from 'next/link';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/router';
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
+  const router = useRouter();
   const supabase = useSupabaseClient();
 
   const logout = async () => {
     await supabase.auth.signOut();
+    router.push('/');
   };
 
   return (
