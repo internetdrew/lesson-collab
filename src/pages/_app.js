@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
+import { RecoilRoot } from 'recoil';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps }) {
       initialSession={pageProps.initialSession}
     >
       <div className={inter.className}>
-        <Component {...pageProps} />
+        <RecoilRoot>
+          <Component {...pageProps} />
+        </RecoilRoot>
       </div>
     </SessionContextProvider>
   );

@@ -3,7 +3,7 @@ import { useSession } from '@supabase/auth-helpers-react';
 
 export default function Home() {
   const session = useSession();
-  // console.log(session.user);
+  console.log(session?.user);
 
   return (
     <div>
