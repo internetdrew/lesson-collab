@@ -1,11 +1,9 @@
 import { Layout, Feed, SignInForm } from '../components';
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useSession } from '@supabase/auth-helpers-react';
 
 export default function Home() {
   const session = useSession();
-  const supabase = useSupabaseClient();
-
-  console.log(session);
+  // console.log(session.user);
 
   return (
     <div>
@@ -14,7 +12,7 @@ export default function Home() {
           <h1 className='text-teal-600 text-2xl font-bold mb-4 text-center sm:text-3xl'>
             Welcome to LessonFeed
           </h1>
-          <SignInForm supabase={supabase} />
+          <SignInForm />
         </section>
       ) : (
         <Layout>
