@@ -1,6 +1,8 @@
 import { Auth } from '@supabase/auth-ui-react';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
-const SignInForm = ({ supabase }) => {
+const SignInForm = () => {
+  const supabase = useSupabaseClient();
   return (
     <div className='sm:w-96 p-6 rounded-xl bg-teal-600 shadow-2xl'>
       <Auth
