@@ -1,4 +1,4 @@
-import { Auth } from '@supabase/auth-ui-react';
+import { Auth, MagicLink } from '@supabase/auth-ui-react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const SignInForm = () => {

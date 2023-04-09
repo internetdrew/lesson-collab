@@ -11,15 +11,17 @@ export default function App({ Component, pageProps }) {
   const [supabase] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <SessionContextProvider
-      supabaseClient={supabase}
-      initialSession={pageProps.initialSession}
-    >
-      <div className={inter.className}>
-        <RecoilRoot>
-          <Component {...pageProps} />
-        </RecoilRoot>
-      </div>
-    </SessionContextProvider>
+    <>
+      <SessionContextProvider
+        supabaseClient={supabase}
+        initialSession={pageProps.initialSession}
+      >
+        <div className={inter.className}>
+          <RecoilRoot>
+            <Component {...pageProps} />
+          </RecoilRoot>
+        </div>
+      </SessionContextProvider>
+    </>
   );
 }
