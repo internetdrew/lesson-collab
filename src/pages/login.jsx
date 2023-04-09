@@ -1,8 +1,18 @@
-import Script from 'next/script';
 import { useEffect } from 'react';
+import jwtDecode from 'jwt-decode';
 
 const Login = () => {
-  const handleCallbackResponse = response => {};
+  const handleCallbackResponse = response => {
+    const resPayload = jwtDecode(response.credential);
+    const userObj = {
+      id: resPayload.sub,
+      firstName: resPayload.given_name,
+      lastName: resPayload.family_name,
+      imageUrl: resPayload.picture,
+      email: resPayload.email,
+    };
+    console.log(userObj);
+  };
 
   useEffect(() => {
     google.accounts.id.initialize({
@@ -11,14 +21,18 @@ const Login = () => {
     });
 
     google.accounts.id.renderButton(document.getElementById('signInDiv'), {
-      theme: 'outline',
+      theme: 'rounded',
       size: 'large',
     });
+    google.accounts.id.prompt();
   }, []);
 
   return (
     <>
-      <Script src='https://accounts.google.com/gsi/client' />
+      <div
+        id='signInDiv'
+        className='w-full h-screen flex items-center justify-center'
+      ></div>
     </>
   );
 };
