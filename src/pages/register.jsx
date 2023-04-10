@@ -2,12 +2,34 @@ import Image from 'next/image';
 import Link from 'next/link';
 import loginImage from '/public/loginbg.jpg';
 import { FcGoogle } from 'react-icons/fc';
-import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
+import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 
 const login = () => {
   const fields = [
-    { name: 'email', symbol: <HiAtSymbol /> },
-    { name: 'password', symbol: <HiFingerPrint /> },
+    {
+      name: 'username',
+      type: 'text',
+      placeholder: 'Please enter your username',
+      symbol: <HiUser />,
+    },
+    {
+      name: 'email',
+      type: 'email',
+      placeholder: 'Please enter your email address',
+      symbol: <HiAtSymbol />,
+    },
+    {
+      name: 'password',
+      type: 'password',
+      placeholder: 'Please enter your password',
+      symbol: <HiFingerPrint />,
+    },
+    {
+      name: 'password2',
+      type: 'password',
+      placeholder: 'Please confirm your password',
+      symbol: <HiFingerPrint />,
+    },
   ];
 
   return (
@@ -26,9 +48,9 @@ const login = () => {
             {fields.map(field => (
               <div className='form-control flex border rounded-xl relative w-full'>
                 <input
-                  type={`${field.name}`}
-                  name={`${field.name}`}
-                  placeholder={`Enter your ${field.name}`}
+                  type={field.type}
+                  name={field.name}
+                  placeholder={field.placeholder}
                   className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
                 />
                 <span className='flex items-center justify-center p-4 text-gray-400'>
@@ -43,17 +65,11 @@ const login = () => {
             >
               Login
             </button>
-            <button
-              type='button'
-              className='w-full border rounded-lg py-3 inline-flex items-center justify-center gap-2 text-gray-700 hover:shadow-lg duration-300'
-            >
-              <FcGoogle className='text-xl' />
-              Sign in with Google
-            </button>
+
             <p className='text-center text-gray-400 p-4'>
-              Don't have an account yet?{' '}
-              <Link href={'/register'} className='text-teal-700'>
-                Sign up
+              Already have an account?{' '}
+              <Link href={'/login'} className='text-teal-700'>
+                Sign in
               </Link>
             </p>
           </form>
