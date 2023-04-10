@@ -40,7 +40,7 @@ const login = () => {
               type='button'
               className='w-full border rounded-lg py-3 inline-flex items-center justify-center gap-2 text-gray-700 hover:shadow-lg duration-300'
             >
-              <FcGoogle className='text-lg' />
+              <FcGoogle className='text-xl' />
               Sign in with Google
             </button>
             <p className='text-center text-gray-400 p-4'>
