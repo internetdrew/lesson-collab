@@ -10,6 +10,8 @@ export default function Document() {
         <NextScript />
         <Script
           src='https://accounts.google.com/gsi/client'
+          async
+          defer
           strategy='beforeInteractive'
         />
       </body>

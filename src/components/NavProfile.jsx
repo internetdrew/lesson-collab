@@ -7,7 +7,7 @@ const NavProfile = () => {
   const user = useRecoilValue(userState);
   console.log(user);
   return (
-    <div className='flex items-center bg-red-50'>
+    <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
         <Link href={'/profile/user'}>
           <Image

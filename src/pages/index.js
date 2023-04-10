@@ -2,21 +2,13 @@ import { Layout, Feed } from '../components';
 import { useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import { userState } from '../atoms/userAtom';
+import { sessionState } from '../atoms/sessionAtom';
 import { useSetRecoilState } from 'recoil';
+import { useSession } from '@supabase/auth-helpers-react';
 
 export default function Home() {
-  const setUser = useSetRecoilState(userState);
-
   const handleCallbackResponse = response => {
-    const resPayload = jwtDecode(response.credential);
-    const userObj = {
-      id: resPayload.sub,
-      firstName: resPayload.given_name,
-      lastName: resPayload.family_name,
-      imageUrl: resPayload.picture,
-      email: resPayload.email,
-    };
-    setUser(userObj);
+    console.log(response.credentials);
   };
 
   useEffect(() => {
@@ -25,10 +17,15 @@ export default function Home() {
       callback: handleCallbackResponse,
     });
 
-    google.accounts.id.prompt();
+    google.accounts.id.renderButton(document.getElementById('signin'), {
+      theme: 'blue',
+      size: 'large',
+    });
   }, []);
+
   return (
     <Layout>
+      <div id='signin'></div>
       <Feed />
     </Layout>
   );
