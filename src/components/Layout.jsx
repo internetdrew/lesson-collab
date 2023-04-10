@@ -1,7 +1,7 @@
 import { NavProfile, SubjectsNav } from '.';
 import Navbar from './Navbar';
 
-const Layout = ({ children }) => {
+const Layout = ({ session, children }) => {
   return (
     <div className='flex min-h-full flex-col'>
       <Navbar />
@@ -9,8 +9,13 @@ const Layout = ({ children }) => {
         <aside className='sticky top-8 hidden w-72 shrink-0 lg:block'>
           {/* Left column area */}
           <div className='shadow bg-white p-4 rounded-3xl'>
-            <NavProfile />
-            <hr className='my-8 text-gray-500' />
+            {session ? (
+              <>
+                <NavProfile />
+                <hr className='my-8 text-gray-500' />
+              </>
+            ) : null}
+
             {/* Where you can filter by subject */}
             <SubjectsNav />
           </div>
