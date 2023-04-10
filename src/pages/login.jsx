@@ -12,7 +12,7 @@ const login = () => {
   ];
 
   const handleGoogleSignin = async () => {
-    await signIn('google', { callbackUrl: '/' });
+    signIn('google', { callbackUrl: '/' });
   };
 
   return (
