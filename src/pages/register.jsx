@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import loginImage from '/public/loginbg.jpg';
-import { FcGoogle } from 'react-icons/fc';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 
 const login = () => {
@@ -63,7 +62,7 @@ const login = () => {
               type='submit'
               className='w-full bg-teal-600 py-3 text-slate-50 text-lg rounded-lg font-semibold hover:shadow-lg duration-300'
             >
-              Login
+              Sign up
             </button>
 
             <p className='text-center text-gray-400 p-4'>
