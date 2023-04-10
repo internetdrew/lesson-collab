@@ -1,27 +1,23 @@
 import '@/src/styles/globals.css';
 import { Inter } from 'next/font/google';
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import { useState } from 'react';
 import { RecoilRoot } from 'recoil';
+import { SessionProvider } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function App({ Component, pageProps }) {
-  const [supabase] = useState(() => createBrowserSupabaseClient());
-
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <>
-      <SessionContextProvider
-        supabaseClient={supabase}
-        initialSession={pageProps.initialSession}
-      >
-        <div className={inter.className}>
+      <div className={inter.className}>
+        <SessionProvider session={session}>
           <RecoilRoot>
             <Component {...pageProps} />
           </RecoilRoot>
-        </div>
-      </SessionContextProvider>
+        </SessionProvider>
+      </div>
     </>
   );
 }

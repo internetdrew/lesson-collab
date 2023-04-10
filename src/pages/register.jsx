@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import loginImage from '/public/loginbg.jpg';
+import loginImage from '/public/login.jpg';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 
 const login = () => {
@@ -35,7 +35,12 @@ const login = () => {
     <div className='h-screen flex items-center bg-teal-600'>
       <section className='m-auto bg-slate-50 rounded-md w-[90%] sm:w-3/5 grid lg:grid-cols-2 overflow-hidden'>
         <div className='left hidden lg:block'>
-          <Image src={loginImage} className='w-full h-full object-cover ' />
+          <Image
+            src={loginImage}
+            alt='woman writing in notepad'
+            className='w-full h-full object-cover'
+            priority
+          />
         </div>
 
         <div className='right flex flex-col items-center justify-center'>
@@ -45,7 +50,10 @@ const login = () => {
           </p>
           <form className='flex flex-col gap-5 items-center mt-4 w-4/5'>
             {fields.map(field => (
-              <div className='form-control flex border rounded-xl relative w-full'>
+              <div
+                key={field.name}
+                className='form-control flex border rounded-xl relative w-full'
+              >
                 <input
                   type={field.type}
                   name={field.name}
