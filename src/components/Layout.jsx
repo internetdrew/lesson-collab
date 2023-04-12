@@ -1,7 +1,10 @@
 import { NavProfile, SubjectsNav } from '.';
 import Navbar from './Navbar';
+import { sessionState } from '../atoms/sessionAtom';
+import { useRecoilState } from 'recoil';
 
-const Layout = ({ session, children }) => {
+const Layout = ({ children }) => {
+  const session = useRecoilState(sessionState);
   return (
     <div className='flex min-h-full flex-col'>
       <Navbar />
@@ -15,19 +18,13 @@ const Layout = ({ session, children }) => {
                 <hr className='my-8 text-gray-500' />
               </>
             ) : null}
-
-            {/* Where you can filter by subject */}
             <SubjectsNav />
           </div>
         </aside>
 
-        <main className='flex-1'>
-          {/* Main area */}
-          {children}
-        </main>
+        <main className='flex-1'>{children}</main>
 
         <aside className='sticky top-8 hidden w-72 shrink-0 bg-orange-300 xl:block'>
-          {/* Right column area */}
           <div>I'm right!</div>
         </aside>
       </div>
