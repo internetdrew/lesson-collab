@@ -1,14 +1,16 @@
 import { Navbar } from '@/src/components';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
 
-const user = {
-  name: 'Test User',
-  handle: 'testuser',
-  email: 'testuser@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
-};
-
-export default function ProfileEditor() {
+export default function ProfileEditor({ session }) {
+  const user = {
+    name: 'Test User',
+    handle: 'testuser',
+    email: 'testuser@example.com',
+    imageUrl:
+      'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
+  };
+  console.log(session);
   return (
     <div>
       <Navbar />
@@ -230,3 +232,21 @@ export default function ProfileEditor() {
     </div>
   );
 }
+
+export const getServerSideProps = async ctx => {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  console.log(session);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
