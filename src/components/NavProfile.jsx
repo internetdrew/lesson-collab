@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 const NavProfile = () => {
+  const { data: session } = useSession();
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
@@ -21,7 +23,7 @@ const NavProfile = () => {
         </p>
         <Link
           href='/profile/user'
-          className='text-md font-medium text-[--primary-color] hover:text-teal-700'
+          className='text-md font-medium text-[--primary-color] hover:text-teal-500'
         >
           View profile
         </Link>
