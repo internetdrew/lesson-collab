@@ -7,9 +7,22 @@ import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik';
 
 const login = () => {
+  const onSubmit = async values => {
+    console.log(values);
+  };
+
+  const formik = useFormik({
+    initialValues: { email: '', password: '' },
+    onSubmit,
+  });
+
   const fields = [
-    { name: 'email', symbol: <HiAtSymbol /> },
-    { name: 'password', symbol: <HiFingerPrint /> },
+    {
+      name: 'email',
+      type: 'email',
+      symbol: <HiAtSymbol />,
+    },
+    { name: 'password', type: 'password', symbol: <HiFingerPrint /> },
   ];
 
   const handleGoogleSignin = async () => {
@@ -33,17 +46,22 @@ const login = () => {
           <p className='w-3/4 text-center text-gray-400'>
             Improve your lesson plans with feedback from other educators.
           </p>
-          <form className='flex flex-col gap-5 items-center mt-4 w-4/5'>
+          <form
+            className='flex flex-col gap-5 items-center mt-4 w-4/5'
+            onSubmit={formik.handleSubmit}
+          >
             {fields.map(field => (
               <div
                 key={field.name}
                 className='form-control flex border rounded-xl relative w-full'
               >
                 <input
-                  type={`${field.name}`}
-                  name={`${field.name}`}
+                  type={field.type}
+                  name={field.name}
                   placeholder={`Enter your ${field.name}`}
                   className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
+                  onChange={formik.handleChange}
+                  value={formik.values?.[field.name]}
                 />
                 <span className='flex items-center justify-center p-4 text-gray-400'>
                   {field.symbol}
