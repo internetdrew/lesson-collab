@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 
 const Layout = ({ children }) => {
   const session = useRecoilState(sessionState);
+
   return (
     <div className='flex min-h-full flex-col'>
       <Navbar />
