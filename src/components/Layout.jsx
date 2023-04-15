@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
             {session ? (
               <>
                 <NavProfile />
-                <hr className='my-8 text-gray-500' />
+                <hr className='mb-8 mt-6 text-gray-500' />
               </>
             ) : null}
             <SubjectsNav />

@@ -90,7 +90,7 @@ const Navbar = () => {
               </Menu>
 
               <Link href={'/create'}>
-                <button className='rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
+                <button className='absolute bottom-2 right-2 sm:static rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
                   New Post
                 </button>
               </Link>

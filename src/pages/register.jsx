@@ -3,12 +3,12 @@ import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 
-const login = () => {
+const Register = () => {
   const fields = [
     {
       name: 'username',
       type: 'text',
-      placeholder: 'Please enter your username',
+      placeholder: 'Please choose a username',
       symbol: <HiUser />,
     },
     {
@@ -86,4 +86,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Register;
