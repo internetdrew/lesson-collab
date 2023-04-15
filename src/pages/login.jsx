@@ -60,8 +60,7 @@ const login = () => {
                   name={field.name}
                   placeholder={`Enter your ${field.name}`}
                   className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
-                  onChange={formik.handleChange}
-                  value={formik.values?.[field.name]}
+                  {...formik.getFieldProps(field.name)}
                 />
                 <span className='flex items-center justify-center p-4 text-gray-400'>
                   {field.symbol}
