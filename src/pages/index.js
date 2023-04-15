@@ -8,7 +8,6 @@ import { authOptions } from './api/auth/[...nextauth]';
 export default function Home() {
   const { data: session } = useSession();
   const setSession = useSetRecoilState(sessionState);
-  console.log(session);
 
   useEffect(() => {
     setSession(session);

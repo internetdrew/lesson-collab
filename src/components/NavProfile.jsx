@@ -1,11 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRecoilValue } from 'recoil';
-import { sessionState } from '../atoms/sessionAtom';
 
 const NavProfile = () => {
-  const session = useRecoilValue(sessionState);
-
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>

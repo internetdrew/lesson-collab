@@ -1,10 +1,10 @@
 import { NavProfile, SubjectsNav } from '.';
 import Navbar from './Navbar';
 import { sessionState } from '../atoms/sessionAtom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 const Layout = ({ children }) => {
-  const session = useRecoilState(sessionState);
+  const session = useRecoilValue(sessionState);
 
   return (
     <div className='flex min-h-full flex-col'>

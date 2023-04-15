@@ -1,4 +1,6 @@
 import { Navbar, NewPostForm } from '@/src/components';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 const Create = () => {
   return (
@@ -16,3 +18,20 @@ const Create = () => {
 };
 
 export default Create;
+
+export const getServerSideProps = async ctx => {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
