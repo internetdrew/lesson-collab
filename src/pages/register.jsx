@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
+import { useFormik } from 'formik';
+import { validateLogin } from '../lib/validate';
 
 const Register = () => {
   const fields = [
@@ -31,8 +33,23 @@ const Register = () => {
     },
   ];
 
+  const onSubmit = async values => {
+    console.log(values);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+      password2: '',
+    },
+    validate: validateLogin,
+    onSubmit,
+  });
+
   return (
-    <div className='h-screen flex items-center bg-teal-600'>
+    <div className='h-full min-h-screen flex items-center bg-teal-600'>
       <section className='m-auto bg-slate-50 rounded-md w-[90%] sm:w-3/5 grid lg:grid-cols-2 overflow-hidden'>
         <div className='left hidden lg:block'>
           <Image
@@ -48,7 +65,10 @@ const Register = () => {
           <p className='w-3/4 text-center text-gray-400'>
             Improve your lesson plans with feedback from other educators.
           </p>
-          <form className='flex flex-col gap-5 items-center mt-4 w-4/5'>
+          <form
+            className='flex flex-col gap-5 items-center mt-4 w-4/5'
+            onSubmit={formik.handleSubmit}
+          >
             {fields.map(field => (
               <div
                 key={field.name}
@@ -59,6 +79,7 @@ const Register = () => {
                   name={field.name}
                   placeholder={field.placeholder}
                   className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
+                  {...formik.getFieldProps(field.name)}
                 />
                 <span className='flex items-center justify-center p-4 text-gray-400'>
                   {field.symbol}
@@ -68,14 +89,17 @@ const Register = () => {
 
             <button
               type='submit'
-              className='w-full bg-teal-600 py-3 text-slate-50 text-lg rounded-lg font-semibold hover:shadow-lg duration-300'
+              className='w-full bg-teal-600 py-3 text-slate-50 text-lg rounded-lg font-semibold hover:bg-teal-500 hover:shadow-lg duration-300'
             >
               Sign up
             </button>
 
             <p className='text-center text-gray-400 p-4'>
               Already have an account?{' '}
-              <Link href={'/login'} className='text-teal-700'>
+              <Link
+                href={'/login'}
+                className='text-teal-600 hover:text-teal-500 duration-200'
+              >
                 Sign in
               </Link>
             </p>

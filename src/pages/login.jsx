@@ -30,7 +30,7 @@ const login = () => {
   };
 
   return (
-    <div className='h-screen flex items-center bg-teal-600'>
+    <div className='h-full min-h-screen flex items-center bg-teal-600'>
       <section className='m-auto bg-slate-50 rounded-md w-[90%] sm:w-3/5 grid lg:grid-cols-2 overflow-hidden'>
         <div className='left hidden relative lg:block'>
           <Image
@@ -70,7 +70,7 @@ const login = () => {
 
             <button
               type='submit'
-              className='w-full bg-teal-600 py-3 text-slate-50 text-lg rounded-lg font-semibold hover:shadow-lg duration-300'
+              className='w-full bg-teal-600 py-3 text-slate-50 text-lg rounded-lg font-semibold hover:bg-teal-500 hover:shadow-lg duration-300'
             >
               Login
             </button>
