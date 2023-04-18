@@ -18,7 +18,7 @@ export const validateLogin = values => {
   }
 
   if (values.password.includes(' ')) {
-    errors.password = 'Your password cannot contain any spaces';
+    errors.password = 'Passwords cannot contain any spaces.';
   }
 
   return errors;

@@ -18,8 +18,6 @@ const login = () => {
     validate: validateLogin,
   });
 
-  console.log(formik.errors);
-
   const fields = [
     {
       name: 'email',
@@ -68,7 +66,8 @@ const login = () => {
                     {field.symbol}
                   </span>
                 </div>
-                {formik.errors?.[`${field.name}`] ? (
+                {formik.errors?.[`${field.name}`] &&
+                formik.touched?.[`${field.name}`] ? (
                   <span
                     key={`${field?.name} error`}
                     className='text-red-500 mt-1 text-sm'

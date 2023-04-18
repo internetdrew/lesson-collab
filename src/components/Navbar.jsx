@@ -29,10 +29,10 @@ const Navbar = () => {
                 <span className='sr-only'>View notifications</span>
                 <BellIcon className='h-6 w-6' aria-hidden='true' />
               </button>
-              <Menu as='div' className='relative'>
+              <Menu as='div' className='relative mt-1'>
                 <Menu.Button>
                   <span className='sr-only'>Your profile</span>
-                  <span className='inline-flex h-10 w-10 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
+                  <span className='inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
                     <Image
                       src={session?.user?.image}
                       alt='user image'
@@ -90,7 +90,7 @@ const Navbar = () => {
               </Menu>
 
               <Link href={'/create'}>
-                <button className='absolute bottom-2 right-2 sm:static rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
+                <button className='fixed bottom-2 right-2 sm:static rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
                   New Post
                 </button>
               </Link>
