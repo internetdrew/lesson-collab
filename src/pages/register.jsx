@@ -3,7 +3,7 @@ import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 import { useFormik } from 'formik';
-import { validateLogin } from '../lib/validate';
+import { validateRegistration } from '../lib/validate';
 
 const Register = () => {
   const fields = [
@@ -44,7 +44,7 @@ const Register = () => {
       password: '',
       password2: '',
     },
-    validate: validateLogin,
+    validate: validateRegistration,
     onSubmit,
   });
 
@@ -70,20 +70,35 @@ const Register = () => {
             onSubmit={formik.handleSubmit}
           >
             {fields.map(field => (
-              <div
-                key={field.name}
-                className='form-control flex border rounded-xl relative w-full'
-              >
-                <input
-                  type={field.type}
-                  name={field.name}
-                  placeholder={field.placeholder}
-                  className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
-                  {...formik.getFieldProps(field.name)}
-                />
-                <span className='flex items-center justify-center p-4 text-gray-400'>
-                  {field.symbol}
-                </span>
+              <div key={field.name} className='w-full'>
+                <div
+                  className={`form-control flex border rounded-xl relative w-full ${
+                    formik.errors?.[`${field.name}`] &&
+                    formik.touched?.[`${field.name}`]
+                      ? 'border-red-500'
+                      : ''
+                  }`}
+                >
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    placeholder={field.placeholder}
+                    className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
+                    {...formik.getFieldProps(field.name)}
+                  />
+                  <span className='flex items-center justify-center p-4 text-gray-400'>
+                    {field.symbol}
+                  </span>
+                </div>
+                {formik.errors?.[`${field.name}`] &&
+                formik.touched?.[`${field.name}`] ? (
+                  <small
+                    key={`${field?.name} error`}
+                    className='text-red-500 mt-1 text-sm'
+                  >
+                    {formik.errors?.[`${field.name}`]}
+                  </small>
+                ) : null}
               </div>
             ))}
 

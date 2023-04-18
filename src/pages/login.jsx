@@ -54,7 +54,14 @@ const login = () => {
           >
             {fields.map(field => (
               <div key={field.name} className='w-full'>
-                <div className='form-control flex border rounded-xl relative w-full'>
+                <div
+                  className={`form-control flex border rounded-xl relative w-full ${
+                    formik.errors?.[`${field.name}`] &&
+                    formik.touched?.[`${field.name}`]
+                      ? 'border-red-500'
+                      : ''
+                  }`}
+                >
                   <input
                     type={field.type}
                     name={field.name}
