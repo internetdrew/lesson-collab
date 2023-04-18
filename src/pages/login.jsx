@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
 import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik';
+import { validateLogin } from '../lib/validate';
 
 const login = () => {
   const onSubmit = async values => {
@@ -14,7 +15,10 @@ const login = () => {
   const formik = useFormik({
     initialValues: { email: '', password: '' },
     onSubmit,
+    validate: validateLogin,
   });
+
+  console.log(formik.errors);
 
   const fields = [
     {
@@ -51,20 +55,27 @@ const login = () => {
             onSubmit={formik.handleSubmit}
           >
             {fields.map(field => (
-              <div
-                key={field.name}
-                className='form-control flex border rounded-xl relative w-full'
-              >
-                <input
-                  type={field.type}
-                  name={field.name}
-                  placeholder={`Enter your ${field.name}`}
-                  className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
-                  {...formik.getFieldProps(field.name)}
-                />
-                <span className='flex items-center justify-center p-4 text-gray-400'>
-                  {field.symbol}
-                </span>
+              <div key={field.name} className='w-full'>
+                <div className='form-control flex border rounded-xl relative w-full'>
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    placeholder={`Enter your ${field.name}`}
+                    className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
+                    {...formik.getFieldProps(field.name)}
+                  />
+                  <span className='flex items-center justify-center p-4 text-gray-400'>
+                    {field.symbol}
+                  </span>
+                </div>
+                {formik.errors?.[`${field.name}`] ? (
+                  <span
+                    key={`${field?.name} error`}
+                    className='text-red-500 mt-1 text-sm'
+                  >
+                    {formik.errors?.[`${field.name}`]}
+                  </span>
+                ) : null}
               </div>
             ))}
 
