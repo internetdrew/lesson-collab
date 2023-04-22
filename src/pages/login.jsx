@@ -7,9 +7,13 @@ import { HiUserCircle, HiFingerPrint } from 'react-icons/hi';
 import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik';
 import { validateLogin } from '../lib/validate';
+import axios from 'axios';
+import { useWindowOrigin } from '../utils';
+import { useRouter } from 'next/router';
 
 const login = () => {
   const [error, setError] = useState('');
+  const router = useRouter();
 
   const onSubmit = async values => {
     try {
@@ -59,10 +63,16 @@ const login = () => {
           <p className='w-3/4 text-center text-gray-400'>
             Improve your lesson plans with feedback from other educators.
           </p>
+
           <form
             className='flex flex-col gap-5 items-center mt-4 w-4/5'
             onSubmit={formik.handleSubmit}
           >
+            {error ? (
+              <small className='text-center text-red-600 text-sm'>
+                {error}
+              </small>
+            ) : null}
             {fields.map(field => (
               <div key={field.name} className='w-full'>
                 <div
@@ -110,6 +120,7 @@ const login = () => {
               <FcGoogle className='text-xl' />
               Sign in with Google
             </button>
+
             <p className='text-center text-gray-400 p-4'>
               Don't have an account yet?{' '}
               <Link href={'/register'} className='text-teal-700'>
