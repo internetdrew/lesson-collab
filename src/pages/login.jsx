@@ -8,14 +8,12 @@ import { useFormik } from 'formik';
 import { validateLogin } from '../lib/validate';
 
 const login = () => {
-  const onSubmit = async values => {
-    console.log(values);
-  };
+  const onSubmit = async values => {};
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
-    onSubmit,
     validate: validateLogin,
+    onSubmit,
   });
 
   const fields = [
