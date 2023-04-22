@@ -1,11 +1,17 @@
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 import { useFormik } from 'formik';
 import { validateRegistration } from '../lib/validate';
+import axios from 'axios';
 
 const Register = () => {
+  const [error, setError] = useState('');
+  const router = useRouter();
+
   const fields = [
     {
       name: 'username',
@@ -34,7 +40,15 @@ const Register = () => {
   ];
 
   const onSubmit = async values => {
-    console.log(values);
+    try {
+      console.log(values);
+      const baseUrl = window.location.origin;
+      const res = await axios.post(`${baseUrl}/api/auth/register`, values);
+      console.log(res);
+      if ((res.statusText = 'OK')) router.push('/');
+    } catch (err) {
+      setError(err.response.data);
+    }
   };
 
   const formik = useFormik({
@@ -108,6 +122,11 @@ const Register = () => {
             >
               Sign up
             </button>
+            {error ? (
+              <small className='text-center text-red-600 text-sm'>
+                {error}
+              </small>
+            ) : null}
 
             <p className='text-center text-gray-400 p-4'>
               Already have an account?{' '}

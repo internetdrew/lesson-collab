@@ -1,3 +1,10 @@
+import { addPost } from '@/src/controllers/post';
+
 export default function handler(req, res) {
-  res.json({ message: 'It works' });
+  const { method } = req;
+
+  switch (method) {
+    case 'GET':
+      addPost(req, res);
+  }
 }
