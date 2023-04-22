@@ -41,11 +41,9 @@ const Register = () => {
 
   const onSubmit = async values => {
     try {
-      console.log(values);
       const baseUrl = window.location.origin;
       const res = await axios.post(`${baseUrl}/api/auth/register`, values);
-      console.log(res);
-      if ((res.statusText = 'OK')) router.push('/');
+      if ((res.statusText = 'OK')) router.push('/login');
     } catch (err) {
       setError(err.response.data);
     }
