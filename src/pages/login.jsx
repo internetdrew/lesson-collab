@@ -1,28 +1,41 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { FcGoogle } from 'react-icons/fc';
-import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
+import { HiUserCircle, HiFingerPrint } from 'react-icons/hi';
 import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik';
 import { validateLogin } from '../lib/validate';
 
 const login = () => {
-  const onSubmit = async values => {};
+  const [error, setError] = useState('');
+
+  const onSubmit = async values => {
+    try {
+      const res = await axios.post(
+        `${useWindowOrigin()}/api/auth/login`,
+        values
+      );
+      if ((res.statusText = 'OK')) router.push('/');
+    } catch (err) {
+      setError(err.response.data);
+    }
+  };
 
   const formik = useFormik({
-    initialValues: { email: '', password: '' },
+    initialValues: { username: '', password: '' },
     validate: validateLogin,
     onSubmit,
   });
 
   const fields = [
     {
-      name: 'email',
-      type: 'email',
-      symbol: <HiAtSymbol />,
+      name: 'username',
+      type: 'text',
+      icon: <HiUserCircle />,
     },
-    { name: 'password', type: 'password', symbol: <HiFingerPrint /> },
+    { name: 'password', type: 'password', icon: <HiFingerPrint /> },
   ];
 
   const handleGoogleSignin = async () => {
@@ -68,7 +81,7 @@ const login = () => {
                     {...formik.getFieldProps(field.name)}
                   />
                   <span className='flex items-center justify-center p-4 text-gray-400'>
-                    {field.symbol}
+                    {field.icon}
                   </span>
                 </div>
                 {formik.errors?.[`${field.name}`] &&

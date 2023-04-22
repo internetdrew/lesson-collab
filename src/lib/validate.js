@@ -1,16 +1,16 @@
 export const validateLogin = values => {
   const errors = {};
 
-  if (!values.email) {
-    errors.email = 'Email is required for login.';
+  if (!values.username) {
+    errors.username = 'Username is required to sign in.';
+  }
+
+  if (values.username.includes(' ')) {
+    errors.username = 'Usernames cannot contain spaces.';
   }
 
   if (!values.password) {
     errors.password = 'Password is required for login';
-  }
-
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
   }
 
   if (values.password.length < 8 || values.password.length > 20) {
@@ -52,7 +52,7 @@ export const validateRegistration = values => {
   }
 
   if (values.password2 !== values.password) {
-    errors.password2 = 'Your passwords do not match. Please try again.';
+    errors.password2 = 'Your passwords inputs do not match. Please try again.';
   }
 
   if (values.password2.includes(' ')) {
