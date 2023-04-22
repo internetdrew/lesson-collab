@@ -2,6 +2,10 @@ import { db } from '@/src/db/db';
 import bcrypt from 'bcryptjs';
 
 export default function handler(req, res) {
+  if (req.method !== 'POST')
+    return res
+      .status(405)
+      .json({ message: `${req.method} method not allowed.` });
   // Check if the user already exists
   const query = 'SELECT * FROM users WHERE email = ? || username = ?';
 
