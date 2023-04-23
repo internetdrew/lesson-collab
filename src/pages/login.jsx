@@ -22,7 +22,7 @@ const login = () => {
         values
       );
       console.log(res);
-      // if ((res.statusText = 'OK')) router.push('/');
+      if ((res.statusText = 'OK')) router.push('/');
     } catch (err) {
       setError(err.response.data);
     }

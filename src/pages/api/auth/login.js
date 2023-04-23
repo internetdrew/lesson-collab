@@ -27,14 +27,12 @@ export default function handler(req, res) {
       req.body.password,
       data[0].password
     );
-    console.log(correctPassword);
 
     if (!correctPassword) {
       return res.status(400).json('Incorrect username or password.');
     }
 
     const token = jwt.sign({ id: data[0].id }, 'jwtkey');
-    console.log(token);
     const { password, ...other } = data[0];
 
     setCookie('access_token', token, { req, res, maxAge: 60 * 6 * 24 });
