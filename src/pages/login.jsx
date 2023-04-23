@@ -11,23 +11,18 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../atoms/userAtom';
+import { useAuthContext } from '../context/authContext';
 
 const login = () => {
   const [error, setError] = useState('');
   const router = useRouter();
-  const setUser = useSetRecoilState(userState);
+  const { login } = useAuthContext();
 
   const onSubmit = async values => {
     try {
-      const res = await axios.post(
-        `${window.location.origin}/api/auth/login`,
-        values
-      );
-      if ((res.statusText = 'OK')) {
-        localStorage.setItem('user', JSON.stringify(res.data));
-        setUser(res.data);
-        router.push('/');
-      }
+      const origin = window.location.origin;
+      login(origin, values);
+      router.push('/');
     } catch (err) {
       setError(err.response.data);
     }

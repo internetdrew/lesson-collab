@@ -1,13 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useWindowOrigin } from '../utils';
-import { Auth } from '@supabase/auth-ui-react';
+import axios from 'axios';
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem('user') || null)
-  );
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const login = async (origin, userData) => {
+    const res = await axios.post(`${origin}/api/auth/login`, userData);
+    if ((res.statusText = 'OK')) setCurrentUser(res.data);
+  };
 
   const logout = async origin => {
     await axios.post(`${origin}/api/auth/logout`);
@@ -25,4 +27,4 @@ export const AuthContextProvider = ({ children }) => {
   );
 };
 
-// export const useAuthContext = useContext(AuthContext);
+export const useAuthContext = () => useContext(AuthContext);

@@ -2,6 +2,7 @@ import '@/src/styles/globals.css';
 import { Inter } from 'next/font/google';
 import { RecoilRoot } from 'recoil';
 import { SessionProvider } from 'next-auth/react';
+import { AuthContextProvider } from '../context/authContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,7 +15,9 @@ export default function App({
       <div className={inter.className}>
         <SessionProvider session={session}>
           <RecoilRoot>
-            <Component {...pageProps} />
+            <AuthContextProvider>
+              <Component {...pageProps} />
+            </AuthContextProvider>
           </RecoilRoot>
         </SessionProvider>
       </div>
