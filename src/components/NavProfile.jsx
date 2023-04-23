@@ -4,9 +4,9 @@ import { useSession } from 'next-auth/react';
 import { useAuthContext } from '../context/authContext';
 
 const NavProfile = () => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const { currentUser } = useAuthContext();
-  console.log(currentUser);
+
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
