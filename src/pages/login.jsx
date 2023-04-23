@@ -24,6 +24,7 @@ const login = () => {
         values
       );
       if ((res.statusText = 'OK')) {
+        localStorage.setItem('user', JSON.stringify(res.data));
         setUser(res.data);
         router.push('/');
       }
