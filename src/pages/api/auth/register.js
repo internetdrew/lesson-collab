@@ -7,6 +7,7 @@ export default function handler(req, res) {
       .status(405)
       .json({ message: `${req.method} method not allowed.` });
   }
+
   // Check if the user already exists
   const query = 'SELECT * FROM users WHERE email = ? || username = ?';
 

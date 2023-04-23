@@ -33,9 +33,9 @@ export default function handler(req, res) {
     }
 
     const token = jwt.sign({ id: data[0].id }, 'jwtkey');
-    const { password, ...other } = data[0];
+    const { password, ...safeUserData } = data[0];
 
     setCookie('access_token', token, { req, res, maxAge: 60 * 6 * 24 });
-    res.status(200).json(other);
+    res.status(200).json(safeUserData);
   });
 }
