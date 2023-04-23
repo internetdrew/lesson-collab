@@ -1,10 +1,13 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
+import { useAuthContext } from '../context/authContext';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../pages/api/auth/[...nextauth]';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -12,6 +15,8 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const { currentUser } = useAuthContext();
+  console.log(currentUser);
 
   return (
     <nav className='shrink-0 border-b border-gray-200 bg-white'>
@@ -20,7 +25,7 @@ const Navbar = () => {
           LessonFeed
         </Link>
         <div className='flex items-center gap-x-4'>
-          {session ? (
+          {currentUser ? (
             <>
               <button
                 type='button'
@@ -33,12 +38,14 @@ const Navbar = () => {
                 <Menu.Button>
                   <span className='sr-only'>Your profile</span>
                   <span className='inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
-                    <Image
-                      src={session?.user?.image}
-                      alt='user image'
-                      width={48}
-                      height={48}
-                    />
+                    {currentUser?.image && (
+                      <Image
+                        src={session?.user?.image}
+                        alt='user image'
+                        width={48}
+                        height={48}
+                      />
+                    )}
                   </span>
                 </Menu.Button>
                 <Transition

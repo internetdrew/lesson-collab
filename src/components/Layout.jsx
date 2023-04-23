@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
         <aside className='sticky top-8 hidden w-72 shrink-0 lg:block'>
           {/* Left column area */}
           <div className='shadow bg-white p-4 rounded-3xl'>
-            {session ? (
+            {currentUser ? (
               <>
                 <NavProfile />
                 <hr className='mb-8 mt-6 text-gray-500' />
