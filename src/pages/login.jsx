@@ -21,7 +21,8 @@ const login = () => {
         `${useWindowOrigin()}/api/auth/login`,
         values
       );
-      if ((res.statusText = 'OK')) router.push('/');
+      console.log(res);
+      // if ((res.statusText = 'OK')) router.push('/');
     } catch (err) {
       setError(err.response.data);
     }
