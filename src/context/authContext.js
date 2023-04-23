@@ -1,5 +1,3 @@
-'use client';
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -18,6 +16,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     await axios.post(`http://localhost:3000/api/auth/logout`);
+    localStorage.removeItem('user');
     setCurrentUser(null);
   };
 
