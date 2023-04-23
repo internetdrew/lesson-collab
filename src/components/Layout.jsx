@@ -9,7 +9,6 @@ import { useAuthContext } from '../context/authContext';
 const Layout = ({ children }) => {
   const session = useRecoilValue(sessionState);
   const { currentUser } = useAuthContext();
-  console.log(currentUser);
 
   return (
     <div className='flex min-h-full flex-col'>

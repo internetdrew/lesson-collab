@@ -15,8 +15,7 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const { data: session } = useSession();
-  const { currentUser } = useAuthContext();
-  console.log(currentUser);
+  const { currentUser, logout } = useAuthContext();
 
   return (
     <nav className='shrink-0 border-b border-gray-200 bg-white'>
@@ -38,13 +37,21 @@ const Navbar = () => {
                 <Menu.Button>
                   <span className='sr-only'>Your profile</span>
                   <span className='inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
-                    {currentUser?.image && (
+                    {currentUser?.image ? (
                       <Image
                         src={session?.user?.image}
                         alt='user image'
                         width={48}
                         height={48}
                       />
+                    ) : (
+                      <svg
+                        className='h-12 w-12 text-gray-300'
+                        fill='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path d='M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z' />
+                      </svg>
                     )}
                   </span>
                 </Menu.Button>
@@ -85,7 +92,7 @@ const Navbar = () => {
                                 : 'text-gray-700',
                               'block w-full px-4 py-2 text-left'
                             )}
-                            onClick={() => signOut()}
+                            onClick={() => logout()}
                           >
                             Sign out
                           </button>

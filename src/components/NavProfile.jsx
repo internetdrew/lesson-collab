@@ -10,7 +10,7 @@ const NavProfile = () => {
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
-        <Link href={'/profile/user'}>
+        <Link href={`/profile/${currentUser?.username}`}>
           {currentUser?.image ? (
             <Image
               src={currentUser?.image}
@@ -35,7 +35,7 @@ const NavProfile = () => {
           @{currentUser?.username}
         </p>
         <Link
-          href='/profile/user'
+          href={`/profile/${currentUser?.username}`}
           className='text-md font-medium text-[--primary-color] hover:text-teal-500'
         >
           View profile
