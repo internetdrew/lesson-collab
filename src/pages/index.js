@@ -2,11 +2,16 @@ import { getServerSession } from 'next-auth';
 import { Layout, Feed } from '../components';
 import { authOptions } from './api/auth/[...nextauth]';
 import axios from 'axios';
+import { useSetRecoilState } from 'recoil';
+import { postsState } from '../atoms/postsAtom';
 
 export default function Home({ posts }) {
+  const setPosts = useSetRecoilState(postsState);
+  setPosts(posts);
+  console.log(posts);
   return (
     <Layout>
-      <Feed posts={posts} />
+      <Feed />
     </Layout>
   );
 }
