@@ -3,25 +3,18 @@ import { AiOutlineUser, AiOutlineComment } from 'react-icons/ai';
 import { BsArrowUpShort, BsArrowDownShort } from 'react-icons/bs';
 
 const LessonPost = ({ post }) => {
+  console.log(post);
   return (
     <article className='overflow-hidden rounded-lg bg-white shadow py-6 mb-8'>
       <div>
         <div className='px-4 sm:px-6'>
           {/* Content goes here */}
           {/* We use less vertical padding on card headers on desktop than on body sections */}
-          <h2 className='text-xl font-bold text-gray-900'>
-            What does the fox say?
-          </h2>
+          <h2 className='text-xl font-bold text-gray-900'>{post.title} </h2>
         </div>
         <div className='px-4 py-2 sm:px-6 sm:py-3'>
           {/* Content goes here */}
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-            aliquam unde quos labore ab qui obcaecati necessitatibus quibusdam
-            ad suscipit quisquam fugiat magnam quis, commodi esse laboriosam
-            praesentium doloribus earum iure dicta! Recusandae autem, numquam
-            odio assumenda accusamus quaerat laudantium.
-          </p>
+          <p>{post.desc}</p>
           <hr className='mt-4' />
         </div>
 
