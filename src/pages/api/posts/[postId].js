@@ -7,5 +7,8 @@ export default function handler(req, res) {
 
     case 'DELETE':
       break;
+
+    case 'PUT':
+      break;
   }
 }

@@ -2,6 +2,7 @@ import { db } from '@/src/db/db';
 
 export default function handler(req, res) {
   const { method } = req;
+  console.log(req.query);
 
   switch (method) {
     case 'GET':
@@ -19,7 +20,7 @@ export default function handler(req, res) {
     case 'POST':
       break;
 
-    case 'UPDATE':
+    case 'PUT':
       break;
   }
 }
