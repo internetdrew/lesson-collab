@@ -13,7 +13,7 @@ import { useSetRecoilState } from 'recoil';
 import { userState } from '../atoms/userAtom';
 import { useAuthContext } from '../context/authContext';
 
-const login = () => {
+const Login = () => {
   const [error, setError] = useState('');
   const router = useRouter();
   const { login } = useAuthContext();
@@ -135,4 +135,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
