@@ -5,6 +5,7 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import axios from 'axios';
 
 const PostDetails = () => {
   return (
@@ -68,3 +69,14 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
+
+export const getServerSideProps = async ctx => {
+  const { query } = ctx;
+  console.log(query);
+  const response = await axios.get(
+    `${process.env.SITE_URL}/api/posts/${query.id}`
+  );
+  console.log(response.data);
+
+  return { props: {} };
+};

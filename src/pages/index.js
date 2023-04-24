@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { getServerSession } from 'next-auth';
 import { Layout, Feed } from '../components';
 import { authOptions } from './api/auth/[...nextauth]';
@@ -7,8 +8,11 @@ import { postsState } from '../atoms/postsAtom';
 
 export default function Home({ posts }) {
   const setPosts = useSetRecoilState(postsState);
-  setPosts(posts);
-  console.log(posts);
+
+  useEffect(() => {
+    setPosts(posts);
+  }, [posts]);
+
   return (
     <Layout>
       <Feed />
@@ -16,7 +20,7 @@ export default function Home({ posts }) {
   );
 }
 
-export const getServerSideProps = async ({ req, res, query }) => {
+export const getServerSideProps = async ({ query }) => {
   const { subject } = query;
   const response = await axios.get(
     subject

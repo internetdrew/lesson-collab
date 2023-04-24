@@ -10,11 +10,11 @@ const LessonPost = ({ post }) => {
         <div className='px-4 sm:px-6'>
           {/* Content goes here */}
           {/* We use less vertical padding on card headers on desktop than on body sections */}
-          <h2 className='text-xl font-bold text-gray-900'>{post.title} </h2>
+          <h2 className='text-xl font-bold text-gray-900'>{post?.title} </h2>
         </div>
         <div className='px-4 py-2 sm:px-6 sm:py-3'>
           {/* Content goes here */}
-          <p>{post.desc}</p>
+          <p>{post?.desc}</p>
           <hr className='mt-4' />
         </div>
 
@@ -35,7 +35,7 @@ const LessonPost = ({ post }) => {
             </span>
             <button className='my-2 px-3 py-1 bg-blue-500 text-white rounded duration-300 hover:shadow-lg hover:bg-purple-700'>
               <Link
-                href={`/lesson-plan/${'id'}`}
+                href={`/lesson-plan/${post?.id}`}
                 className='font-semibold flex items-center'
               >
                 {' '}
