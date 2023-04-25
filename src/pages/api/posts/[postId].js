@@ -7,8 +7,10 @@ export default function handler(req, res) {
   switch (method) {
     case 'GET':
       const query = 'SELECT * FROM posts WHERE id = ?';
-      db.query(query, [req.query.postId], (err, data) => {});
-      res.json('You win');
+      db.query(query, [req.query.postId], (err, data) => {
+        if (err) return res.json(err);
+        res.status(200).json(data);
+      });
       break;
 
     case 'DELETE':

@@ -7,7 +7,8 @@ import {
 import Link from 'next/link';
 import axios from 'axios';
 
-const PostDetails = () => {
+const PostDetails = ({ post }) => {
+  console.log(post);
   return (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
@@ -40,17 +41,9 @@ const PostDetails = () => {
             allow='fullscreen'
             className='bg-red-200 w-full mt-4 mb-6 h-96'
           ></iframe>
-          <h1 className='text-xl font-semibold mb-2'>
-            Post title made by user
-          </h1>
-          <p className='mb-4 text-justify'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde nam
-            aut provident ad quidem. Quaerat dolorem velit soluta, quia ex rerum
-            tenetur incidunt excepturi optio odio dolore aperiam fugiat enim
-            laboriosam perspiciatis ab distinctio neque tempore asperiores?
-            Accusantium, repudiandae odit.
-          </p>
-          <div className='flex gap-2 text-gray-400'>
+          <h1 className='text-xl font-semibold mb-2'>{post?.title}</h1>
+          <p className='mb-4 text-justify'>{post?.desc}</p>
+          <div className='hidden gap-2 text-gray-400'>
             <span>#topic</span>
             <span>#topic</span>
             <span>#topic</span>
@@ -72,11 +65,10 @@ export default PostDetails;
 
 export const getServerSideProps = async ctx => {
   const { query } = ctx;
-  console.log(query);
   const response = await axios.get(
     `${process.env.SITE_URL}/api/posts/${query.id}`
   );
-  console.log(response.data);
+  const post = response.data[0];
 
-  return { props: {} };
+  return { props: { post } };
 };
