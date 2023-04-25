@@ -6,9 +6,11 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import axios from 'axios';
+import moment from 'moment';
 
 const PostDetails = ({ post }) => {
-  console.log(post);
+  const { username, date, title, desc } = post;
+
   return (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
@@ -21,10 +23,17 @@ const PostDetails = ({ post }) => {
             </span>
           </span>
           <div className='flex flex-col'>
-            <h1 className='font-bold text-gray-900'>Test User</h1>
-            <span className='text-gray-500 text-sm'>6 Hours Ago</span>
+            <Link
+              href={`/profile/${username}`}
+              className='font-bold text-gray-900'
+            >
+              @{username}
+            </Link>
+            <span className='text-gray-500 text-sm'>
+              {moment(date).calendar()}
+            </span>
           </div>
-          <Link href='/lesson-plan/id/edit'>
+          <Link href='/posts/id/edit'>
             <PencilSquareIcon className='w-6 h-6 text-green-500' />
           </Link>
           <button>
@@ -41,8 +50,8 @@ const PostDetails = ({ post }) => {
             allow='fullscreen'
             className='bg-red-200 w-full mt-4 mb-6 h-96'
           ></iframe>
-          <h1 className='text-xl font-semibold mb-2'>{post?.title}</h1>
-          <p className='mb-4 text-justify'>{post?.desc}</p>
+          <h1 className='text-xl font-semibold mb-2'>{title}</h1>
+          <p className='mb-4 text-justify'>{desc}</p>
           <div className='hidden gap-2 text-gray-400'>
             <span>#topic</span>
             <span>#topic</span>
@@ -68,7 +77,8 @@ export const getServerSideProps = async ctx => {
   const response = await axios.get(
     `${process.env.SITE_URL}/api/posts/${query.id}`
   );
-  const post = response.data[0];
+  const post = response.data;
+  console.log(post);
 
   return { props: { post } };
 };
