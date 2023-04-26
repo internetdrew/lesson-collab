@@ -10,11 +10,10 @@ export default function handler(req, res) {
   switch (method) {
     case 'GET':
       const getQuery =
-        'SELECT p.id, `username`, `title`, `desc`, `image`, `subject`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?';
+        'SELECT p.id, u.id AS userId, `username`, `title`, `desc`, `image`, `subject`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?';
 
       db.query(getQuery, [postId], (err, data) => {
         if (err) return res.json(err);
-        console.log(data);
         res.status(200).json(data[0]);
       });
       break;

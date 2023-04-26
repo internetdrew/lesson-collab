@@ -37,7 +37,6 @@ const PostDetails = ({ post }) => {
               TU
             </span>
           </span>
-          {}
           <div className='flex flex-col'>
             <Link
               href={`/profile/${username}`}
@@ -49,7 +48,7 @@ const PostDetails = ({ post }) => {
               {moment(date).calendar()}
             </span>
           </div>
-          {currentUser.id === post.userId ? (
+          {currentUser?.id === post?.userId ? (
             <>
               <Link href='/posts/id/edit'>
                 <PencilSquareIcon className='w-6 h-6 text-green-500' />
