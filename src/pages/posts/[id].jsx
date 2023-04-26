@@ -7,9 +7,24 @@ import {
 import Link from 'next/link';
 import axios from 'axios';
 import moment from 'moment';
+import { useRouter } from 'next/router';
+import { useAuthContext } from '@/src/context/authContext';
 
 const PostDetails = ({ post }) => {
-  const { username, date, title, desc } = post;
+  const { currentUser } = useAuthContext();
+  console.log(currentUser);
+  console.log(post);
+  const { id, username, date, title, desc } = post;
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Layout>
@@ -22,6 +37,7 @@ const PostDetails = ({ post }) => {
               TU
             </span>
           </span>
+          {}
           <div className='flex flex-col'>
             <Link
               href={`/profile/${username}`}
@@ -33,12 +49,16 @@ const PostDetails = ({ post }) => {
               {moment(date).calendar()}
             </span>
           </div>
-          <Link href='/posts/id/edit'>
-            <PencilSquareIcon className='w-6 h-6 text-green-500' />
-          </Link>
-          <button>
-            <TrashIcon className='w-6 h-6 text-red-500' />
-          </button>
+          {currentUser.id === post.userId ? (
+            <>
+              <Link href='/posts/id/edit'>
+                <PencilSquareIcon className='w-6 h-6 text-green-500' />
+              </Link>
+              <button onClick={() => handleDelete()}>
+                <TrashIcon className='w-6 h-6 text-red-500' />
+              </button>
+            </>
+          ) : null}
           <button className='ml-auto'>
             <EllipsisVerticalIcon className='w-6 h-6 text-gray-500' />
           </button>
@@ -74,11 +94,12 @@ export default PostDetails;
 
 export const getServerSideProps = async ctx => {
   const { query } = ctx;
-  const response = await axios.get(
+  const postResponse = await axios.get(
     `${process.env.SITE_URL}/api/posts/${query.id}`
   );
-  const post = response.data;
-  console.log(post);
+  const userResponse = '';
+  // const user = userResponse.data;
+  const post = postResponse.data;
 
   return { props: { post } };
 };
