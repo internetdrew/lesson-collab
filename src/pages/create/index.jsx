@@ -22,14 +22,14 @@ export default Create;
 export const getServerSideProps = async ctx => {
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: '/login',
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: { session },

@@ -1,4 +1,7 @@
+import { useRef, useState } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
+import { useFormik } from 'formik';
+import { calcLength } from 'framer-motion';
 
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
@@ -10,6 +13,19 @@ const capitalize = str =>
     .join(' ');
 
 export default function Example() {
+  const [file, setFile] = useState('');
+  const inputRef = useRef(null);
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      gradeLevel: 'elementary',
+      subject: subjects[0],
+      file,
+      desc: '',
+    },
+  });
+  console.log(file);
+  console.log(formik.values);
   return (
     <form className='px-4 py-4 sm:px-6'>
       <div>
@@ -26,25 +42,28 @@ export default function Example() {
             id='title'
             className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='Title your post'
+            value={formik.values.title}
+            onChange={formik.handleChange}
           />
         </div>
       </div>
       <div className='mt-6 gap-4 items-center sm:flex'>
         <div className='flex-1 mb-6 sm:mb-0'>
           <label
-            htmlFor='subject'
+            htmlFor='gradeLevel'
             className='block text-sm font-medium leading-6 text-gray-900'
           >
             Grade Level
           </label>
           <select
-            id='subject'
-            name='subject'
+            id='gradeLevel'
+            name='gradeLevel'
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            defaultValue='Test'
+            value={formik.values.gradeLevel}
+            onChange={formik.handleChange}
           >
             {gradeLevels.map(level => (
-              <option key={level} className='capitalize'>
+              <option key={level} className='capitalize' value={level}>
                 {capitalize(level)} School
               </option>
             ))}
@@ -61,10 +80,11 @@ export default function Example() {
             id='subject'
             name='subject'
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            defaultValue='Test'
+            value={formik.values.subject}
+            onChange={formik.handleChange}
           >
             {subjects.map(subject => (
-              <option key={subject} className='capitalize'>
+              <option key={subject} className='capitalize' value={subject}>
                 {capitalize(subject)}
               </option>
             ))}
@@ -79,7 +99,12 @@ export default function Example() {
         >
           Lesson Plan
         </label>
-        <div className='mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10'>
+        <div
+          className='mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer'
+          onClick={() => {
+            inputRef.current.click();
+          }}
+        >
           <div className='text-center'>
             <DocumentIcon
               className='mx-auto h-12 w-12 text-gray-300'
@@ -87,22 +112,29 @@ export default function Example() {
             />
             <div className='mt-4 flex text-sm leading-6 text-gray-600'>
               <label
-                htmlFor='file-upload'
+                htmlFor='file'
                 className='relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
               >
-                <span>Upload a file</span>
                 <input
-                  id='file-upload'
-                  name='file-upload'
+                  id='file'
+                  name='file'
                   type='file'
-                  className='sr-only'
+                  ref={inputRef}
+                  value={formik.values.file}
+                  accept='.pdf, .doc, .docx, application/msword'
+                  onChange={e =>
+                    setFile(URL.createObjectURL(e.target.files[0]))
+                  }
+                  className='sr-only bg-red-200'
                 />
               </label>
-              <p className='pl-1'>or drag and drop</p>
+              <p className='pl-1 font-semibold text-teal-600'>
+                Browse files to upload your lesson plan
+              </p>
             </div>
-            <p className='text-xs leading-5 text-gray-600'>
+            <small className='text-xs leading-5 text-gray-600'>
               PDF and Word Doc up to 10MB
-            </p>
+            </small>
           </div>
         </div>
       </div>
@@ -116,8 +148,8 @@ export default function Example() {
         </label>
         <div className='mt-2'>
           <textarea
-            name='description'
-            id='description'
+            name='desc'
+            id='desc'
             className='min-h-[125px] block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='What would you like feedback on?'
           />
