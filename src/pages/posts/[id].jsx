@@ -50,7 +50,7 @@ const PostDetails = ({ post }) => {
           </div>
           {currentUser?.id === post?.userId ? (
             <>
-              <Link href='/posts/id/edit'>
+              <Link href={`/create?edit=${post.id}`}>
                 <PencilSquareIcon className='w-6 h-6 text-green-500' />
               </Link>
               <button onClick={() => handleDelete()}>
