@@ -1,8 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
-import { useFormik } from 'formik';
 import axios from 'axios';
-import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
@@ -14,37 +12,38 @@ const capitalize = str =>
     .join(' ');
 
 export default function NewPostForm() {
-  const [fileUrl, setFileUrl] = useState('');
   const fileUploadRef = useRef(null);
   const instance = axios.create();
 
-  const handleOnSubmit = async e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(fileUploadRef);
-    const form = e.currentTarget;
-    const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === 'file'
-    );
-    console.log(fileInput.files);
+    try {
+      const form = e.currentTarget;
+      const fileInput = Array.from(form.elements).find(
+        ({ name }) => name === 'file'
+      );
+      const formData = new FormData(form);
 
-    const formData = new FormData();
+      for (const file of fileInput.files) {
+        formData.append('file', file);
+      }
+      formData.append('upload_preset', 'my-uploads');
 
-    for (const file of fileInput.files) {
-      formData.append('file', fileInput.files[0]);
-    }
-
-    formData.append('upload_preset', 'my-uploads');
-    const res = await instance.post(
-      'https://api.cloudinary.com/v1_1/dxtdoiyij/upload',
-      formData
-    );
-    if (res.statusText === 'OK') {
-      setFileUrl(res.data.secure_url);
+      const res = await instance.post(
+        'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
+        formData
+      );
+      if (res.statusText === 'OK') {
+        formData.append('fileUrl', res.data.secure_url);
+      }
+      console.log(Object.fromEntries(formData));
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <form className='px-4 py-4 sm:px-6' onSubmit={handleOnSubmit}>
+    <form className='px-4 py-4 sm:px-6' onSubmit={handleSubmit}>
       <div>
         <label
           htmlFor='title'
