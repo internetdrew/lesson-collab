@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
 import { useFormik } from 'formik';
-import { calcLength } from 'framer-motion';
+import axios from 'axios';
+import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
@@ -12,22 +13,38 @@ const capitalize = str =>
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-export default function Example() {
-  const [file, setFile] = useState('');
-  const inputRef = useRef(null);
-  const formik = useFormik({
-    initialValues: {
-      title: '',
-      gradeLevel: 'elementary',
-      subject: subjects[0],
-      file,
-      desc: '',
-    },
-  });
-  console.log(file);
-  console.log(formik.values);
+export default function NewPostForm() {
+  const [fileUrl, setFileUrl] = useState('');
+  const fileUploadRef = useRef(null);
+  const instance = axios.create();
+
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+    console.log(fileUploadRef);
+    const form = e.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === 'file'
+    );
+    console.log(fileInput.files);
+
+    const formData = new FormData();
+
+    for (const file of fileInput.files) {
+      formData.append('file', fileInput.files[0]);
+    }
+
+    formData.append('upload_preset', 'my-uploads');
+    const res = await instance.post(
+      'https://api.cloudinary.com/v1_1/dxtdoiyij/upload',
+      formData
+    );
+    if (res.statusText === 'OK') {
+      setFileUrl(res.data.secure_url);
+    }
+  };
+
   return (
-    <form className='px-4 py-4 sm:px-6'>
+    <form className='px-4 py-4 sm:px-6' onSubmit={handleOnSubmit}>
       <div>
         <label
           htmlFor='title'
@@ -42,8 +59,6 @@ export default function Example() {
             id='title'
             className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='Title your post'
-            value={formik.values.title}
-            onChange={formik.handleChange}
           />
         </div>
       </div>
@@ -59,8 +74,6 @@ export default function Example() {
             id='gradeLevel'
             name='gradeLevel'
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            value={formik.values.gradeLevel}
-            onChange={formik.handleChange}
           >
             {gradeLevels.map(level => (
               <option key={level} className='capitalize' value={level}>
@@ -80,8 +93,6 @@ export default function Example() {
             id='subject'
             name='subject'
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            value={formik.values.subject}
-            onChange={formik.handleChange}
           >
             {subjects.map(subject => (
               <option key={subject} className='capitalize' value={subject}>
@@ -102,7 +113,7 @@ export default function Example() {
         <div
           className='mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer'
           onClick={() => {
-            inputRef.current.click();
+            fileUploadRef.current.click();
           }}
         >
           <div className='text-center'>
@@ -119,13 +130,9 @@ export default function Example() {
                   id='file'
                   name='file'
                   type='file'
-                  ref={inputRef}
-                  value={formik.values.file}
                   accept='.pdf, .doc, .docx, application/msword'
-                  onChange={e =>
-                    setFile(URL.createObjectURL(e.target.files[0]))
-                  }
-                  className='sr-only bg-red-200'
+                  ref={fileUploadRef}
+                  hidden
                 />
               </label>
               <p className='pl-1 font-semibold text-teal-600'>
