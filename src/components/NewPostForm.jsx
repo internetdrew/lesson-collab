@@ -1,17 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
+import { useAuthContext } from '../context/authContext';
 
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
 
-const capitalize = str =>
+const capitalize = str => {
   str
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+};
 
 export default function NewPostForm({ postData }) {
+  const { currentUser } = useAuthContext();
+  console.log(currentUser);
   console.log(postData);
   const [title, setTitle] = useState(postData?.title || '');
   const [gradeLevel, setGradeLevel] = useState(
@@ -19,9 +23,10 @@ export default function NewPostForm({ postData }) {
   );
   const [subject, setSubject] = useState(postData?.subject || subjects[0]);
   const [fileName, setFileName] = useState(postData?.fileName || '');
+  const [fileUrl, setFileUrl] = useState(postData?.fileUrl || '');
   const [desc, setDesc] = useState(postData?.desc || '');
 
-  console.log(fileName);
+  console.log(fileUrl);
 
   useEffect(() => {
     if (!postData) {
@@ -38,30 +43,48 @@ export default function NewPostForm({ postData }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      const form = e.currentTarget;
-      const fileInput = Array.from(form.elements).find(
-        ({ name }) => name === 'file'
-      );
-      const formData = new FormData(form);
-      formData.append('upload_preset', 'my-uploads');
+    const form = e.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === 'file'
+    );
+    const formData = new FormData();
+    formData.append('upload_preset', 'my-uploads');
 
-      for (const file of fileInput.files) {
-        formData.append('file', file);
-        formData.append('fileName', file.name);
-      }
+    for (const file of fileInput.files) {
+      formData.append('file', file);
+    }
 
-      const res = await instance.post(
+    const res =
+      formData.has('file') &&
+      (await instance.post(
         'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
         formData
-      );
-      if (res.statusText === 'OK') {
-        formData.append('fileUrl', res.data.secure_url);
-      }
-      console.log(Object.fromEntries(formData));
-    } catch (error) {
-      console.log(error);
+      ));
+    if (res.statusText === 'OK') {
+      formData.append('fileUrl', res.data.secure_url);
     }
+    console.log(Object.fromEntries(formData));
+    console.log(formData.get('fileUrl'));
+
+    postData
+      ? await axios.put(`api/posts/${postData.id}`, {
+          title,
+          gradeLevel,
+          subject,
+          fileName,
+          fileUrl: formData.get('fileUrl') || fileUrl,
+          desc,
+          uid: currentUser.id,
+        })
+      : await axios.post('/api/posts', {
+          title,
+          gradeLevel,
+          subject,
+          fileName,
+          fileUrl: formData.get('fileUrl') || fileUrl,
+          desc,
+          uid: currentUser.id,
+        });
   };
 
   return (

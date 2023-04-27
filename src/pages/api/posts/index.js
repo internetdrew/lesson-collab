@@ -18,6 +18,7 @@ export default function handler(req, res) {
       break;
 
     case 'POST':
+      res.status(200).json('posted');
       break;
 
     case 'PUT':

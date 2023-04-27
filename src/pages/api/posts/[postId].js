@@ -1,10 +1,12 @@
 import { db } from '@/src/db/db';
 import jwt from 'jsonwebtoken';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { method } = req;
   const { postId } = req.query;
   const token = req.cookies.access_token;
+
+  console.log(req.method);
 
   switch (method) {
     case 'GET':
@@ -35,10 +37,18 @@ export default function handler(req, res) {
           return res.json('Post has been deleted');
         });
       });
-
       break;
 
     case 'PUT':
+      if (!token) return res.status(401).json('There is no authenticated user');
+
+      jwt.verify(token, process.env.JWT_KEY, (err, userInfo) => {
+        if (err) return res.status(403).json('Invalid token');
+        const { id: userId } = userInfo;
+
+        console.log(req.query);
+        return res.status(200).json('put reached');
+      });
       break;
   }
 }
