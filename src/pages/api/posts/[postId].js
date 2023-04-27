@@ -5,12 +5,11 @@ export default function handler(req, res) {
   const { method } = req;
   const { postId } = req.query;
   const token = req.cookies.access_token;
-  console.log(req.method);
 
   switch (method) {
     case 'GET':
       const getQuery =
-        'SELECT p.id, u.id AS userId, `username`, `title`, `desc`, `image`, `subject`, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?';
+        'SELECT p.id, u.id AS userId, p.grade_level AS gradeLevel, `username`, `title`, `desc`, `image`, `subject`, `file_name` AS fileName, `file_url` AS fileUrl, `date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ?';
 
       db.query(getQuery, [postId], (err, data) => {
         if (err) return res.json(err);
