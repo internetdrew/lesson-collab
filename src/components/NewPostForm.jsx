@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
 
@@ -11,7 +11,28 @@ const capitalize = str =>
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-export default function NewPostForm() {
+export default function NewPostForm({ postData }) {
+  console.log(postData);
+  const [title, setTitle] = useState(postData?.title || '');
+  const [gradeLevel, setGradeLevel] = useState(
+    postData?.gradeLevel || gradeLevels[0]
+  );
+  const [subject, setSubject] = useState(postData?.subject || subjects[0]);
+  const [fileName, setFileName] = useState(postData?.fileName || '');
+  const [desc, setDesc] = useState(postData?.desc || '');
+
+  console.log(fileName);
+
+  useEffect(() => {
+    if (!postData) {
+      setTitle('');
+      setGradeLevel(gradeLevels[0]);
+      setSubject(subjects[0]);
+      setFileName('');
+      setDesc('');
+    }
+  }, [postData]);
+
   const fileUploadRef = useRef(null);
   const instance = axios.create();
 
@@ -27,6 +48,7 @@ export default function NewPostForm() {
 
       for (const file of fileInput.files) {
         formData.append('file', file);
+        formData.append('fileName', file.name);
       }
 
       const res = await instance.post(
@@ -35,8 +57,8 @@ export default function NewPostForm() {
       );
       if (res.statusText === 'OK') {
         formData.append('fileUrl', res.data.secure_url);
-        formData.delete('file');
       }
+      console.log(Object.fromEntries(formData));
     } catch (error) {
       console.log(error);
     }
@@ -56,6 +78,8 @@ export default function NewPostForm() {
             type='text'
             name='title'
             id='title'
+            value={title}
+            onChange={e => setTitle(e.target.value)}
             className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='Title your post'
           />
@@ -72,6 +96,8 @@ export default function NewPostForm() {
           <select
             id='gradeLevel'
             name='gradeLevel'
+            value={gradeLevel}
+            onChange={e => setGradeLevel(e.target.value)}
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
           >
             {gradeLevels.map(level => (
@@ -91,6 +117,8 @@ export default function NewPostForm() {
           <select
             id='subject'
             name='subject'
+            value={subject}
+            onChange={e => setSubject(e.target.value)}
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
           >
             {subjects.map(subject => (
@@ -130,11 +158,12 @@ export default function NewPostForm() {
                   name='file'
                   type='file'
                   accept='.pdf, .doc, .docx, application/msword'
+                  onChange={e => setFileName(e.target.files[0].name)}
                   ref={fileUploadRef}
                   hidden
                 />
               </label>
-              <p className='pl-1 font-semibold text-teal-600'>
+              <p className='pl-1 font-semibold text-teal-600 mx-auto'>
                 Browse files to upload your lesson plan
               </p>
             </div>
@@ -143,6 +172,11 @@ export default function NewPostForm() {
             </small>
           </div>
         </div>
+        {fileName.trim() ? (
+          <p className='w-full mt-1 text-center text-sm text-gray-600'>
+            Current file: {fileName}
+          </p>
+        ) : null}
       </div>
       {/* finish */}
       <div className='mt-6'>
@@ -156,6 +190,8 @@ export default function NewPostForm() {
           <textarea
             name='desc'
             id='desc'
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
             className='min-h-[125px] block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='What would you like feedback on?'
           />
@@ -171,9 +207,9 @@ export default function NewPostForm() {
         </button>
         <button
           type='submit'
-          className='inline-flex justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700'
+          className='inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700'
         >
-          Post
+          {postData ? 'Update' : 'Post'}
         </button>
       </div>
     </form>
