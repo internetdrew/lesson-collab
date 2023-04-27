@@ -96,8 +96,6 @@ export const getServerSideProps = async ctx => {
   const postResponse = await axios.get(
     `${process.env.SITE_URL}/api/posts/${query.id}`
   );
-  const userResponse = '';
-  // const user = userResponse.data;
   const post = postResponse.data;
 
   return { props: { post } };
