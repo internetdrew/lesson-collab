@@ -24,8 +24,8 @@ const LessonPost = ({ post }) => {
           </span>
           <p className='hidden sm:inline-block'>
             Posted by{' '}
-            <span className='text-blue-500'>
-              <Link href={`/profile/${username}`}>{username}</Link>
+            <span className='text-teal-600 duration-300 hover:text-teal-500'>
+              <Link href={`/profile/${username}`}>@{username}</Link>
             </span>
           </p>
           <div className='flex items-center ml-auto gap-4'>
@@ -33,7 +33,7 @@ const LessonPost = ({ post }) => {
               <AiOutlineComment className='text-lg' />
               <span className='ml-1'>50+</span>
             </span>
-            <button className='my-2 px-3 py-1 bg-blue-500 text-white rounded duration-300 hover:shadow-lg hover:bg-purple-700'>
+            <button className='my-2 px-3 py-1 bg-teal-600 text-white rounded duration-300 hover:shadow-lg hover:bg-teal-500'>
               <Link
                 href={`/posts/${id}`}
                 className='font-semibold flex items-center'
