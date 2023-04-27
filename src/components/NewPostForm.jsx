@@ -23,11 +23,11 @@ export default function NewPostForm() {
         ({ name }) => name === 'file'
       );
       const formData = new FormData(form);
+      formData.append('upload_preset', 'my-uploads');
 
       for (const file of fileInput.files) {
         formData.append('file', file);
       }
-      formData.append('upload_preset', 'my-uploads');
 
       const res = await instance.post(
         'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
@@ -35,8 +35,8 @@ export default function NewPostForm() {
       );
       if (res.statusText === 'OK') {
         formData.append('fileUrl', res.data.secure_url);
+        formData.delete('file');
       }
-      console.log(Object.fromEntries(formData));
     } catch (error) {
       console.log(error);
     }
