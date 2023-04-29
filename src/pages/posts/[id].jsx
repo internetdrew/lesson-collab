@@ -1,4 +1,11 @@
-import { Layout, Comment, AddCommentForm } from '@/src/components';
+import { useState } from 'react';
+import {
+  Layout,
+  Comment,
+  AddCommentForm,
+  PdfViewer,
+  Navbar,
+} from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
@@ -9,12 +16,15 @@ import axios from 'axios';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/src/context/authContext';
+import { HiArrowLeft } from 'react-icons/hi';
 
 const PostDetails = ({ post }) => {
+  const [showLessonPlan, setShowLessonPlan] = useState(false);
   const { currentUser } = useAuthContext();
   console.log(currentUser);
   console.log(post);
   const { id, username, date, title, desc } = post;
+
   const router = useRouter();
 
   const handleDelete = async () => {
@@ -27,7 +37,19 @@ const PostDetails = ({ post }) => {
     }
   };
 
-  return (
+  return showLessonPlan ? (
+    <>
+      <Navbar />
+      <iframe src={post?.fileUrl} className='w-full h-screen relative'></iframe>
+      <button
+        className='absolute right-2 -bottom-10 inline-flex items-center gap-2 bg-teal-600 text-white font-semibold px-4 py-2'
+        onClick={() => setShowLessonPlan(false)}
+      >
+        <HiArrowLeft />
+        Go back
+      </button>
+    </>
+  ) : (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
@@ -65,13 +87,16 @@ const PostDetails = ({ post }) => {
         </div>
         <div className='px-4 py-5 sm:p-6'>
           {/* Content goes here */}
-          <iframe
-            src='/testpdf.pdf'
-            allow='fullscreen'
-            className='bg-red-200 w-full mt-4 mb-6 h-96'
-          ></iframe>
           <h1 className='text-xl font-semibold mb-2'>{title}</h1>
           <p className='mb-4 text-justify'>{desc}</p>
+
+          <button
+            className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 sm:w-1/2 hover:bg-teal-500 shadow-md'
+            onClick={() => setShowLessonPlan(true)}
+          >
+            View the Lesson Plan
+          </button>
+
           <div className='hidden gap-2 text-gray-400'>
             <span>#topic</span>
             <span>#topic</span>
