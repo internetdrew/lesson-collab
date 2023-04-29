@@ -21,8 +21,9 @@ const PostDetails = ({ post }) => {
     try {
       await axios.delete(`/api/posts/${id}`);
       router.push('/');
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err.request.status === 401) router.push('/login');
+      console.error(err);
     }
   };
 
