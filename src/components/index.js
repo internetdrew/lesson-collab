@@ -13,3 +13,4 @@ export { default as Navbar } from './Navbar';
 export { default as NewPostForm } from './NewPostForm';
 export { default as SinglePanelContainer } from './SinglePanelContainer';
 export { default as SignInForm } from './SignInForm';
+export { default as PdfViewer } from './PdfViewer';
