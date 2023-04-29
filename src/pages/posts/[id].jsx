@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  Layout,
-  Comment,
-  AddCommentForm,
-  PdfViewer,
-  Navbar,
-} from '@/src/components';
+import { Layout, Comment, AddCommentForm, PdfViewer } from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
@@ -16,7 +10,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/src/context/authContext';
-import { HiArrowLeft } from 'react-icons/hi';
 
 const PostDetails = ({ post }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
@@ -38,7 +31,7 @@ const PostDetails = ({ post }) => {
   };
 
   return showLessonPlan ? (
-    <PdfViewer />
+    <PdfViewer post={post} show={setShowLessonPlan} />
   ) : (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>

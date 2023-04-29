@@ -1,7 +1,4 @@
-'use client';
-
-import { NavProfile, SubjectsNav } from '.';
-import Navbar from './Navbar';
+import { NavProfile, SubjectsNav, Navbar } from '.';
 import { sessionState } from '../atoms/sessionAtom';
 import { useRecoilValue } from 'recoil';
 import { useAuthContext } from '../context/authContext';
