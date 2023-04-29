@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
 import { useAuthContext } from '../context/authContext';
+import { useRouter } from 'next/router';
 
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
 
-const capitalize = str => {
+const capitalize = str =>
   str
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
-};
 
 export default function NewPostForm({ postData }) {
   const { currentUser } = useAuthContext();
@@ -26,7 +26,9 @@ export default function NewPostForm({ postData }) {
   const [fileUrl, setFileUrl] = useState(postData?.fileUrl || '');
   const [desc, setDesc] = useState(postData?.desc || '');
 
-  console.log(fileUrl);
+  const router = useRouter();
+
+  console.log(gradeLevels);
 
   useEffect(() => {
     if (!postData) {
@@ -54,29 +56,19 @@ export default function NewPostForm({ postData }) {
       formData.append('file', file);
     }
 
-    const res =
-      formData.has('file') &&
-      (await instance.post(
-        'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
-        formData
-      ));
-    if (res.statusText === 'OK') {
-      formData.append('fileUrl', res.data.secure_url);
-    }
-    console.log(Object.fromEntries(formData));
-    console.log(formData.get('fileUrl'));
+    try {
+      const res =
+        formData.has('file') &&
+        (await instance.post(
+          'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
+          formData
+        ));
+      if (res.statusText === 'OK') {
+        formData.append('fileUrl', res.data.secure_url);
+      }
 
-    postData
-      ? await axios.put(`api/posts/${postData.id}`, {
-          title,
-          gradeLevel,
-          subject,
-          fileName,
-          fileUrl: formData.get('fileUrl') || fileUrl,
-          desc,
-          uid: currentUser.id,
-        })
-      : await axios.post('/api/posts', {
+      if (postData) {
+        await axios.put(`/api/posts/${postData.id}`, {
           title,
           gradeLevel,
           subject,
@@ -85,6 +77,23 @@ export default function NewPostForm({ postData }) {
           desc,
           uid: currentUser.id,
         });
+        router.push(`/posts/${postData.id}`);
+      }
+
+      if (!postData) {
+        await axios.post('/api/posts', {
+          title,
+          gradeLevel,
+          subject,
+          fileName,
+          fileUrl: formData.get('fileUrl') || fileUrl,
+          desc,
+        });
+        router.push('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

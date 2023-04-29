@@ -46,8 +46,23 @@ export default async function handler(req, res) {
         if (err) return res.status(403).json('Invalid token');
         const { id: userId } = userInfo;
 
-        console.log(req.query);
-        return res.status(200).json('put reached');
+        const postId = req.query.postId;
+        const editPostQuery =
+          'UPDATE posts SET `title` = ?, `grade_level` = ?, `subject` = ?, `file_name` = ?, `file_url` = ?, `desc` = ? WHERE `id` = ? AND `uid` = ?';
+
+        const values = [
+          req.body.title,
+          req.body.gradeLevel,
+          req.body.subject,
+          req.body.fileName,
+          req.body.fileUrl,
+          req.body.desc,
+        ];
+
+        db.query(editPostQuery, [...values, postId, userId], (err, data) => {
+          if (err) return res.status(500).json(err);
+          return res.json('Post has been edited');
+        });
       });
       break;
   }

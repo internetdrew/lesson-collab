@@ -1,8 +1,10 @@
 import { db } from '@/src/db/db';
+import jwt from 'jsonwebtoken';
 
 export default function handler(req, res) {
   const { method } = req;
   const { subject } = req.query;
+  const token = req.cookies.access_token;
 
   switch (method) {
     case 'GET':
@@ -18,10 +20,32 @@ export default function handler(req, res) {
       break;
 
     case 'POST':
-      res.status(200).json('posted');
-      break;
+      if (!token) return res.status(401).json('There is no authenticated user');
 
-    case 'PUT':
+      jwt.verify(token, process.env.JWT_KEY, (err, userInfo) => {
+        if (err) return res.status(403).json('Invalid token');
+        const { id: userId } = userInfo;
+
+        const postId = req.query.postId;
+        const newPostQuery =
+          'INSERT INTO posts(`title`, `grade_level`, `subject`, `file_name`, `file_url`, `desc`, `uid` ) VALUES (?)';
+
+        const values = [
+          req.body.title,
+          req.body.gradeLevel,
+          req.body.subject,
+          req.body.fileName,
+          req.body.fileUrl,
+          req.body.desc,
+          userId,
+        ];
+
+        db.query(newPostQuery, [values], (err, data) => {
+          if (err) return res.status(500).json(err);
+
+          return res.json('Post has been created.');
+        });
+      });
       break;
   }
 }
