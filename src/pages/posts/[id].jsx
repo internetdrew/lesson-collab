@@ -74,7 +74,7 @@ const PostDetails = ({ post }) => {
           <p className='mb-4 text-justify'>{desc}</p>
 
           <button
-            className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 sm:w-1/2 hover:bg-teal-500 shadow-md'
+            className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
             onClick={() => setShowLessonPlan(true)}
           >
             View the Lesson Plan
