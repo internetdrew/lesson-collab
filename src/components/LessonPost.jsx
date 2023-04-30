@@ -1,9 +1,24 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineUser, AiOutlineComment } from 'react-icons/ai';
 import { BsArrowUpShort, BsArrowDownShort } from 'react-icons/bs';
+import axios from 'axios';
+import { comment } from 'postcss';
 
 const LessonPost = ({ post }) => {
+  const [commentCount, setCommentCount] = useState(null);
   const { id, title, desc, username } = post;
+
+  const fetchComments = async () => {
+    const res = await axios.get(`/api/comments/${id}`);
+    console.log(res.data.length);
+    setCommentCount(res.data.length);
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
   return (
     <article className='overflow-hidden rounded-lg bg-white shadow py-6 mb-8'>
       <div>
@@ -29,10 +44,14 @@ const LessonPost = ({ post }) => {
             </span>
           </p>
           <div className='flex items-center ml-auto gap-4'>
-            <span className='flex items-center'>
-              <AiOutlineComment className='text-lg' />
-              <span className='ml-1'>50+</span>
-            </span>
+            {commentCount ? (
+              <span className='flex items-center'>
+                <AiOutlineComment className='text-lg' />
+                <span className='ml-1'>{commentCount} comments</span>
+              </span>
+            ) : (
+              <span>No feedback... yet</span>
+            )}
             <button className='my-2 px-3 py-1 bg-teal-600 text-white rounded duration-300 hover:shadow-lg hover:bg-teal-500'>
               <Link
                 href={`/posts/${id}`}

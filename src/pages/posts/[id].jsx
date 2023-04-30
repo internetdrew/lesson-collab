@@ -11,12 +11,12 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/src/context/authContext';
 
-const PostDetails = ({ post }) => {
+const PostDetails = ({ post, comments }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const { currentUser } = useAuthContext();
-  console.log(currentUser);
-  console.log(post);
   const { id, username, date, title, desc } = post;
+
+  console.log(comments);
 
   const router = useRouter();
 
@@ -90,8 +90,12 @@ const PostDetails = ({ post }) => {
         </div>
         <div className='px-4 py-4 sm:px-6'>
           <AddCommentForm postId={post?.id} />
-          <p className='text-gray-500 mb-2'>Feedback</p>
-          <Comment />
+          {comments.length ? (
+            <p className='text-gray-500 mb-2'>Feedback</p>
+          ) : null}
+          {comments.map(comment => (
+            <Comment key={comment?.id} comment={comment} />
+          ))}
         </div>
       </div>
     </Layout>
@@ -102,10 +106,16 @@ export default PostDetails;
 
 export const getServerSideProps = async ctx => {
   const { query } = ctx;
+  query;
   const postResponse = await axios.get(
     `${process.env.SITE_URL}/api/posts/${query.id}`
   );
+  const commentsRes = await axios.get(
+    `${process.env.SITE_URL}/api/comments/${query.id}`
+  );
+  console.log(commentsRes.data);
   const post = postResponse.data;
+  const comments = commentsRes.data;
 
-  return { props: { post } };
+  return { props: { post, comments } };
 };
