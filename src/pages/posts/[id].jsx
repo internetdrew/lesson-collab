@@ -89,7 +89,7 @@ const PostDetails = ({ post }) => {
           </div>
         </div>
         <div className='px-4 py-4 sm:px-6'>
-          <AddCommentForm />
+          <AddCommentForm postId={post?.id} userId={currentUser?.id} />
           <p className='text-gray-500 mb-2'>Feedback</p>
           <Comment />
         </div>
