@@ -6,8 +6,6 @@ export default async function handler(req, res) {
   const { postId } = req.query;
   const token = req.cookies.access_token;
 
-  console.log(req.method);
-
   switch (method) {
     case 'GET':
       const getQuery =

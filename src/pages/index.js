@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getServerSession } from 'next-auth';
 import { Layout, Feed } from '../components';
 import { authOptions } from './api/auth/[...nextauth]';
@@ -15,7 +15,13 @@ export default function Home({ posts }) {
 
   return (
     <Layout>
-      <Feed />
+      {posts.length ? (
+        <Feed />
+      ) : (
+        <p className='text-center text-2xl font-semibold mt-20'>
+          Sorry, no posts on this subject... yet.
+        </p>
+      )}
     </Layout>
   );
 }

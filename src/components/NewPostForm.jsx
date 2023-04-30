@@ -15,8 +15,6 @@ const capitalize = str =>
 
 export default function NewPostForm({ postData }) {
   const { currentUser } = useAuthContext();
-  console.log(currentUser);
-  console.log(postData);
   const [title, setTitle] = useState(postData?.title || '');
   const [gradeLevel, setGradeLevel] = useState(
     postData?.gradeLevel || gradeLevels[0]
@@ -27,8 +25,6 @@ export default function NewPostForm({ postData }) {
   const [desc, setDesc] = useState(postData?.desc || '');
 
   const router = useRouter();
-
-  console.log(gradeLevels);
 
   useEffect(() => {
     if (!postData) {

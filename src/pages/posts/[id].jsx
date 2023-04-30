@@ -16,8 +16,6 @@ const PostDetails = ({ post, comments }) => {
   const { currentUser } = useAuthContext();
   const { id, username, date, title, desc } = post;
 
-  console.log(comments);
-
   const router = useRouter();
 
   const handleDelete = async () => {
@@ -113,7 +111,6 @@ export const getServerSideProps = async ctx => {
   const commentsRes = await axios.get(
     `${process.env.SITE_URL}/api/comments/${query.id}`
   );
-  console.log(commentsRes.data);
   const post = postResponse.data;
   const comments = commentsRes.data;
 
