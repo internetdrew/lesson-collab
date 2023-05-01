@@ -1,15 +1,16 @@
 import { Navbar } from '@/src/components';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
+// import { getServerSession } from 'next-auth/next';
+// import { authOptions } from '../../api/auth/[...nextauth]';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-export default function ProfileEditor() {
-  const user = {
-    name: 'Test User',
-    handle: 'testuser',
-    email: 'testuser@example.com',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
-  };
+export default function ProfileEditor({ user }) {
+  // const user = {
+  //   name: 'Test User',
+  //   handle: 'testuser',
+  //   email: 'testuser@example.com',
+  //   imageUrl:
+  //     'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
+  // };
   return (
     <div>
       <Navbar />
@@ -233,7 +234,11 @@ export default function ProfileEditor() {
 }
 
 export const getServerSideProps = async ctx => {
-  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  const supabase = createServerSupabaseClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   if (!session) {
     return {
@@ -245,6 +250,6 @@ export const getServerSideProps = async ctx => {
   }
 
   return {
-    props: { session },
+    props: { initialSession: session, user: session.user },
   };
 };
