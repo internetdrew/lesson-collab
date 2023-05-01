@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
-import { getServerSession } from 'next-auth';
+import { useEffect } from 'react';
 import { Layout, Feed } from '../components';
-import { authOptions } from './api/auth/[...nextauth]';
-import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
 import { postsState } from '../atoms/postsAtom';
+import { supabase } from '../db/db';
 
 export default function Home({ posts }) {
   const setPosts = useSetRecoilState(postsState);
@@ -28,10 +26,15 @@ export default function Home({ posts }) {
 
 export const getServerSideProps = async ({ query }) => {
   const { subject } = query;
-  const response = await axios.get(
-    `${process.env.SITE_URL}/api/posts${subject ? `?subject=${subject}` : ''}`
-  );
-  const posts = response.data;
 
-  return { props: { posts } };
+  if (subject) {
+    const { data } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('subject', subject);
+    return { props: { posts: data } };
+  }
+
+  const { data } = await supabase.from('posts').select('*');
+  return { props: { posts: data } };
 };
