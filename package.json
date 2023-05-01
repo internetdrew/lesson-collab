@@ -14,7 +14,7 @@
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
     "@next-auth/supabase-adapter": "^0.2.1",
-    "@supabase/auth-helpers-nextjs": "^0.5.7",
+    "@supabase/auth-helpers-nextjs": "^0.5.9",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.3.5",
     "@supabase/supabase-js": "^2.21.0",
@@ -44,5 +44,10 @@
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.3.0"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
