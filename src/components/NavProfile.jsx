@@ -1,17 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchCurrentUser } from '../utils/fetchCurrentUser';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 
 const NavProfile = () => {
-  const currentUser = fetchCurrentUser();
+  const supabase = useSupabaseClient();
+  const currentUser = useUser();
 
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
-        <Link href={`/profile/${currentUser?.username}`}>
-          {currentUser?.picture ? (
+        <Link href={`/profile/${currentUser?.user_metadata?.username}`}>
+          {currentUser ? (
             <Image
-              src={currentUser?.picture}
+              src={currentUser?.user_metadata?.picture}
               alt='user image'
               width={48}
               height={48}
@@ -30,7 +31,7 @@ const NavProfile = () => {
       </span>
       <div className='ml-4 flex flex-col justify-center'>
         <p className='font-medium text-gray-700 group-hover:text-gray-900'>
-          {currentUser?.name}
+          {currentUser?.user_metadata?.name}
         </p>
         <Link
           href={`/profile/${currentUser?.username}`}

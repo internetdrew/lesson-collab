@@ -3,14 +3,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
-import { fetchCurrentUser } from '../utils/fetchCurrentUser';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/router';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
-  const currentUser = fetchCurrentUser();
+  const supabase = useSupabaseClient();
+  const currentUser = useUser();
+  console.log();
+  console.log(currentUser);
+
+  const router = useRouter();
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    router.push('/');
+  };
 
   return (
     <nav className='shrink-0 border-b border-gray-200 bg-white'>
@@ -32,9 +43,9 @@ const Navbar = () => {
                 <Menu.Button>
                   <span className='sr-only'>Your profile</span>
                   <span className='inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
-                    {currentUser?.picture ? (
+                    {currentUser ? (
                       <Image
-                        src={currentUser?.picture}
+                        src={currentUser?.user_metadata?.picture}
                         alt='user image'
                         width={48}
                         height={48}

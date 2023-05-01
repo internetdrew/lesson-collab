@@ -2,10 +2,11 @@ import { NavProfile, SubjectsNav, Navbar } from '.';
 import { sessionState } from '../atoms/sessionAtom';
 import { useRecoilValue } from 'recoil';
 import { useAuthContext } from '../context/authContext';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const Layout = ({ children }) => {
   const session = useRecoilValue(sessionState);
-  const { currentUser } = useAuthContext();
+  const currentUser = useUser();
 
   return (
     <div className='flex min-h-full flex-col'>
