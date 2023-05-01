@@ -1,50 +1,17 @@
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { FcGoogle } from 'react-icons/fc';
-import { HiUserCircle, HiFingerPrint } from 'react-icons/hi';
-import { signIn } from 'next-auth/react';
-import { useFormik } from 'formik';
-import { validateLogin } from '../lib/validate';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
-import { userState } from '../atoms/userAtom';
-import { useAuthContext } from '../context/authContext';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const Login = () => {
-  const [error, setError] = useState('');
-  const router = useRouter();
-  const { login } = useAuthContext();
-
-  const onSubmit = async values => {
-    try {
-      const origin = window.location.origin;
-      login(origin, values);
-      router.push('/');
-    } catch (err) {
-      setError(err.response.data);
-    }
-  };
-
-  const formik = useFormik({
-    initialValues: { username: '', password: '' },
-    validate: validateLogin,
-    onSubmit,
-  });
-
-  const fields = [
-    {
-      name: 'username',
-      type: 'text',
-      icon: <HiUserCircle />,
-    },
-    { name: 'password', type: 'password', icon: <HiFingerPrint /> },
-  ];
+  const supabase = useSupabaseClient();
 
   const handleGoogleSignin = async () => {
-    signIn('google', { callbackUrl: '/' });
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: '/' },
+    });
   };
 
   return (
@@ -61,74 +28,18 @@ const Login = () => {
 
         <div className='right flex flex-col items-center justify-center'>
           <h1 className='text-teal-600 text-4xl font-bold p-4'>LessonFeed</h1>
-          <p className='w-3/4 text-center text-gray-400'>
+          <p className='w-3/4 text-center text-gray-400 mb-10'>
             Improve your lesson plans with feedback from other educators.
           </p>
 
-          <form
-            className='flex flex-col gap-5 items-center mt-4 w-4/5'
-            onSubmit={formik.handleSubmit}
+          <button
+            type='button'
+            className='w-3/4 border rounded-lg py-3 inline-flex items-center justify-center gap-2 text-gray-800 hover:shadow-lg duration-300'
+            onClick={handleGoogleSignin}
           >
-            {error ? (
-              <small className='text-center text-red-600 text-sm'>
-                {error}
-              </small>
-            ) : null}
-            {fields.map(field => (
-              <div key={field.name} className='w-full'>
-                <div
-                  className={`form-control flex border rounded-xl relative w-full ${
-                    formik.errors?.[`${field.name}`] &&
-                    formik.touched?.[`${field.name}`]
-                      ? 'border-red-500'
-                      : ''
-                  }`}
-                >
-                  <input
-                    type={field.type}
-                    name={field.name}
-                    placeholder={`Enter your ${field.name}`}
-                    className='w-full py-3 px-4 focus:outline-none focus:ring-0 border-none rounded-xl bg-slate-50'
-                    {...formik.getFieldProps(field.name)}
-                  />
-                  <span className='flex items-center justify-center p-4 text-gray-400'>
-                    {field.icon}
-                  </span>
-                </div>
-                {formik.errors?.[`${field.name}`] &&
-                formik.touched?.[`${field.name}`] ? (
-                  <span
-                    key={`${field?.name} error`}
-                    className='text-red-500 mt-1 text-sm'
-                  >
-                    {formik.errors?.[`${field.name}`]}
-                  </span>
-                ) : null}
-              </div>
-            ))}
-
-            <button
-              type='submit'
-              className='w-full bg-teal-600 py-3 text-slate-50 text-lg rounded-lg font-semibold hover:bg-teal-500 hover:shadow-lg duration-300'
-            >
-              Login
-            </button>
-            <button
-              type='button'
-              className='w-full border rounded-lg py-3 inline-flex items-center justify-center gap-2 text-gray-700 hover:shadow-lg duration-300'
-              onClick={handleGoogleSignin}
-            >
-              <FcGoogle className='text-xl' />
-              Sign in with Google
-            </button>
-
-            <p className='text-center text-gray-400 p-4'>
-              Don't have an account yet?{' '}
-              <Link href={'/register'} className='text-teal-700'>
-                Sign up
-              </Link>
-            </p>
-          </form>
+            <FcGoogle className='text-xl' />
+            Continue with Google
+          </button>
         </div>
       </section>
     </div>
