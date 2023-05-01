@@ -30,11 +30,17 @@ export const getServerSideProps = async ({ query }) => {
   if (subject) {
     const { data } = await supabase
       .from('posts')
-      .select('*')
+      .select(
+        `*, profiles (
+        name
+      )`
+      )
       .eq('subject', subject);
     return { props: { posts: data } };
   }
 
-  const { data } = await supabase.from('posts').select('*');
+  const { data } = await supabase.from('posts').select(`*, profiles (
+    name
+  )`);
   return { props: { posts: data } };
 };
