@@ -1,21 +1,16 @@
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
-import { useSession } from 'next-auth/react';
-import { signOut } from 'next-auth/react';
-import { useAuthContext } from '../context/authContext';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../pages/api/auth/[...nextauth]';
+import { fetchCurrentUser } from '../utils/fetchCurrentUser';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
-  const { data: session } = useSession();
-  const { currentUser, logout } = useAuthContext();
+  const currentUser = fetchCurrentUser();
 
   return (
     <nav className='shrink-0 border-b border-gray-200 bg-white'>
@@ -37,9 +32,9 @@ const Navbar = () => {
                 <Menu.Button>
                   <span className='sr-only'>Your profile</span>
                   <span className='inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
-                    {currentUser?.image ? (
+                    {currentUser?.picture ? (
                       <Image
-                        src={session?.user?.image}
+                        src={currentUser?.picture}
                         alt='user image'
                         width={48}
                         height={48}
