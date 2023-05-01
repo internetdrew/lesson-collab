@@ -1,19 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
-import { useAuthContext } from '../context/authContext';
+import { fetchCurrentUser } from '../utils/fetchCurrentUser';
 
 const NavProfile = () => {
-  // const { data: session } = useSession();
-  const { currentUser } = useAuthContext();
+  const currentUser = fetchCurrentUser();
 
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
         <Link href={`/profile/${currentUser?.username}`}>
-          {currentUser?.image ? (
+          {currentUser?.picture ? (
             <Image
-              src={currentUser?.image}
+              src={currentUser?.picture}
               alt='user image'
               width={48}
               height={48}
@@ -32,7 +30,7 @@ const NavProfile = () => {
       </span>
       <div className='ml-4 flex flex-col justify-center'>
         <p className='font-medium text-gray-700 group-hover:text-gray-900'>
-          @{currentUser?.username}
+          {currentUser?.name}
         </p>
         <Link
           href={`/profile/${currentUser?.username}`}
