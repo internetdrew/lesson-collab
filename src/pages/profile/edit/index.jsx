@@ -1,10 +1,8 @@
 import { Navbar } from '@/src/components';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { useUser } from '@supabase/auth-helpers-react';
+import Image from 'next/image';
 
 export default function ProfileEditor({ user }) {
-  const userData = useUser();
-
   return (
     <div>
       <Navbar />
@@ -40,16 +38,16 @@ export default function ProfileEditor({ user }) {
                           Username
                         </label>
                         <div className='mt-2 flex rounded-md shadow-sm'>
-                          <span className='inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm'>
-                            lessonfeed.com/
-                          </span>
+                          {/* <span className='inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm'>
+                            lessonfeed.com/profile/
+                          </span> */}
                           <input
                             type='text'
                             name='username'
                             id='username'
                             autoComplete='username'
-                            className='block w-full min-w-0 flex-grow rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6'
-                            defaultValue={user.handle}
+                            className='block w-full min-w-0 flex-grow rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6'
+                            defaultValue={user?.id}
                           />
                         </div>
                       </div>
@@ -67,7 +65,7 @@ export default function ProfileEditor({ user }) {
                             name='about'
                             rows={3}
                             className='mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 min-h-[125px] placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:py-1.5 sm:text-sm sm:leading-6'
-                            defaultValue={''}
+                            defaultValue={user?.about}
                           />
                         </div>
                         <p className='mt-2 text-sm text-gray-500'>
@@ -78,7 +76,7 @@ export default function ProfileEditor({ user }) {
 
                     <div className='mt-6 flex-grow lg:ml-6 lg:mt-0 lg:flex-shrink-0 lg:flex-grow-0'>
                       <p
-                        className='text-sm font-medium leading-6 text-gray-900 mb-1'
+                        className='text-sm font-medium leading-6 w-full ml-1 lg:text-center text-gray-900 mb-1'
                         aria-hidden='true'
                       >
                         Photo
@@ -89,10 +87,12 @@ export default function ProfileEditor({ user }) {
                             className='inline-block h-12 w-12 flex-shrink-0 overflow-hidden rounded-full'
                             aria-hidden='true'
                           >
-                            <img
+                            <Image
                               className='h-full w-full rounded-full'
-                              src={user.imageUrl}
-                              alt=''
+                              src={user?.avatar}
+                              alt='user image'
+                              height={48}
+                              width={48}
                             />
                           </div>
                           <div className='relative ml-5'>
@@ -114,10 +114,12 @@ export default function ProfileEditor({ user }) {
                       </div>
 
                       <div className='relative hidden overflow-hidden rounded-full lg:block'>
-                        <img
-                          className='relative h-40 w-40 rounded-full'
-                          src={user.imageUrl}
-                          alt=''
+                        <Image
+                          className='relative h-32 w-32 rounded-full'
+                          src={user?.avatar}
+                          width={48}
+                          height={48}
+                          alt='user image'
                         />
                         <label
                           htmlFor='desktop-user-photo'
@@ -139,37 +141,22 @@ export default function ProfileEditor({ user }) {
                   <div className='mt-6 grid grid-cols-12 gap-6'>
                     <div className='col-span-12 sm:col-span-6'>
                       <label
-                        htmlFor='first-name'
+                        htmlFor='name'
                         className='block text-sm font-medium leading-6 text-gray-900'
                       >
-                        First name
+                        Name
                       </label>
                       <input
                         type='text'
-                        name='first-name'
-                        id='first-name'
+                        name='name'
+                        id='name'
+                        defaultValue={user?.name}
                         autoComplete='given-name'
                         className='mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6'
                       />
                     </div>
 
                     <div className='col-span-12 sm:col-span-6'>
-                      <label
-                        htmlFor='last-name'
-                        className='block text-sm font-medium leading-6 text-gray-900'
-                      >
-                        Last name
-                      </label>
-                      <input
-                        type='text'
-                        name='last-name'
-                        id='last-name'
-                        autoComplete='family-name'
-                        className='mt-2 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:border-0 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6'
-                      />
-                    </div>
-
-                    <div className='col-span-12'>
                       <label
                         htmlFor='url'
                         className='block text-sm font-medium leading-6 text-gray-900'
@@ -212,7 +199,7 @@ export default function ProfileEditor({ user }) {
                     </button>
                     <button
                       type='submit'
-                      className='inline-flex justify-center rounded-md bg-sky-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700'
+                      className='inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700'
                     >
                       Save
                     </button>
@@ -243,7 +230,9 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  return {
-    props: { initialSession: session, user: session.user },
-  };
+  const { data } = await supabase
+    .from('users')
+    .select()
+    .eq('id', session?.user?.id);
+  return { props: { user: data[0] } };
 };

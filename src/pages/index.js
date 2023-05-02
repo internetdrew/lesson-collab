@@ -14,7 +14,7 @@ export default function Home({ posts }) {
   return (
     <Layout>
       {posts.length ? (
-        <Feed />
+        <Feed posts={posts} />
       ) : (
         <p className='text-center text-2xl font-semibold mt-20'>
           Sorry, no posts on this subject... yet.
@@ -43,5 +43,6 @@ export const getServerSideProps = async ({ req, res, query }) => {
   const { data } = await supabaseServerClient.from('posts').select(`*, users (
     name, avatar
   )`);
+  console.log(data);
   return { props: { posts: data } };
 };

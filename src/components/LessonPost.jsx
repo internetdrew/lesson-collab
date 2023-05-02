@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const LessonPost = ({ post }) => {
+  console.log(post);
   const [commentCount, setCommentCount] = useState(null);
   const supabase = useSupabaseClient();
 
@@ -46,7 +47,7 @@ const LessonPost = ({ post }) => {
           <p className='hidden sm:inline-block'>
             Posted by{' '}
             <span className='text-teal-600 duration-300 hover:text-teal-500'>
-              <Link href={`/profile/${''}`}>{post?.users?.name}</Link>
+              <Link href={`/profile/${post?.uid}`}>{post?.users?.name}</Link>
             </span>
           </p>
           <div className='flex items-center ml-auto gap-4'>
@@ -61,7 +62,6 @@ const LessonPost = ({ post }) => {
                 href={`/posts/${post?.id}`}
                 className='font-semibold flex items-center'
               >
-                {' '}
                 <span className='mr-1'>👀</span> Take a look
               </Link>
             </button>
