@@ -12,13 +12,12 @@ import { supabase } from '@/src/db/db';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 
-const PostDetails = ({ postData, comments }) => {
+const PostDetails = ({ post, comments }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const router = useRouter();
   const user = useUser();
 
-  const post = postData[0];
-  const currentUserIsPostOwner = user?.id === post?.profiles?.id;
+  const currentUserIsPostOwner = user?.id === post?.users?.id;
 
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
@@ -39,7 +38,7 @@ const PostDetails = ({ postData, comments }) => {
               TU
             </span> */}
             <Image
-              src={post?.profiles?.avatar}
+              src={post?.users?.avatar}
               alt='user image'
               width={48}
               height={48}
@@ -47,7 +46,7 @@ const PostDetails = ({ postData, comments }) => {
           </span>
           <div className='flex flex-col'>
             <Link href={`/profile/${'username'}`} className='font-medium'>
-              {post?.profiles?.name}
+              {post?.users?.name}
             </Link>
             <span className='text-gray-500 text-sm'>
               {moment(post?.created_at).calendar()}
@@ -55,7 +54,7 @@ const PostDetails = ({ postData, comments }) => {
           </div>
           {currentUserIsPostOwner ? (
             <>
-              <Link href={`/create?edit=${post.id}`}>
+              <Link href={`/create?edit=${post?.id}`}>
                 <PencilSquareIcon className='w-6 h-6 text-green-500' />
               </Link>
               <button onClick={() => handleDelete()}>
@@ -107,22 +106,21 @@ export const getServerSideProps = async ({ query }) => {
   const { data: postData } = await supabase
     .from('posts')
     .select(
-      `*, profiles (
+      `*, users (
         name, avatar, id
       )`
     )
     .eq('id', query.id)
     .limit(1);
-  console.log(postData);
 
   const { data: comments } = await supabase
     .from('comments')
     .select(
-      `*, profiles (
+      `*, users (
       name, avatar
     )`
     )
     .eq('post_id', query.id);
 
-  return { props: { postData, comments } };
+  return { props: { post: postData[0], comments } };
 };

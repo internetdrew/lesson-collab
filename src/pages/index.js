@@ -31,7 +31,7 @@ export const getServerSideProps = async ({ query }) => {
     const { data } = await supabase
       .from('posts')
       .select(
-        `*, profiles (
+        `*, users (
         name, avatar
       )`
       )
@@ -39,7 +39,7 @@ export const getServerSideProps = async ({ query }) => {
     return { props: { posts: data } };
   }
 
-  const { data } = await supabase.from('posts').select(`*, profiles (
+  const { data } = await supabase.from('posts').select(`*, users (
     name, avatar
   )`);
   return { props: { posts: data } };

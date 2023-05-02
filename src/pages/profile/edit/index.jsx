@@ -1,19 +1,10 @@
 import { Navbar } from '@/src/components';
-// import { getServerSession } from 'next-auth/next';
-// import { authOptions } from '../../api/auth/[...nextauth]';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useUser } from '@supabase/auth-helpers-react';
 
 export default function ProfileEditor({ user }) {
   const userData = useUser();
-  console.log(userData);
-  // const user = {
-  //   name: 'Test User',
-  //   handle: 'testuser',
-  //   email: 'testuser@example.com',
-  //   imageUrl:
-  //     'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
-  // };
+
   return (
     <div>
       <Navbar />
@@ -242,7 +233,6 @@ export const getServerSideProps = async ctx => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  console.log(session);
 
   if (!session) {
     return {

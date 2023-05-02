@@ -5,6 +5,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { HandThumbUpIcon as LikedThumbUp } from '@heroicons/react/24/solid';
 import Image from 'next/image';
+import moment from 'moment';
 
 const Comment = ({ comment }) => {
   const [userLikedPost, setUserLikedPost] = useState(false);
@@ -17,7 +18,7 @@ const Comment = ({ comment }) => {
           {/* <span className='font-medium leading-none text-white'>TU</span> */}
           {comment ? (
             <Image
-              src={comment?.profiles?.avatar}
+              src={comment?.users?.avatar}
               alt='user image'
               width={48}
               height={48}
@@ -32,7 +33,12 @@ const Comment = ({ comment }) => {
             </svg>
           )}
         </span>
-        <p>{comment?.profiles?.name}</p>
+        <div>
+          <p className='-mb-1'>{comment?.users?.name}</p>
+          <span className='text-gray-500 text-sm'>
+            {moment(comment?.created_at).calendar()}
+          </span>
+        </div>
         <EllipsisVerticalIcon className='h-6 w-6 ml-auto text-gray-500' />
       </div>
       <div>

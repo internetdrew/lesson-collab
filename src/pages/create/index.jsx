@@ -3,14 +3,14 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-const Create = ({ postData, user }) => {
+const Create = ({ postData, userData }) => {
   return (
     <div>
       <Navbar />
       <main className='mt-24'>
         <div className='mx-auto max-w-screen-md px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16'>
           <div className='bg-white rounded-lg'>
-            <NewPostForm postData={postData} user={user} />
+            <NewPostForm postData={postData} userData={userData} />
           </div>
         </div>
       </main>
@@ -37,8 +37,8 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  const { data: user } = await supabase
-    .from('profiles')
+  const { data: userData } = await supabase
+    .from('users')
     .select()
     .eq('id', session.user.id);
 
@@ -49,7 +49,7 @@ export const getServerSideProps = async ctx => {
       .eq('id', postId);
 
     return {
-      props: { user, postData },
+      props: { userData: userData[0], postData: postData[0] },
     };
   }
 };

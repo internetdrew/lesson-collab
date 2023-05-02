@@ -3,7 +3,8 @@ import { DocumentIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
 import { useAuthContext } from '../context/authContext';
 import { useRouter } from 'next/router';
-
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
 
@@ -13,8 +14,7 @@ const capitalize = str =>
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-export default function NewPostForm({ postData }) {
-  const { currentUser } = useAuthContext();
+export default function NewPostForm({ postData, userData }) {
   const [title, setTitle] = useState(postData?.title || '');
   const [gradeLevel, setGradeLevel] = useState(
     postData?.gradeLevel || gradeLevels[0]
@@ -23,6 +23,8 @@ export default function NewPostForm({ postData }) {
   const [fileName, setFileName] = useState(postData?.fileName || '');
   const [fileUrl, setFileUrl] = useState(postData?.fileUrl || '');
   const [desc, setDesc] = useState(postData?.desc || '');
+
+  const supabase = useSupabaseClient();
 
   const router = useRouter();
 
@@ -64,16 +66,23 @@ export default function NewPostForm({ postData }) {
       }
 
       if (postData) {
-        await axios.put(`/api/posts/${postData.id}`, {
-          title,
-          gradeLevel,
-          subject,
-          fileName,
-          fileUrl: formData.get('fileUrl') || fileUrl,
-          desc,
-          uid: currentUser.id,
-        });
-        router.push(`/posts/${postData.id}`);
+        const { data, error } = await supabase
+          .from('posts')
+          .update({
+            title,
+            grade_level: gradeLevel,
+            subject,
+            file_name: fileName,
+            file_url: fileUrl,
+            desc,
+            uid: userData.id,
+          })
+          .eq('uid', userData.id)
+          .select();
+
+        if (!error) {
+          router.push(`/posts/${postData.id}`);
+        }
       }
 
       if (!postData) {

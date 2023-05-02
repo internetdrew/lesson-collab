@@ -36,7 +36,7 @@ const LessonPost = ({ post }) => {
         <div className='px-4 flex items-center gap-2 text-gray-600 text-sm mt-1 sm:mt-0 sm:px-6'>
           <span className='inline-flex overflow-hidden shrink-0 h-8 w-8 items-center justify-center rounded-full bg-gray-500'>
             <Image
-              src={post?.profiles?.avatar}
+              src={post?.users?.avatar}
               alt='user image'
               width={48}
               height={48}
@@ -45,7 +45,7 @@ const LessonPost = ({ post }) => {
           <p className='hidden sm:inline-block'>
             Posted by{' '}
             <span className='text-teal-600 duration-300 hover:text-teal-500'>
-              <Link href={`/profile/${''}`}>{post?.profiles?.name}</Link>
+              <Link href={`/profile/${''}`}>{post?.users?.name}</Link>
             </span>
           </p>
           <div className='flex items-center ml-auto gap-4'>
