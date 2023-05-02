@@ -1,15 +1,16 @@
 import { Navbar, NewPostForm } from '@/src/components';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-const Create = ({ postData }) => {
+const Create = ({ postData, user }) => {
   return (
     <div>
       <Navbar />
       <main className='mt-24'>
         <div className='mx-auto max-w-screen-md px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16'>
           <div className='bg-white rounded-lg'>
-            <NewPostForm postData={postData} />
+            <NewPostForm postData={postData} user={user} />
           </div>
         </div>
       </main>
@@ -20,21 +21,35 @@ const Create = ({ postData }) => {
 export default Create;
 
 export const getServerSideProps = async ctx => {
-  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  const supabase = createServerSupabaseClient(ctx);
   const { edit: postId } = ctx.query;
 
-  const res = await fetch(`${process.env.SITE_URL}/api/posts/${postId}`);
-  const postData = postId ? await res.json() : null;
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: '/login',
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-  return {
-    props: { postData },
-  };
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const { data: user } = await supabase
+    .from('profiles')
+    .select()
+    .eq('id', session.user.id);
+
+  if (postId) {
+    const { data: postData } = await supabase
+      .from('posts')
+      .select()
+      .eq('id', postId);
+
+    return {
+      props: { user, postData },
+    };
+  }
 };
