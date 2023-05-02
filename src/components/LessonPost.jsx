@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineComment } from 'react-icons/ai';
 import Image from 'next/image';
-import { supabase } from '../db/db';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const LessonPost = ({ post }) => {
   const [commentCount, setCommentCount] = useState(null);
+  const supabase = useSupabaseClient();
 
   const fetchComments = async () => {
     const { data } = await supabase
