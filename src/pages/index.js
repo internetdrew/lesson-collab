@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Layout, Feed } from '../components';
 import { useSetRecoilState } from 'recoil';
 import { postsState } from '../atoms/postsAtom';
-import { supabase } from '../db/db';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export default function Home({ posts }) {
   const setPosts = useSetRecoilState(postsState);
@@ -24,11 +24,12 @@ export default function Home({ posts }) {
   );
 }
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ req, res, query }) => {
+  const supabaseServerClient = createServerSupabaseClient({ req, res });
   const { subject } = query;
 
   if (subject) {
-    const { data } = await supabase
+    const { data } = await supabaseServerClient
       .from('posts')
       .select(
         `*, users (
@@ -39,7 +40,7 @@ export const getServerSideProps = async ({ query }) => {
     return { props: { posts: data } };
   }
 
-  const { data } = await supabase.from('posts').select(`*, users (
+  const { data } = await supabaseServerClient.from('posts').select(`*, users (
     name, avatar
   )`);
   return { props: { posts: data } };
