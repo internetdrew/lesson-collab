@@ -53,8 +53,6 @@ export default function NewPostForm({ postData, userData }) {
       formData.append('file', file);
     }
 
-    const formView = Object.fromEntries(formData);
-
     const res = formData.has('file')
       ? await instance.post(
           'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
