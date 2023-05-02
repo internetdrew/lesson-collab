@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const NavProfile = () => {
-  const supabase = useSupabaseClient();
   const currentUser = useUser();
 
   return (

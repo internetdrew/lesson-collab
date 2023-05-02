@@ -6,26 +6,24 @@ import {
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import axios from 'axios';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { useAuthContext } from '@/src/context/authContext';
+import { supabase } from '@/src/db/db';
+import Image from 'next/image';
+import { useUser } from '@supabase/auth-helpers-react';
 
-const PostDetails = ({ post, comments }) => {
+const PostDetails = ({ postData, comments }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
-  const { currentUser } = useAuthContext();
-  const { id, username, date, title, desc } = post;
-
   const router = useRouter();
+  const user = useUser();
+
+  const post = postData[0];
+  const currentUserIsPostOwner = user?.id === post?.profiles?.id;
 
   const handleDelete = async () => {
-    try {
-      await axios.delete(`/api/posts/${id}`);
-      router.push('/');
-    } catch (err) {
-      if (err.request.status === 401) router.push('/login');
-      console.error(err);
-    }
+    if (!currentUserIsPostOwner) return;
+    const { error } = await supabase.from('posts').delete().eq('id', post?.id);
+    if (!error) router.push('/');
   };
 
   return showLessonPlan ? (
@@ -36,23 +34,26 @@ const PostDetails = ({ post, comments }) => {
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
           {/* Content goes here */}
           {/* We use less vertical padding on card headers on desktop than on body sections */}
-          <span className='inline-flex shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
-            <span className='font-medium text-sm leading-none text-white'>
+          <span className='inline-flex overflow-hidden shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
+            {/* <span className='font-medium text-sm leading-none text-white'>
               TU
-            </span>
+            </span> */}
+            <Image
+              src={post?.profiles?.avatar}
+              alt='user image'
+              width={48}
+              height={48}
+            />
           </span>
           <div className='flex flex-col'>
-            <Link
-              href={`/profile/${username}`}
-              className='font-bold text-gray-900'
-            >
-              @{username}
+            <Link href={`/profile/${'username'}`} className='font-medium'>
+              {post?.profiles?.name}
             </Link>
             <span className='text-gray-500 text-sm'>
-              {moment(date).calendar()}
+              {moment(post?.created_at).calendar()}
             </span>
           </div>
-          {currentUser?.id === post?.userId ? (
+          {currentUserIsPostOwner ? (
             <>
               <Link href={`/create?edit=${post.id}`}>
                 <PencilSquareIcon className='w-6 h-6 text-green-500' />
@@ -68,8 +69,8 @@ const PostDetails = ({ post, comments }) => {
         </div>
         <div className='px-4 py-5 sm:p-6'>
           {/* Content goes here */}
-          <h1 className='text-xl font-semibold mb-2'>{title}</h1>
-          <p className='mb-4 text-justify'>{desc}</p>
+          <h1 className='text-xl font-semibold mb-2'>{post?.title}</h1>
+          <p className='mb-4 text-justify'>{post?.desc}</p>
 
           <button
             className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
@@ -102,17 +103,26 @@ const PostDetails = ({ post, comments }) => {
 
 export default PostDetails;
 
-export const getServerSideProps = async ctx => {
-  const { query } = ctx;
-  query;
-  const postResponse = await axios.get(
-    `${process.env.SITE_URL}/api/posts/${query.id}`
-  );
-  const commentsRes = await axios.get(
-    `${process.env.SITE_URL}/api/comments/${query.id}`
-  );
-  const post = postResponse.data;
-  const comments = commentsRes.data;
+export const getServerSideProps = async ({ query }) => {
+  const { data: postData } = await supabase
+    .from('posts')
+    .select(
+      `*, profiles (
+        name, avatar, id
+      )`
+    )
+    .eq('id', query.id)
+    .limit(1);
+  console.log(postData);
 
-  return { props: { post, comments } };
+  const { data: comments } = await supabase
+    .from('comments')
+    .select(
+      `*, profiles (
+      name, avatar
+    )`
+    )
+    .eq('post_id', query.id);
+
+  return { props: { postData, comments } };
 };
