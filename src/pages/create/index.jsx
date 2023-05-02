@@ -52,4 +52,6 @@ export const getServerSideProps = async ctx => {
       props: { userData: userData[0], postData: postData[0] },
     };
   }
+
+  return { props: { userData: userData[0], postData: {} } };
 };

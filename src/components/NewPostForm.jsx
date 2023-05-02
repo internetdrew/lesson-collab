@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { DocumentIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
-import { useAuthContext } from '../context/authContext';
 import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
 
@@ -20,10 +18,11 @@ export default function NewPostForm({ postData, userData }) {
     postData?.gradeLevel || gradeLevels[0]
   );
   const [subject, setSubject] = useState(postData?.subject || subjects[0]);
-  const [fileName, setFileName] = useState(postData?.fileName || '');
-  const [fileUrl, setFileUrl] = useState(postData?.fileUrl || '');
+  const [fileName, setFileName] = useState(postData?.file_name || '');
+  const [fileUrl, setFileUrl] = useState(postData?.file_url || '');
   const [desc, setDesc] = useState(postData?.desc || '');
 
+  const postToEdit = Object.keys(postData).length !== 0;
   const supabase = useSupabaseClient();
 
   const router = useRouter();
@@ -54,50 +53,53 @@ export default function NewPostForm({ postData, userData }) {
       formData.append('file', file);
     }
 
-    try {
-      const res =
-        formData.has('file') &&
-        (await instance.post(
-          'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
-          formData
-        ));
-      if (res.statusText === 'OK') {
-        formData.append('fileUrl', res.data.secure_url);
-      }
+    const formView = Object.fromEntries(formData);
+    console.log(formView);
 
-      if (postData) {
-        const { data, error } = await supabase
-          .from('posts')
-          .update({
-            title,
-            grade_level: gradeLevel,
-            subject,
-            file_name: fileName,
-            file_url: fileUrl,
-            desc,
-            uid: userData.id,
-          })
-          .eq('uid', userData.id)
-          .select();
+    const res =
+      formData.has('file') &&
+      (await instance.post(
+        'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
+        formData
+      ));
+    console.log(res.data);
+    if (res.statusText !== 'OK') return;
 
-        if (!error) {
-          router.push(`/posts/${postData.id}`);
-        }
-      }
-
-      if (!postData) {
-        await axios.post('/api/posts', {
+    if (postToEdit) {
+      const { error } = await supabase
+        .from('posts')
+        .update({
           title,
-          gradeLevel,
+          grade_level: gradeLevel,
           subject,
-          fileName,
-          fileUrl: formData.get('fileUrl') || fileUrl,
+          file_name: fileName,
+          file_url: res.data.secure_url,
           desc,
-        });
-        router.push('/');
+          uid: userData.id,
+        })
+        .eq('id', postData.id);
+
+      if (!error) {
+        router.push(`/posts/${postData.id}`);
       }
-    } catch (error) {
-      console.error(error);
+      return;
+    }
+
+    if (!postToEdit) {
+      const { error } = await supabase
+        .from('posts')
+        .insert({
+          title,
+          grade_level: gradeLevel,
+          subject,
+          file_name: fileName,
+          file_url: res.data.secure_url,
+          desc,
+          uid: userData.id,
+        })
+        .eq('uid', userData.id);
+
+      !error && router.push('/');
     }
   };
 
@@ -116,7 +118,7 @@ export default function NewPostForm({ postData, userData }) {
             name='title'
             id='title'
             value={title}
-            onChange={e => setTitle(e.target.value)}
+            onChange={e => setTitle(() => e.target.value)}
             className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='Title your post'
           />
@@ -134,7 +136,7 @@ export default function NewPostForm({ postData, userData }) {
             id='gradeLevel'
             name='gradeLevel'
             value={gradeLevel}
-            onChange={e => setGradeLevel(e.target.value)}
+            onChange={e => setGradeLevel(() => e.target.value)}
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
           >
             {gradeLevels.map(level => (
@@ -155,7 +157,7 @@ export default function NewPostForm({ postData, userData }) {
             id='subject'
             name='subject'
             value={subject}
-            onChange={e => setSubject(e.target.value)}
+            onChange={e => setSubject(() => e.target.value)}
             className='mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6'
           >
             {subjects.map(subject => (
@@ -195,7 +197,7 @@ export default function NewPostForm({ postData, userData }) {
                   name='file'
                   type='file'
                   accept='.pdf, .doc, .docx, application/msword'
-                  onChange={e => setFileName(e.target.files[0].name)}
+                  onChange={e => setFileName(() => e.target.files[0].name)}
                   ref={fileUploadRef}
                   hidden
                 />
@@ -209,7 +211,7 @@ export default function NewPostForm({ postData, userData }) {
             </small>
           </div>
         </div>
-        {fileName.trim() ? (
+        {fileName ? (
           <p className='w-full mt-1 text-center text-sm text-gray-600'>
             Current file: {fileName}
           </p>
@@ -228,7 +230,7 @@ export default function NewPostForm({ postData, userData }) {
             name='desc'
             id='desc'
             value={desc}
-            onChange={e => setDesc(e.target.value)}
+            onChange={e => setDesc(() => e.target.value)}
             className='min-h-[125px] block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:outline-none'
             placeholder='What would you like feedback on?'
           />
@@ -246,7 +248,7 @@ export default function NewPostForm({ postData, userData }) {
           type='submit'
           className='inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700'
         >
-          {postData ? 'Update' : 'Post'}
+          {postToEdit ? 'Update' : 'Post'}
         </button>
       </div>
     </form>
