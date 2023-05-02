@@ -13,7 +13,6 @@ function classNames(...classes) {
 const Navbar = () => {
   const supabase = useSupabaseClient();
   const currentUser = useUser();
-  console.log();
   console.log(currentUser);
 
   const router = useRouter();

@@ -8,14 +8,20 @@ import Image from 'next/image';
 
 const Comment = ({ comment }) => {
   const [userLikedPost, setUserLikedPost] = useState(false);
+  console.log(comment);
 
   return (
     <div className='flex flex-col items-start mb-6'>
       <div className='flex items-center mb-3 w-full'>
         <span className='inline-flex shrink-0 mr-2 h-8 w-8 overflow-hidden items-center justify-center rounded-full bg-gray-500 sm:h-10 sm:w-10'>
           {/* <span className='font-medium leading-none text-white'>TU</span> */}
-          {comment?.userImg ? (
-            <Image src={comment?.userImg} />
+          {comment ? (
+            <Image
+              src={comment?.profiles?.avatar}
+              alt='user image'
+              width={48}
+              height={48}
+            />
           ) : (
             <svg
               className='h-12 w-12 text-gray-300'
@@ -26,7 +32,7 @@ const Comment = ({ comment }) => {
             </svg>
           )}
         </span>
-        <p className='font-semibold'>@{comment?.username}</p>
+        <p>{comment?.profiles?.name}</p>
         <EllipsisVerticalIcon className='h-6 w-6 ml-auto text-gray-500' />
       </div>
       <div>

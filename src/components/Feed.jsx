@@ -4,6 +4,7 @@ import { postsState } from '../atoms/postsAtom';
 
 const Feed = () => {
   const posts = useRecoilValue(postsState);
+  console.log(posts);
 
   return (
     <section>

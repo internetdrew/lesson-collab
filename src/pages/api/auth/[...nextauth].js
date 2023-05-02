@@ -10,10 +10,10 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  adapter: SupabaseAdapter({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    secret: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  }),
+  // adapter: SupabaseAdapter({
+  //   url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  //   secret: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  // }),
   callbacks: {
     async session({ session, user }) {
       const signingSecret = process.env.SUPABASE_JWT_SECRET;
