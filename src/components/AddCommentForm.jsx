@@ -1,36 +1,33 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import { useUser } from '@supabase/auth-helpers-react';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const AddCommentForm = ({ postId }) => {
   const [commentText, setCommentText] = useState('');
   const [error, setError] = useState({ status: false, message: '' });
   const router = useRouter();
+  const user = useUser();
+  const supabase = useSupabaseClient();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    formData.append('postId', postId);
-    const commentData = Object.fromEntries(formData);
-    if (commentData.feedback.trim() === '') {
+
+    if (!user) router.push('/login');
+
+    if (commentText.trim() === '') {
       return setError({
         status: true,
         message: 'Please leave feedback to post.',
       });
     }
 
-    try {
-      const res = await axios.post('/api/comments', commentData);
-
-      if (res.status === 200) {
-        setCommentText('');
-        setError({ status: false, message: '' });
-        router.replace(router.asPath);
-      }
-    } catch (err) {
-      if (err.response.status === 401) {
-        router.push('/login');
-      }
+    const { error } = await supabase
+      .from('comments')
+      .insert({ post_id: postId, user_id: user.id, text: commentText });
+    if (!error) {
+      setCommentText('');
+      router.replace(router.asPath);
     }
   };
 
