@@ -11,12 +11,12 @@ import { useRouter } from 'next/router';
 import { supabase } from '@/src/db/db';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const PostDetails = ({ post, comments }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const router = useRouter();
   const user = useUser();
-
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
   const handleDelete = async () => {
@@ -102,8 +102,9 @@ const PostDetails = ({ post, comments }) => {
 
 export default PostDetails;
 
-export const getServerSideProps = async ({ query }) => {
-  const { data: postData } = await supabase
+export const getServerSideProps = async ({ req, res, query }) => {
+  const supabaseServerClient = createServerSupabaseClient({ req, res });
+  const { data: postData } = await supabaseServerClient
     .from('posts')
     .select(
       `*, users (
@@ -113,7 +114,7 @@ export const getServerSideProps = async ({ query }) => {
     .eq('id', query.id)
     .limit(1);
 
-  const { data: comments } = await supabase
+  const { data: comments } = await supabaseServerClient
     .from('comments')
     .select(
       `*, users (
