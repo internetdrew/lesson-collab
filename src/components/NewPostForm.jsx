@@ -54,15 +54,13 @@ export default function NewPostForm({ postData, userData }) {
     }
 
     const formView = Object.fromEntries(formData);
-    console.log(formView);
 
-    const res =
-      formData.has('file') &&
-      (await instance.post(
-        'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
-        formData
-      ));
-    console.log(res.data);
+    const res = formData.has('file')
+      ? await instance.post(
+          'https://api.cloudinary.com/v1_1/dxtdoiyij/auto/upload',
+          formData
+        )
+      : { statusText: 'OK' };
     if (res.statusText !== 'OK') return;
 
     if (postToEdit) {
@@ -73,11 +71,12 @@ export default function NewPostForm({ postData, userData }) {
           grade_level: gradeLevel,
           subject,
           file_name: fileName,
-          file_url: res.data.secure_url,
+          file_url: res?.data?.secure_url || postData?.file_url,
           desc,
           uid: userData.id,
         })
         .eq('id', postData.id);
+      console.log(error);
 
       if (!error) {
         router.push(`/posts/${postData.id}`);
