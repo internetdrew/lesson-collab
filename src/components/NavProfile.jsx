@@ -8,7 +8,7 @@ const NavProfile = () => {
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
-        <Link href={`/profile/${currentUser?.user_metadata?.username}`}>
+        <Link href={`/profile/${currentUser?.id}`}>
           {currentUser ? (
             <Image
               src={currentUser?.user_metadata?.picture}
@@ -33,7 +33,7 @@ const NavProfile = () => {
           {currentUser?.user_metadata?.name}
         </p>
         <Link
-          href={`/profile/${currentUser?.username}`}
+          href={`/profile/${currentUser?.id}`}
           className='text-md font-medium text-[--primary-color] hover:text-teal-500'
         >
           View profile
