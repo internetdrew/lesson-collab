@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 const LessonPost = ({ post }) => {
-  console.log(post);
   const [commentCount, setCommentCount] = useState(null);
   const supabase = useSupabaseClient();
 

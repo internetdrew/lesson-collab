@@ -74,7 +74,6 @@ export default function NewPostForm({ postData, userData }) {
           uid: userData.id,
         })
         .eq('id', postData.id);
-      console.log(error);
 
       if (!error) {
         router.push(`/posts/${postData.id}`);

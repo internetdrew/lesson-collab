@@ -3,17 +3,7 @@ import { MapPinIcon } from '@heroicons/react/24/solid';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
 
-// const user = {
-//   name: 'Test User',
-//   handle: 'testuser',
-//   email: 'testuser@example.com',
-//   imageUrl:
-//     'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=320&h=320&q=80',
-// };
-
 export default function UserProfile({ user, posts }) {
-  console.log(user);
-  console.log(posts);
   return (
     <div>
       <header>

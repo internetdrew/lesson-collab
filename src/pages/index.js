@@ -43,6 +43,6 @@ export const getServerSideProps = async ({ req, res, query }) => {
   const { data } = await supabaseServerClient.from('posts').select(`*, users (
     name, avatar
   )`);
-  console.log(data);
+
   return { props: { posts: data } };
 };
