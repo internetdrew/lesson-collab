@@ -44,7 +44,7 @@ const PostDetails = ({ post, comments }) => {
             />
           </span>
           <div className='flex flex-col'>
-            <Link href={`/profile/${'username'}`} className='font-medium'>
+            <Link href={`/profile/${post?.users?.id}`} className='font-medium'>
               {post?.users?.name}
             </Link>
             <span className='text-gray-500 text-sm'>
