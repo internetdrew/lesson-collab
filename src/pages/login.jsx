@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import loginImage from '/public/login.jpg';
 import { FcGoogle } from 'react-icons/fc';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
@@ -20,7 +19,9 @@ const Login = () => {
         <div className='left hidden relative lg:block'>
           <Image
             src={loginImage}
-            alt='woman writing in notepad'
+            alt='Picture of woman writing in notepad'
+            width={500}
+            height={500}
             className='w-full h-full object-cover'
             priority
           />
