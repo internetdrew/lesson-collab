@@ -1,4 +1,3 @@
-import { db } from '@/src/db/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { setCookie } from 'cookies-next';

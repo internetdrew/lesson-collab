@@ -1,4 +1,3 @@
-import { db } from '@/src/db/db';
 import jwt from 'jsonwebtoken';
 
 export default function handler(req, res) {

@@ -1,4 +1,3 @@
-import { db } from '@/src/db/db';
 import bcrypt from 'bcryptjs';
 
 export default function handler(req, res) {

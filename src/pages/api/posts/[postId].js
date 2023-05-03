@@ -1,5 +1,3 @@
-import { db } from '@/src/db/db';
-import { supabase } from '@/src/db/db';
 import jwt from 'jsonwebtoken';
 
 export default async function handler(req, res) {
