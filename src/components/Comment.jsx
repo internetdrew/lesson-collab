@@ -6,9 +6,11 @@ import {
 import { HandThumbUpIcon as LikedThumbUp } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import moment from 'moment';
+import Link from 'next/link';
 
 const Comment = ({ comment }) => {
   const [userLikedPost, setUserLikedPost] = useState(false);
+  console.log(comment);
 
   return (
     <div className='flex flex-col items-start mb-6'>
@@ -33,7 +35,9 @@ const Comment = ({ comment }) => {
           )}
         </span>
         <div>
-          <p className='-mb-1'>{comment?.users?.name}</p>
+          <Link href={`/profile/${comment?.users?.id}`} className='-mb-1 block'>
+            {comment?.users?.name}
+          </Link>
           <span className='text-gray-500 text-sm'>
             {moment(comment?.created_at).calendar()}
           </span>

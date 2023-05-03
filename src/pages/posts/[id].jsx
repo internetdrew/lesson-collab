@@ -117,7 +117,7 @@ export const getServerSideProps = async ({ req, res, query }) => {
     .from('comments')
     .select(
       `*, users (
-      name, avatar
+      name, avatar, id
     )`
     )
     .eq('post_id', query.id);
