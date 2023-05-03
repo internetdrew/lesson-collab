@@ -13,7 +13,7 @@ const AddCommentForm = ({ postId }) => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!user) router.push('/login');
+    if (!user) return router.push('/login');
 
     if (commentText.trim() === '') {
       return setError({
