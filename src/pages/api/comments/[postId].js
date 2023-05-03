@@ -1,5 +1,3 @@
-import { db } from '@/src/db/db';
-
 export default function handler(req, res) {
   const { method } = req;
   const { postId } = req.query;

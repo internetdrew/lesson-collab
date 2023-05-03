@@ -7,7 +7,6 @@ import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi';
 import { useFormik } from 'formik';
 import { validateRegistration } from '../lib/validate';
 import axios from 'axios';
-import { useWindowOrigin } from '../utils';
 
 const Register = () => {
   const [error, setError] = useState('');
@@ -42,10 +41,7 @@ const Register = () => {
 
   const onSubmit = async values => {
     try {
-      const res = await axios.post(
-        `${useWindowOrigin()}/api/auth/register`,
-        values
-      );
+      const res = await axios.post(`/api/auth/register`, values);
       if ((res.statusText = 'OK')) router.push('/login');
     } catch (err) {
       setError(err.response.data);

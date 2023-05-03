@@ -9,7 +9,6 @@ import moment from 'moment';
 
 const Comment = ({ comment }) => {
   const [userLikedPost, setUserLikedPost] = useState(false);
-  console.log(comment);
 
   return (
     <div className='flex flex-col items-start mb-6'>

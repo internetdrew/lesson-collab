@@ -1,6 +1,4 @@
 import { LessonPost } from './';
-import { useRecoilValue } from 'recoil';
-import { postsState } from '../atoms/postsAtom';
 
 const Feed = ({ posts }) => {
   return (

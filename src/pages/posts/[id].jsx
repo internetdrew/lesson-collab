@@ -8,7 +8,6 @@ import {
 import Link from 'next/link';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import { supabase } from '@/src/db/db';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
