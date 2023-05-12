@@ -21,6 +21,12 @@ const SubjectsNav = () => {
         subjects
       </p>
       <nav>
+        <Link
+          href={'/'}
+          className='flex items-center rounded-md px-3 py-2 text-lg capitalize font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+        >
+          All
+        </Link>
         {navigation.map(subject => (
           <Link
             key={subject}
