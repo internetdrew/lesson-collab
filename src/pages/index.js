@@ -3,6 +3,7 @@ import { Layout, Feed } from '../components';
 import { useSetRecoilState } from 'recoil';
 import { postsState } from '../atoms/postsAtom';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import axios from 'axios';
 
 export default function Home({ posts }) {
   const setPosts = useSetRecoilState(postsState);
@@ -25,24 +26,10 @@ export default function Home({ posts }) {
 }
 
 export const getServerSideProps = async ({ req, res, query }) => {
-  const supabaseServerClient = createServerSupabaseClient({ req, res });
   const { subject } = query;
+  const { data: posts } = await axios.get(
+    `${process.env.SITE_URL}/api/posts/${subject ? `?subject=${subject}` : ''}`
+  );
 
-  if (subject) {
-    const { data } = await supabaseServerClient
-      .from('posts')
-      .select(
-        `*, users (
-        name, avatar
-      )`
-      )
-      .eq('subject', subject);
-    return { props: { posts: data } };
-  }
-
-  const { data } = await supabaseServerClient.from('posts').select(`*, users (
-    name, avatar
-  )`);
-
-  return { props: { posts: data } };
+  return { props: { posts } };
 };
