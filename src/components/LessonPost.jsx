@@ -2,18 +2,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineComment } from 'react-icons/ai';
 import Image from 'next/image';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import axios from 'axios';
 
 const LessonPost = ({ post }) => {
   const [commentCount, setCommentCount] = useState(null);
-  const supabase = useSupabaseClient();
 
   const fetchComments = async () => {
-    const { data } = await supabase
-      .from('comments')
-      .select()
-      .eq('post_id', post?.id);
-    setCommentCount(data.length);
+    const comments = await axios(`/api/comments/${post?.id}`);
+    setCommentCount(comments?.data?.length);
   };
 
   useEffect(() => {
