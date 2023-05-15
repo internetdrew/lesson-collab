@@ -20,12 +20,9 @@ const LessonPost = ({ post }) => {
     <article className='overflow-hidden rounded-lg bg-white shadow py-6 mb-8'>
       <div>
         <div className='px-4 sm:px-6'>
-          {/* Content goes here */}
-          {/* We use less vertical padding on card headers on desktop than on body sections */}
           <h2 className='text-xl font-bold text-gray-900'>{post?.title}</h2>
         </div>
         <div className='px-4 py-2 sm:px-6 sm:py-3'>
-          {/* Content goes here */}
           <p>{post?.desc}</p>
           <hr className='mt-4' />
         </div>
