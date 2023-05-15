@@ -8,7 +8,9 @@ export default async function handler(req, res) {
 
   const { data: userData } = await supabase
     .from('users')
-    .select(`*`)
+    .select(
+      `name, avatar, about, posts(title, desc, id, uid, users(id, name, avatar))`
+    )
     .eq('id', userId);
 
   return res.status(200).json(userData);

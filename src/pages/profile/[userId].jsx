@@ -1,9 +1,10 @@
 import { Navbar, SinglePanelContainer, Feed } from '@/src/components';
 import { MapPinIcon } from '@heroicons/react/24/solid';
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
+import axios from 'axios';
 
-export default function UserProfile({ user, posts }) {
+export default function UserProfile({ userData }) {
+  const { posts } = userData;
   return (
     <div>
       <header>
@@ -14,7 +15,8 @@ export default function UserProfile({ user, posts }) {
           <div className='w-full h-40 bg-gradient-to-r from-orange-200 to-red-500 relative'>
             <div className='w-32 h-32 rounded-full overflow-hidden absolute top-1/2 mt-3 left-1/4 border-4 border-white sm:left-6'>
               <Image
-                src={user?.avatar}
+                src={userData?.avatar}
+                alt='user image'
                 width={48}
                 height={48}
                 className='w-full h-full'
@@ -22,8 +24,8 @@ export default function UserProfile({ user, posts }) {
             </div>
           </div>
           <div className='pt-28 w-[90%] mx-auto pb-6 relative'>
-            <h1 className='text-2xl font-semibold'>{user?.name}</h1>
-            <span className='block text-gray-600 mb-2'>@{user?.id}</span>
+            <h1 className='text-2xl font-semibold'>{userData?.name}</h1>
+            <span className='block text-gray-600 mb-2'>@{userData?.id}</span>
             <div className='flex items-center'>
               <MapPinIcon className='w-4 h-auto text-gray-500 mr-1' />
               <span className='font-light text-gray-600'>Brooklyn, NY</span>
@@ -39,7 +41,7 @@ export default function UserProfile({ user, posts }) {
 
         <div className='mx-auto max-w-screen-md px-4 pb-6 sm:px-6 lg:px-8 lg:pb-16'>
           <h2 className='text-xl font-semibold mb-2 bg-white w-max px-4 py-2 rounded-lg'>
-            {user?.name}'s Posts
+            {userData?.name}'s Posts
           </h2>
           <Feed posts={posts} />
         </div>
@@ -49,26 +51,11 @@ export default function UserProfile({ user, posts }) {
 }
 
 export const getServerSideProps = async ({ res, req, query }) => {
-  const supabase = createServerSupabaseClient({ req, res });
-  const { username } = query;
+  const { userId } = query;
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data: userData } = await axios.get(
+    `${process.env.SITE_URL}/api/users/${userId}`
+  );
 
-  const { data: userData } = await supabase
-    .from('users')
-    .select()
-    .eq('id', username);
-
-  const { data: postsData } = await supabase
-    .from('posts')
-    .select(
-      `*, users (
-      name, avatar, about
-    )`
-    )
-    .eq('uid', username);
-
-  return { props: { user: userData[0], posts: postsData } };
+  return { props: { userData: userData[0] } };
 };
