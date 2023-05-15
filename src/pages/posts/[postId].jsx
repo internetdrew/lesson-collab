@@ -21,8 +21,8 @@ const PostDetails = ({ post }) => {
 
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
-    const { error } = await supabase.from('posts').delete().eq('id', post?.id);
-    if (!error) router.push('/');
+    await axios.delete(`/api/posts/${post.id}`);
+    router.push('/');
   };
 
   return showLessonPlan ? (

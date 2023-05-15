@@ -25,6 +25,26 @@ export default async function handler(req, res) {
       break;
 
     case 'DELETE':
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      console.log(session);
+
+      if (!session) {
+        return res.status(401).json({
+          error: 'not_authenticated',
+          description:
+            'The user does not have an active session or is not authenticated',
+        });
+      }
+
+      const { error: deletionError } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId);
+
+      if (!deletionError) res.json('post has been deleted');
+
       break;
   }
 
