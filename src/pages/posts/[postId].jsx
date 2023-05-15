@@ -10,9 +10,10 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import axios from 'axios';
 
-const PostDetails = ({ post, comments }) => {
+const PostDetails = ({ post }) => {
+  const { comments } = post;
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const router = useRouter();
   const user = useUser();
@@ -101,26 +102,12 @@ const PostDetails = ({ post, comments }) => {
 
 export default PostDetails;
 
-export const getServerSideProps = async ({ req, res, query }) => {
-  const supabaseServerClient = createServerSupabaseClient({ req, res });
-  const { data: postData } = await supabaseServerClient
-    .from('posts')
-    .select(
-      `*, users (
-        name, avatar, id
-      )`
-    )
-    .eq('id', query.id)
-    .limit(1);
+export const getServerSideProps = async ({ query }) => {
+  const { postId } = query;
 
-  const { data: comments } = await supabaseServerClient
-    .from('comments')
-    .select(
-      `*, users (
-      name, avatar, id
-    )`
-    )
-    .eq('post_id', query.id);
+  const { data: postData } = await axios.get(
+    `${process.env.SITE_URL}/api/posts/${postId}`
+  );
 
-  return { props: { post: postData[0], comments } };
+  return { props: { post: postData[0] } };
 };
