@@ -1,6 +1,7 @@
 import { Navbar } from '@/src/components';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Image from 'next/image';
+import axios from 'axios';
 
 export default function ProfileEditor({ user }) {
   return (
@@ -230,9 +231,9 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  const { data } = await supabase
-    .from('users')
-    .select()
-    .eq('id', session?.user?.id);
-  return { props: { user: data[0] } };
+  const res = await axios.get(
+    `${process.env.SITE_URL}/api/users/${session?.user?.id}`
+  );
+
+  return { props: { user: res.data[0] } };
 };
