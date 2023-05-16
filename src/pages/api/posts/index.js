@@ -39,11 +39,9 @@ export default async function handler(req, res) {
         break;
 
       case 'POST':
-        console.log(req.body);
         const {
           data: { session },
         } = await supabase.auth.getSession();
-        console.log(session);
 
         if (!session) {
           return res.status(401).json({
@@ -63,10 +61,9 @@ export default async function handler(req, res) {
           uid,
         });
         if (!error) res.status(200).json(session);
-
         break;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
