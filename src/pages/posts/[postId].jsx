@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout, Comment, AddCommentForm, PdfViewer } from '@/src/components';
 import {
   EllipsisVerticalIcon,
@@ -15,6 +15,7 @@ import axios from 'axios';
 const PostDetails = ({ post }) => {
   const { comments } = post;
   const [showLessonPlan, setShowLessonPlan] = useState(false);
+  const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
   const currentUserIsPostOwner = user?.id === post?.users?.id;
@@ -31,12 +32,7 @@ const PostDetails = ({ post }) => {
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
-          {/* Content goes here */}
-          {/* We use less vertical padding on card headers on desktop than on body sections */}
           <span className='inline-flex overflow-hidden shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
-            {/* <span className='font-medium text-sm leading-none text-white'>
-              TU
-            </span> */}
             <Image
               src={post?.users?.avatar}
               alt='user image'
@@ -53,18 +49,29 @@ const PostDetails = ({ post }) => {
             </span>
           </div>
           {currentUserIsPostOwner ? (
-            <>
-              <Link href={`/create?edit=${post?.id}`}>
-                <PencilSquareIcon className='w-6 h-6 text-green-500' />
-              </Link>
-              <button onClick={() => handleDelete()}>
-                <TrashIcon className='w-6 h-6 text-red-500' />
+            <div className='ml-auto relative w-44 flex flex-col items-end'>
+              <button onClick={() => setShowPostMenu(prev => !prev)}>
+                <EllipsisVerticalIcon className='w-6 h-6 text-gray-500 mb-2 my-auto' />
               </button>
-            </>
+              {showPostMenu ? (
+                <div className='absolute top-8 right-2 duration-500 bg-white w-full border border-slate-200 rounded-md shadow-lg py-2'>
+                  <Link
+                    href={`/create?edit=${post?.id}`}
+                    className='block px-4 py-2 hover:bg-gray-100 duration-300'
+                  >
+                    Edit post
+                  </Link>
+                  <button
+                    className='w-full px-4 py-2 text-left hover:bg-gray-100 duration-300'
+                    onClick={handleDelete}
+                  >
+                    Delete post
+                  </button>
+                </div>
+              ) : null}
+            </div>
           ) : null}
-          <button className='ml-auto'>
-            <EllipsisVerticalIcon className='w-6 h-6 text-gray-500' />
-          </button>
+          {/* Post menu button */}
         </div>
         <div className='px-4 py-5 sm:p-6'>
           {/* Content goes here */}
