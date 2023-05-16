@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import axios from 'axios';
 
 const AddCommentForm = ({ postId }) => {
   const [commentText, setCommentText] = useState('');
   const [error, setError] = useState({ status: false, message: '' });
   const router = useRouter();
   const user = useUser();
-  const supabase = useSupabaseClient();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -22,13 +21,11 @@ const AddCommentForm = ({ postId }) => {
       });
     }
 
-    const { error } = await supabase
-      .from('comments')
-      .insert({ post_id: postId, user_id: user.id, text: commentText });
-    if (!error) {
-      setCommentText('');
-      router.replace(router.asPath);
-    }
+    const commentRes = await axios.post(`/api/comments/${postId}`, {
+      userId: user.id,
+      commentText,
+    });
+    if (commentRes.statusText === 'OK') router.replace(router.asPath);
   };
 
   return (
