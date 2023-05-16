@@ -1,7 +1,6 @@
 import { Navbar, NewPostForm } from '@/src/components';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../api/auth/[...nextauth]';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import axios from 'axios';
 
 const Create = ({ postData, userData }) => {
   return (
@@ -36,22 +35,19 @@ export const getServerSideProps = async ctx => {
       },
     };
   }
-
-  const { data: userData } = await supabase
-    .from('users')
-    .select()
-    .eq('id', session.user.id);
+  const userRes = await axios.get(
+    `${process.env.SITE_URL}/api/users/${session?.user?.id}`
+  );
 
   if (postId) {
-    const { data: postData } = await supabase
-      .from('posts')
-      .select()
-      .eq('id', postId);
+    const postRes = await axios.get(
+      `${process.env.SITE_URL}/api/posts/${postId}`
+    );
 
     return {
-      props: { userData: userData[0], postData: postData[0] },
+      props: { userData: userRes.data[0], postData: postRes.data[0] },
     };
   }
 
-  return { props: { userData: userData[0], postData: {} } };
+  return { props: { userData: userRes.data[0], postData: {} } };
 };
