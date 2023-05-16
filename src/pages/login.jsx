@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <div className='h-full min-h-screen flex items-center bg-teal-600'>
-      <section className='m-auto bg-slate-50 rounded-md w-[90%] sm:w-3/5 grid lg:grid-cols-2 overflow-hidden'>
+      <section className='m-auto bg-slate-50 rounded-md w-[90%] sm:w-3/5 grid lg:grid-cols-2 overflow-hidden min-h-max pb-10 lg:pb-0'>
         <div className='left hidden relative lg:block'>
           <Image
             src={loginImage}
