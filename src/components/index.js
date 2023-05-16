@@ -14,3 +14,4 @@ export { default as NewPostForm } from './NewPostForm';
 export { default as SinglePanelContainer } from './SinglePanelContainer';
 export { default as SignInForm } from './SignInForm';
 export { default as PdfViewer } from './PdfViewer';
+export { default as NewUsers } from './NewUsers';

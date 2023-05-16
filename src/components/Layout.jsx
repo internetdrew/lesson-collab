@@ -1,4 +1,4 @@
-import { NavProfile, SubjectsNav, Navbar } from '.';
+import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
 import { useUser } from '@supabase/auth-helpers-react';
 
 const Layout = ({ children }) => {
@@ -23,8 +23,13 @@ const Layout = ({ children }) => {
 
         <main className='flex-1'>{children}</main>
 
-        <aside className='sticky top-8 hidden w-72 shrink-0 bg-orange-300 xl:block'>
-          <div>I'm right!</div>
+        <aside className='sticky top-8 hidden w-72 shrink-0 xl:block'>
+          <div className='shadow bg-white p-4 rounded-3xl'>
+            <h3 className='text-xl font-semibold text-center'>
+              Look who's here!
+            </h3>
+            <NewUsers />
+          </div>
         </aside>
       </div>
     </div>
