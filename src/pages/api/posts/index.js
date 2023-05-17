@@ -60,7 +60,7 @@ export default async function handler(req, res) {
           desc,
           uid,
         });
-        if (!error) res.status(200).json(session);
+        if (!error) res.status(200).json('Post successfully added.');
         break;
     }
   } catch (error) {

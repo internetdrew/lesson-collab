@@ -39,30 +39,17 @@ export default function NewPostForm({ postData, userData }) {
   const postToEdit = Object.keys(postData).length !== 0;
 
   const router = useRouter();
-  const instance = axios.create();
 
   const onSubmit = async data => {
     try {
-      const { title, gradeLevel, subject, desc } = data;
+      const { title, gradeLevel, subject, desc, file } = data;
 
-      const lessonPlanData = new FormData();
-      lessonPlanData.append('upload_preset', 'my-uploads');
-
-      for (const file of data?.file) {
-        lessonPlanData.append('file', file);
-      }
-
-      const res =
+      const { data: fileUrl } =
         data?.file?.length !== 0
-          ? await instance.post(
-              process.env.NEXT_PUBLIC_CLOUDINARY_URL,
-              lessonPlanData
-            )
-          : { statusText: 'OK' };
-      if (res.statusText !== 'OK') return;
+          ? await axios.post('/api/upload', file)
+          : postData?.file_url;
 
-      const fileName = data?.file?.[0]?.name || postData?.fileUrl;
-      const fileUrl = res?.data?.secure_url;
+      const fileName = file?.[0]?.name || postData?.fileUrl;
 
       if (postToEdit) {
         const res = await axios.put(`/api/posts/${postData?.id}`, {
@@ -70,7 +57,7 @@ export default function NewPostForm({ postData, userData }) {
           gradeLevel,
           subject,
           fileName: fileName || postData?.file_name,
-          fileUrl: fileUrl || postData?.file_url,
+          fileUrl,
           desc,
           uid: userData?.id,
         });
@@ -78,7 +65,6 @@ export default function NewPostForm({ postData, userData }) {
         if (res.statusText === 'OK') router.push(`/posts/${postData?.id}`);
         return;
       }
-
       if (!postToEdit) {
         const res = await axios.post('/api/posts', {
           title,
@@ -89,7 +75,6 @@ export default function NewPostForm({ postData, userData }) {
           desc,
           uid: userData?.id,
         });
-
         if (res.statusText === 'OK') router.push('/');
       }
     } catch (error) {

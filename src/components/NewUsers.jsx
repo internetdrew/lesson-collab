@@ -11,8 +11,6 @@ const NewUsers = () => {
     setNewUsers(userRes.data);
   };
 
-  console.log(newUsers);
-
   useEffect(() => {
     getNewUsers();
   }, []);
