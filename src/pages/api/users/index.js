@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const { data: userData } = await supabase
     .from('users')
-    .select(`id, name, avatar)`)
+    .select(`id, created_at, name, avatar`)
     .order('created_at', { ascending: false })
     .limit(5);
 

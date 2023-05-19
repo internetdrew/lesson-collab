@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
 
         <aside className='sticky top-8 hidden w-72 shrink-0 xl:block'>
           <div className='shadow bg-white p-4 rounded-3xl'>
-            <h3 className='text-xl font-semibold text-center'>
+            <h3 className='text-lg text-gray-700 font-semibold text-center'>
               Look who's here!
             </h3>
             <NewUsers />

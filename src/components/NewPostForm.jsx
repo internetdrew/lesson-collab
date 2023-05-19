@@ -22,6 +22,7 @@ const schema = z.object({
   subject: z
     .string()
     .min(1, { message: 'Subject is required for submission.' }),
+  file: z.object(),
   desc: z
     .string()
     .min(1, { message: 'Description is required for submission.' }),
