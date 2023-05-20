@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BellIcon } from '@heroicons/react/24/outline';
+import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
@@ -108,8 +108,11 @@ const Navbar = () => {
               </Menu>
 
               <Link href={'/create'}>
-                <button className='fixed bottom-2 right-2 sm:static rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
-                  New Post
+                <button className='rounded-full h-10 w-10 flex items-center justify-center bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 sm:block sm:rounded-md sm:w-auto sm:h-auto hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
+                  <span className='hidden sm:block'>New Post</span>
+                  <span className='sm:hidden'>
+                    <PlusIcon className='w-6 h-6' />
+                  </span>
                 </button>
               </Link>
             </>
