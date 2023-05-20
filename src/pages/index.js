@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Layout, Feed } from '../components';
+import { Layout, Feed, SubSelector } from '../components';
 import { useSetRecoilState } from 'recoil';
 import { postsState } from '../atoms/postsAtom';
 import axios from 'axios';
@@ -13,6 +13,7 @@ export default function Home({ posts }) {
 
   return (
     <Layout>
+      <SubSelector />
       {posts.length ? (
         <Feed posts={posts} />
       ) : (
