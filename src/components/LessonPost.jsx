@@ -36,12 +36,15 @@ const LessonPost = ({ post }) => {
               height={48}
             />
           </span>
-          <p className='hidden sm:inline-block'>
-            Posted by{' '}
-            <span className='text-teal-600 duration-300 hover:text-teal-500'>
-              <Link href={`/profile/${post?.uid}`}>{post?.users?.name}</Link>
-            </span>
-          </p>
+          <div>
+            <p className='hidden sm:inline-block'>Posted by </p>{' '}
+            <Link
+              href={`/profile/${post?.uid}`}
+              className='text-teal-600 duration-300 hover:text-teal-500'
+            >
+              {post?.users?.name}
+            </Link>
+          </div>
           <div className='flex items-center ml-auto gap-4'>
             {commentCount ? (
               <span className='flex items-center'>
