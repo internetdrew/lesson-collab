@@ -1,21 +1,25 @@
 import Link from 'next/link';
 import React from 'react';
-import { ChevronDownIcon } from '@heroicons/react/24/solid';
-
-const subjects = [];
+import { subjects } from '../lib';
+import { useRouter } from 'next/router';
 
 const SubSelector = () => {
+  const router = useRouter();
+
+  const handleChange = e => {
+    router.push(`/?subject=${e.target.value}`);
+  };
+
   return (
-    <div className='mb-4'>
-      <div className='w-1/2 mx-auto bg-white rounded-lg flex justify-between items-center py-2 px-4'>
-        <span>Filter by subject</span>
-        <ChevronDownIcon className='w-6 h-6' />
-      </div>
-      <ul>
-        <li>
-          <Link />
-        </li>
-      </ul>
+    <div className='mb-6 w-1/2 mx-auto relative lg:hidden'>
+      <select className='w-full capitalize' onChange={handleChange}>
+        <option value='all'>all</option>
+        {subjects.map(sub => (
+          <option key={sub.name} value={`${sub.name}`}>
+            {sub.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
