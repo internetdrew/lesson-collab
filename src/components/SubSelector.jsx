@@ -6,19 +6,28 @@ import { subjects } from '../lib';
 import { useRouter } from 'next/router';
 
 const SubSelector = () => {
+  const subs = subjects.map(sub => sub.name).sort();
+
+  console.log(subs);
   const router = useRouter();
 
   const handleChange = e => {
+    if (e.target.value === 'all') {
+      return router.push('/');
+    }
     router.push(`/?subject=${e.target.value}`);
   };
 
   return (
     <div className='mb-6 w-1/2 mx-auto relative lg:hidden'>
-      <select className='w-full capitalize' onChange={handleChange}>
+      <select
+        className='w-full capitalize rounded-lg shadow-md'
+        onChange={handleChange}
+      >
         <option value='all'>all</option>
-        {subjects.map(sub => (
-          <option key={sub.name} value={`${sub.name}`}>
-            {sub.name}
+        {subs.map(sub => (
+          <option key={sub} value={`${sub}`}>
+            {sub}
           </option>
         ))}
       </select>
