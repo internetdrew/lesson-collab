@@ -25,11 +25,13 @@ export default function UserProfile({ userData }) {
           </div>
           <div className='pt-28 w-[90%] mx-auto pb-6 relative'>
             <h1 className='text-2xl font-semibold'>{userData?.name}</h1>
-            <span className='block text-gray-600 mb-2'>@{userData?.id}</span>
             <div className='flex items-center'>
               <MapPinIcon className='w-4 h-auto text-gray-500 mr-1' />
-              <span className='font-light text-gray-600'>Brooklyn, NY</span>
+              <span className='font-light text-gray-600'>
+                {userData?.location}
+              </span>
             </div>
+            <p className='mt-2 w-3/4'>{userData?.about}</p>
             <button
               type='button'
               className='static sm:absolute w-full sm:w-fit mt-4 top-2 right-4 rounded-md bg-teal-600 px-3.5 py-2.5 font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 duration-300'
