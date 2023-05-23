@@ -9,23 +9,23 @@ const NewUsers = () => {
 
   const getNewUsers = async () => {
     const userRes = await axios.get('/api/users');
-    setNewUsers(userRes.data);
+    setNewUsers(userRes?.data);
   };
 
   useEffect(() => {
     getNewUsers();
-    console.log(newUsers);
   }, []);
 
   return (
     <div className='mt-6'>
       {newUsers?.map(user => (
-        <div className='flex items-center mb-3'>
+        <div key={user?.id} className='flex items-center mb-3'>
           <Image
             width={500}
             height={500}
             src={user?.avatar}
             className='rounded-full w-12 h-12 mr-2'
+            alt='user avatar'
           />
           <div className='flex flex-col'>
             <Link
