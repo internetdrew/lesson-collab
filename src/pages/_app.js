@@ -2,7 +2,6 @@ import '@/src/styles/globals.css';
 import { Inter } from 'next/font/google';
 import { RecoilRoot } from 'recoil';
 import { SessionProvider } from 'next-auth/react';
-import { AuthContextProvider } from '../context/authContext';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
@@ -24,9 +23,7 @@ export default function App({
         >
           <SessionProvider session={session}>
             <RecoilRoot>
-              <AuthContextProvider>
-                <Component {...pageProps} />
-              </AuthContextProvider>
+              <Component {...pageProps} />
             </RecoilRoot>
           </SessionProvider>
         </SessionContextProvider>
