@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 const SubSelector = () => {
   const subs = subjects.map(sub => sub.name).sort();
 
-  console.log(subs);
   const router = useRouter();
 
   const handleChange = e => {
