@@ -45,8 +45,9 @@ const Navbar = () => {
                       <Image
                         src={currentUser?.user_metadata?.picture}
                         alt='user image'
-                        width={48}
-                        height={48}
+                        width={500}
+                        height={500}
+                        style={{ objectFit: 'cover' }}
                       />
                     ) : (
                       <svg

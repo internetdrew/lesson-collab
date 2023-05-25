@@ -40,6 +40,7 @@ const PostDetails = ({ post }) => {
                 alt='user image'
                 width={48}
                 height={48}
+                style={{ objectFit: 'cover' }}
               />
             ) : null}
           </span>

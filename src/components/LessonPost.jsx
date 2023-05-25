@@ -28,12 +28,13 @@ const LessonPost = ({ post }) => {
         </div>
 
         <div className='px-4 flex items-center gap-2 text-gray-600 text-sm mt-1 sm:mt-0 sm:px-6'>
-          <span className='inline-flex overflow-hidden shrink-0 h-8 w-8 items-center justify-center rounded-full bg-gray-500'>
+          <span className='inline-flex overflow-hidden shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
             <Image
               src={post?.users?.avatar}
               alt='user image'
-              width={48}
-              height={48}
+              width={500}
+              height={500}
+              style={{ objectFit: 'cover' }}
             />
           </span>
           <div>

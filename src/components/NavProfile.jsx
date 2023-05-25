@@ -10,13 +10,16 @@ const NavProfile = () => {
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
         <Link href={`/profile/${currentUser?.id}`}>
           {currentUser ? (
-            <Image
-              src={currentUser?.user_metadata?.picture}
-              alt='user image'
-              width={48}
-              height={48}
-              className='font-medium leading-none text-white'
-            />
+            <div className='w-12 h-12 overflow-hidden'>
+              <Image
+                src={currentUser?.user_metadata?.picture}
+                alt='user image'
+                width={500}
+                height={500}
+                style={{ objectFit: 'cover' }}
+                className='font-medium leading-none text-white'
+              />
+            </div>
           ) : (
             <svg
               className='h-12 w-12 text-gray-300'

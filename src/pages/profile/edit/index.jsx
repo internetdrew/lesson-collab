@@ -105,6 +105,7 @@ export default function ProfileEditor({ user }) {
                       src={user?.avatar}
                       width={48}
                       height={48}
+                      style={{ objectFit: 'cover' }}
                       alt='user avatar'
                     />
                     <div className='absolute bg-gray-600 text-white flex items-center justify-center top-0 left-0 right-0 bottom-0 opacity-0 duration-300 ease-out hover:opacity-80'>

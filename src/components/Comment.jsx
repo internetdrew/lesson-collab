@@ -19,8 +19,9 @@ const Comment = ({ comment }) => {
             <Image
               src={comment?.users?.avatar}
               alt='user image'
-              width={48}
-              height={48}
+              width={500}
+              height={500}
+              style={{ objectFit: 'cover' }}
             />
           ) : (
             <svg

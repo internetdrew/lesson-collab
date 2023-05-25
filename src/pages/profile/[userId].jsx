@@ -19,7 +19,7 @@ export default function UserProfile({ userData }) {
                 alt='user image'
                 width={500}
                 height={500}
-                className='w-full h-full'
+                style={{ objectFit: 'cover' }}
                 priority
               />
             </div>

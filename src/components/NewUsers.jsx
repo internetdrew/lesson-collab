@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
@@ -19,6 +17,7 @@ const NewUsers = () => {
             src={user?.avatar}
             className='rounded-full w-12 h-12 mr-2'
             alt='user avatar'
+            style={{ objectFit: 'cover' }}
           />
           <div className='flex flex-col'>
             <Link

@@ -22,6 +22,7 @@ const Login = () => {
             alt='Picture of woman writing in notepad'
             width={500}
             height={500}
+            style={{ objectFit: 'cover' }}
             className='w-full h-full object-cover'
             priority
           />
