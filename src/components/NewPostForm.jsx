@@ -63,7 +63,7 @@ export default function NewPostForm({ postData, userData }) {
           uid: userData?.id,
         });
 
-        if (res.statusText === 'OK') router.push(`/posts/${postData?.id}`);
+        if (res.status === 200) router.push(`/posts/${postData?.id}`);
         return;
       }
 
@@ -77,8 +77,7 @@ export default function NewPostForm({ postData, userData }) {
           desc,
           uid: userData?.id,
         });
-        console.log(res);
-        if (res.statusText === 'OK') router.push('/');
+        if (res.status === 200) router.push('/');
         return;
       }
     } catch (error) {

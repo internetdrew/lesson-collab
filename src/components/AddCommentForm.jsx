@@ -38,7 +38,7 @@ const AddCommentForm = ({ postId, setComments }) => {
       comment,
     });
 
-    if (commentRes.statusText === 'OK') {
+    if (commentRes.status === 200) {
       reset();
       const res = await axios.get(`/api/comments/${postId}`);
       setComments(res.data);

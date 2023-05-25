@@ -58,7 +58,7 @@ export default function ProfileEditor({ user }) {
       website,
       userId,
     });
-    if (res.statusText === 'OK') {
+    if (res.status === 200) {
       router.push(`/profile/${userId}`);
     }
   };

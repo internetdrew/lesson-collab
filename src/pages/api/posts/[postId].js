@@ -60,7 +60,7 @@ export default async function handler(req, res) {
           });
         }
 
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('posts')
           .update({
             title,
@@ -71,11 +71,10 @@ export default async function handler(req, res) {
             desc,
             uid,
           })
-          .eq('id', postId)
-          .select();
+          .eq('id', postId);
         if (error) return res.status(500).json(error);
 
-        res.status(200).json(data);
+        res.status(200).json({ message: 'Successfully updated post' });
 
         break;
       }
