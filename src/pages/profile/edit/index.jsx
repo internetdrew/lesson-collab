@@ -21,7 +21,6 @@ const schema = z.object({
 });
 
 export default function ProfileEditor({ user }) {
-  console.log(user);
   const imgInputRef = useRef(null);
   const router = useRouter();
 
@@ -42,7 +41,6 @@ export default function ProfileEditor({ user }) {
 
   const onSubmit = async data => {
     const { avatar, name, location, about, website, userId } = data;
-    console.log(data);
     const avatarChange = avatar.length > 0;
 
     let avatarUrl = user?.avatar;
