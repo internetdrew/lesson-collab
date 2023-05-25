@@ -28,13 +28,19 @@ export default async function handler(req, res) {
             name, avatar
             )`
             )
-            .eq('subject', subject);
+            .eq('subject', subject)
+            .order('id', { ascending: false });
           return res.status(200).json(data);
         }
 
-        const { data } = await supabase.from('posts').select(`*, users (
+        const { data } = await supabase
+          .from('posts')
+          .select(
+            `*, users (
             name, avatar
-            )`);
+            )`
+          )
+          .order('id', { ascending: false });
         res.status(200).json(data);
         break;
 
