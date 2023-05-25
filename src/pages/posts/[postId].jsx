@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from 'react';
-import { Layout, AddCommentForm, PdfViewer, Comments } from '@/src/components';
+import { useState } from 'react';
+import { Layout, PdfViewer, Comments } from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
@@ -11,20 +11,14 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
-import { useRef } from 'react';
-import { useRecoilState } from 'recoil';
-import { scrollState } from '@/src/atoms/scrollAtom';
 
 const PostDetails = ({ post, comments }) => {
-  const [scrollToBottom, setScrollToBottom] = useRecoilState(scrollState);
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
-
-  const initialCommentCount = useRef(comments?.length);
 
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
