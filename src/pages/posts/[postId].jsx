@@ -34,7 +34,8 @@ const PostDetails = ({ post }) => {
 
   useEffect(() => {
     if (comments.length !== initialCommentCount.current) {
-      lastCommentRef.current.scrollIntoView({ behavior: 'smooth' });
+      // lastCommentRef.current.scrollIntoView({ behavior: 'smooth' });
+      console.log('testing');
     }
   }, [comments]);
 
