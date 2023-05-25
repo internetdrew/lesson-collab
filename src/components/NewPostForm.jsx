@@ -66,6 +66,7 @@ export default function NewPostForm({ postData, userData }) {
         if (res.statusText === 'OK') router.push(`/posts/${postData?.id}`);
         return;
       }
+
       if (!postToEdit) {
         const res = await axios.post('/api/posts', {
           title,
@@ -76,7 +77,9 @@ export default function NewPostForm({ postData, userData }) {
           desc,
           uid: userData?.id,
         });
+        console.log(res);
         if (res.statusText === 'OK') router.push('/');
+        return;
       }
     } catch (error) {
       console.error(error);
