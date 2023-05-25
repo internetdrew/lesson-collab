@@ -34,6 +34,7 @@ const AddCommentForm = ({ postId }) => {
       userId: user.id,
       comment,
     });
+
     if (commentRes.statusText === 'OK') {
       reset();
       router.replace(router.asPath);

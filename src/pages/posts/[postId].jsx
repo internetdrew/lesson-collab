@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Layout, Comment, AddCommentForm, PdfViewer } from '@/src/components';
 import {
   EllipsisVerticalIcon,
@@ -13,9 +13,7 @@ import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import { useRef } from 'react';
 
-const PostDetails = ({ post }) => {
-  const { comments } = post;
-
+const PostDetails = ({ post, comments }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
@@ -23,8 +21,11 @@ const PostDetails = ({ post }) => {
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
-  const initialCommentCount = useRef(comments.length);
   const lastCommentRef = useRef(null);
+  const initialCommentCount = useRef(comments.length);
+
+  const newComment = comments.length !== initialCommentCount.current;
+  console.log(newComment);
 
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
@@ -33,11 +34,10 @@ const PostDetails = ({ post }) => {
   };
 
   useEffect(() => {
-    if (comments.length !== initialCommentCount.current) {
-      // lastCommentRef.current.scrollIntoView({ behavior: 'smooth' });
-      console.log('testing');
+    if (newComment) {
+      lastCommentRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [comments]);
+  }, [newComment]);
 
   return showLessonPlan ? (
     <PdfViewer post={post} show={setShowLessonPlan} />
@@ -46,12 +46,14 @@ const PostDetails = ({ post }) => {
       <div className='overflow-hidden rounded-lg bg-white shadow'>
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
           <span className='inline-flex overflow-hidden shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
-            <Image
-              src={post?.users?.avatar}
-              alt='user image'
-              width={48}
-              height={48}
-            />
+            {post?.users?.avatar ? (
+              <Image
+                src={post?.users?.avatar}
+                alt='user image'
+                width={48}
+                height={48}
+              />
+            ) : null}
           </span>
           <div className='flex flex-col'>
             <Link href={`/profile/${post?.users?.id}`} className='font-medium'>
@@ -108,10 +110,10 @@ const PostDetails = ({ post }) => {
         </div>
         <div className='px-4 py-4 sm:px-6'>
           <AddCommentForm postId={post?.id} />
-          {comments.length ? (
+          {comments?.length ? (
             <p className='text-gray-500 mb-2'>Feedback</p>
           ) : null}
-          {comments.map(comment => (
+          {comments?.map(comment => (
             <Comment key={comment?.id} comment={comment} />
           ))}
           <div ref={lastCommentRef} />
@@ -129,6 +131,9 @@ export const getServerSideProps = async ({ query }) => {
   const { data: postData } = await axios.get(
     `${process.env.SITE_URL}/api/posts/${postId}`
   );
+  const { data: commentData } = await axios.get(
+    `${process.env.SITE_URL}/api/comments/${postId}`
+  );
 
-  return { props: { post: postData[0] } };
+  return { props: { post: postData[0], comments: commentData } };
 };
