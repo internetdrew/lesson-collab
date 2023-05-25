@@ -16,3 +16,4 @@ export { default as SignInForm } from './SignInForm';
 export { default as PdfViewer } from './PdfViewer';
 export { default as NewUsers } from './NewUsers';
 export { default as SubSelector } from './SubSelector';
+export { default as Comments } from './Comments';
