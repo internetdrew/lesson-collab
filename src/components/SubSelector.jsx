@@ -18,7 +18,7 @@ const SubSelector = () => {
   };
 
   return (
-    <div className='mb-6 w-1/2 mx-auto relative lg:hidden'>
+    <div className='mb-6 w-1/2 mx-auto relative md:hidden'>
       <select
         className='w-full capitalize rounded-lg shadow-md'
         onChange={handleChange}
