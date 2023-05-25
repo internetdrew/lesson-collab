@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Layout, Comment, AddCommentForm, PdfViewer } from '@/src/components';
+import { Layout, AddCommentForm, PdfViewer, Comments } from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
@@ -12,8 +12,11 @@ import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import { useRef } from 'react';
+import { useRecoilState } from 'recoil';
+import { scrollState } from '@/src/atoms/scrollAtom';
 
 const PostDetails = ({ post, comments }) => {
+  const [scrollToBottom, setScrollToBottom] = useRecoilState(scrollState);
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
@@ -21,23 +24,15 @@ const PostDetails = ({ post, comments }) => {
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
-  const lastCommentRef = useRef(null);
-  const initialCommentCount = useRef(comments.length);
+  const initialCommentCount = useRef(comments?.length);
+  console.log(comments);
 
-  const newComment = comments.length !== initialCommentCount.current;
-  console.log(newComment);
-
+  console.log(scrollToBottom);
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
     await axios.delete(`/api/posts/${post.id}`);
     router.push('/');
   };
-
-  useEffect(() => {
-    if (newComment) {
-      lastCommentRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [newComment]);
 
   return showLessonPlan ? (
     <PdfViewer post={post} show={setShowLessonPlan} />
@@ -109,14 +104,7 @@ const PostDetails = ({ post, comments }) => {
           </div>
         </div>
         <div className='px-4 py-4 sm:px-6'>
-          <AddCommentForm postId={post?.id} />
-          {comments?.length ? (
-            <p className='text-gray-500 mb-2'>Feedback</p>
-          ) : null}
-          {comments?.map(comment => (
-            <Comment key={comment?.id} comment={comment} />
-          ))}
-          <div ref={lastCommentRef} />
+          <Comments postId={post?.id} />
         </div>
       </div>
     </Layout>

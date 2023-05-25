@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useSetRecoilState } from 'recoil';
+import { scrollState } from '../atoms/scrollAtom';
 
 const schema = z.object({
   comment: z
@@ -14,7 +16,8 @@ const schema = z.object({
     .max(455, { message: 'Feedback must be less than 455 characters.' }),
 });
 
-const AddCommentForm = ({ postId }) => {
+const AddCommentForm = ({ postId, setComments }) => {
+  const setScroll = useSetRecoilState(scrollState);
   const {
     register,
     handleSubmit,
@@ -37,7 +40,9 @@ const AddCommentForm = ({ postId }) => {
 
     if (commentRes.statusText === 'OK') {
       reset();
-      router.replace(router.asPath);
+      const res = await axios.get(`/api/comments/${postId}`);
+      setComments(res.data);
+      setScroll(true);
     }
     return;
   };
