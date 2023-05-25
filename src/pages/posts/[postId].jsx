@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 const PostDetails = ({ post }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
@@ -56,20 +57,26 @@ const PostDetails = ({ post }) => {
                 <EllipsisVerticalIcon className='w-6 h-6 text-gray-500 mb-2 my-auto' />
               </button>
               {showPostMenu ? (
-                <div className='absolute top-8 right-2 duration-500 bg-white w-full border border-slate-200 rounded-md shadow-lg py-2'>
-                  <Link
-                    href={`/create?edit=${post?.id}`}
-                    className='block px-4 py-2 hover:bg-gray-100 duration-300'
-                  >
-                    Edit post
-                  </Link>
-                  <button
-                    className='w-full px-4 py-2 text-left hover:bg-gray-100 duration-300'
-                    onClick={handleDelete}
-                  >
-                    Delete post
-                  </button>
-                </div>
+                <OutsideClickHandler
+                  onOutsideClick={() => {
+                    setShowPostMenu(false);
+                  }}
+                >
+                  <div className='absolute top-8 right-2 duration-500 bg-white w-full border border-slate-200 rounded-md shadow-lg py-2'>
+                    <Link
+                      href={`/create?edit=${post?.id}`}
+                      className='block px-4 py-2 hover:bg-gray-100 duration-300'
+                    >
+                      Edit post
+                    </Link>
+                    <button
+                      className='w-full px-4 py-2 text-left hover:bg-gray-100 duration-300'
+                      onClick={handleDelete}
+                    >
+                      Delete post
+                    </button>
+                  </div>
+                </OutsideClickHandler>
               ) : null}
             </div>
           ) : null}
