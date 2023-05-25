@@ -3,18 +3,11 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
+import { useRecoilValue } from 'recoil';
+import { newUsersState } from '../atoms/newUsersAtom';
 
 const NewUsers = () => {
-  const [newUsers, setNewUsers] = useState([]);
-
-  const getNewUsers = async () => {
-    const userRes = await axios.get('/api/users');
-    setNewUsers(userRes?.data);
-  };
-
-  useEffect(() => {
-    getNewUsers();
-  }, []);
+  const newUsers = useRecoilValue(newUsersState);
 
   return (
     <div className='mt-6'>

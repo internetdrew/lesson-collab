@@ -2,10 +2,16 @@ import { useEffect } from 'react';
 import { Layout, Feed, SubSelector } from '../components';
 import { useSetRecoilState } from 'recoil';
 import { postsState } from '../atoms/postsAtom';
+import { newUsersState } from '../atoms/newUsersAtom';
 import axios from 'axios';
 
-export default function Home({ posts }) {
+export default function Home({ posts, newUsers }) {
   const setPosts = useSetRecoilState(postsState);
+  const setNewUsers = useSetRecoilState(newUsersState);
+
+  useEffect(() => {
+    setNewUsers(newUsers);
+  }, [newUsers]);
 
   useEffect(() => {
     setPosts(posts);
@@ -32,5 +38,9 @@ export const getServerSideProps = async ({ query }) => {
     `${process.env.SITE_URL}/api/posts${subject ? `/?subject=${subject}` : ''}`
   );
 
-  return { props: { posts } };
+  const { data: newUsers } = await axios.get(
+    `${process.env.SITE_URL}/api/users`
+  );
+
+  return { props: { posts, newUsers } };
 };
