@@ -15,7 +15,6 @@ const Comment = ({ comment }) => {
     <div className='flex flex-col items-start mb-6'>
       <div className='flex items-center mb-3 w-full'>
         <span className='inline-flex shrink-0 mr-2 h-8 w-8 overflow-hidden items-center justify-center rounded-full bg-gray-500 sm:h-10 sm:w-10'>
-          {/* <span className='font-medium leading-none text-white'>TU</span> */}
           {comment ? (
             <Image
               src={comment?.users?.avatar}

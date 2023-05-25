@@ -1,35 +1,46 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+const schema = z.object({
+  comment: z
+    .string()
+    .min(1, { message: 'Your feedback is required for submission.' })
+    .max(455, { message: 'Feedback must be less than 455 characters.' }),
+});
 
 const AddCommentForm = ({ postId }) => {
-  const [commentText, setCommentText] = useState('');
-  const [error, setError] = useState({ status: false, message: '' });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
+
   const router = useRouter();
   const user = useUser();
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const onSubmit = async data => {
+    const { comment } = data;
 
     if (!user) return router.push('/login');
 
-    if (commentText.trim() === '') {
-      return setError({
-        status: true,
-        message: 'Please leave feedback to post.',
-      });
-    }
-
     const commentRes = await axios.post(`/api/comments/${postId}`, {
       userId: user.id,
-      commentText,
+      comment,
     });
-    if (commentRes.statusText === 'OK') router.replace(router.asPath);
+    if (commentRes.statusText === 'OK') {
+      reset();
+      router.replace(router.asPath);
+    }
+    return;
   };
 
   return (
-    <form className='mb-4' onSubmit={handleSubmit}>
+    <form className='mb-4' onSubmit={handleSubmit(onSubmit)}>
       <label
         htmlFor='feedback'
         className='block text-sm font-medium leading-6 text-gray-900'
@@ -39,19 +50,12 @@ const AddCommentForm = ({ postId }) => {
       <div className='mt-2 flex flex-col'>
         <textarea
           rows={6}
-          name='feedback'
-          id='feedback'
-          value={commentText}
-          onChange={e => setCommentText(e.target.value)}
-          className={`block w-full rounded-md text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:py-1.5 sm:leading-6 resize-none ${
-            error.status ? 'border-red-700' : ''
-          }`}
+          {...register('comment')}
+          className='block w-full rounded-md text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 resize-none'
         />
-        {error.status && (
-          <small className='text-right mt-1 text-red-700 text-sm'>
-            {error?.message}
-          </small>
-        )}
+        <small className='mt-1 text-red-600 text-sm'>
+          {errors.comment?.message}
+        </small>
         <button
           type='submit'
           className={
