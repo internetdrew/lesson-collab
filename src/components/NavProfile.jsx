@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms/userAtom';
 
 const NavProfile = () => {
-  const currentUser = useUser();
+  const currentUser = useRecoilValue(userState);
 
   return (
     <div className='flex items-center'>
@@ -12,11 +13,12 @@ const NavProfile = () => {
           {currentUser ? (
             <div className='w-12 h-12 overflow-hidden'>
               <Image
-                src={currentUser?.user_metadata?.picture}
+                src={currentUser?.avatar}
                 alt='user image'
                 width={500}
                 height={500}
                 style={{ objectFit: 'cover' }}
+                priority
                 className='font-medium leading-none text-white'
               />
             </div>
@@ -33,7 +35,7 @@ const NavProfile = () => {
       </span>
       <div className='ml-4 flex flex-col justify-center'>
         <p className='font-medium text-gray-700 group-hover:text-gray-900'>
-          {currentUser?.user_metadata?.name}
+          {currentUser?.name}
         </p>
         <Link
           href={`/profile/${currentUser?.id}`}

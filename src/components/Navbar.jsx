@@ -5,14 +5,16 @@ import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../atoms/userAtom';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
+  const currentUser = useRecoilValue(userState);
   const supabase = useSupabaseClient();
-  const currentUser = useUser();
 
   const router = useRouter();
 
@@ -43,11 +45,12 @@ const Navbar = () => {
                   <span className='inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden bg-gray-500'>
                     {currentUser ? (
                       <Image
-                        src={currentUser?.user_metadata?.picture}
+                        src={currentUser?.avatar}
                         alt='user image'
                         width={500}
                         height={500}
                         style={{ objectFit: 'cover' }}
+                        priority
                       />
                     ) : (
                       <svg

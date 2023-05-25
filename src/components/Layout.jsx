@@ -1,8 +1,10 @@
+import { useRecoilValue } from 'recoil';
 import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
-import { useUser } from '@supabase/auth-helpers-react';
+import { userState } from '../atoms/userAtom';
 
 const Layout = ({ children }) => {
-  const currentUser = useUser();
+  const currentUser = useRecoilValue(userState);
+  console.log(currentUser);
 
   return (
     <div className='flex min-h-full flex-col'>
