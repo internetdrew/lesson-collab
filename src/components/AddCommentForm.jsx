@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
