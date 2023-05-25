@@ -25,9 +25,7 @@ const PostDetails = ({ post, comments }) => {
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
   const initialCommentCount = useRef(comments?.length);
-  console.log(comments);
 
-  console.log(scrollToBottom);
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
     await axios.delete(`/api/posts/${post.id}`);
