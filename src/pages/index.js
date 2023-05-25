@@ -27,9 +27,16 @@ export default function Home({ posts }) {
 
 export const getServerSideProps = async ({ query }) => {
   const { subject } = query;
-  const { data: posts } = await axios.get(
-    `${process.env.SITE_URL}/api/posts${subject ? `/?subject=${subject}` : ''}`
-  );
 
-  return { props: { posts } };
+  try {
+    const { data: posts } = await axios.get(
+      `${process.env.SITE_URL}/api/posts${
+        subject ? `/?subject=${subject}` : ''
+      }`
+    );
+
+    return { props: { posts } };
+  } catch (error) {
+    console.error(error);
+  }
 };
