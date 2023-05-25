@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const { postId } = req.query;
   const supabase = createServerSupabaseClient({ req, res });
 
-  const { userId, commentText } = req.body;
+  const { userId, comment } = req.body;
 
   if (method !== 'GET' && method !== 'POST')
     return res.status(405).json('Method not allowed.');
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     case 'POST':
       const { error } = await supabase
         .from('comments')
-        .insert({ post_id: postId, user_id: userId, text: commentText });
+        .insert({ post_id: postId, user_id: userId, text: comment });
       if (!error)
         res.status(200).json({ message: 'successfully added new comment' });
       break;
