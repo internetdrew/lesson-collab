@@ -13,7 +13,7 @@ const Comments = ({ postId }) => {
     if (scrollToBottom) {
       lastCommentRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'end',
+        block: 'start',
       });
       setScrollToBottom(false);
     }
