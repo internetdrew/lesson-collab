@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 
-const PostDetails = ({ post, comments }) => {
+const PostDetails = ({ post }) => {
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
@@ -111,9 +111,6 @@ export const getServerSideProps = async ({ query }) => {
   const { data: postData } = await axios.get(
     `${process.env.SITE_URL}/api/posts/${postId}`
   );
-  const { data: commentData } = await axios.get(
-    `${process.env.SITE_URL}/api/comments/${postId}`
-  );
 
-  return { props: { post: postData[0], comments: commentData } };
+  return { props: { post: postData[0] } };
 };
