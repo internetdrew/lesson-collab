@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
+import { useRef } from 'react';
 
 const PostDetails = ({ post }) => {
   const { comments } = post;
@@ -18,6 +19,8 @@ const PostDetails = ({ post }) => {
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
+  const lastCommentRef = useRef(null);
+
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
   const handleDelete = async () => {
@@ -25,6 +28,10 @@ const PostDetails = ({ post }) => {
     await axios.delete(`/api/posts/${post.id}`);
     router.push('/');
   };
+
+  useEffect(() => {
+    lastCommentRef?.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [comments]);
 
   return showLessonPlan ? (
     <PdfViewer post={post} show={setShowLessonPlan} />
@@ -101,6 +108,7 @@ const PostDetails = ({ post }) => {
           {comments.map(comment => (
             <Comment key={comment?.id} comment={comment} />
           ))}
+          <div ref={lastCommentRef} />
         </div>
       </div>
     </Layout>
