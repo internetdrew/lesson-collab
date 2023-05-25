@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Layout, Comment, AddCommentForm, PdfViewer } from '@/src/components';
 import {
   EllipsisVerticalIcon,
@@ -15,13 +15,16 @@ import { useRef } from 'react';
 
 const PostDetails = ({ post }) => {
   const { comments } = post;
+
   const [showLessonPlan, setShowLessonPlan] = useState(false);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
-  const lastCommentRef = useRef(null);
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
+
+  const initialCommentCount = useRef(comments.length);
+  const lastCommentRef = useRef(null);
 
   const handleDelete = async () => {
     if (!currentUserIsPostOwner) return;
@@ -30,7 +33,9 @@ const PostDetails = ({ post }) => {
   };
 
   useEffect(() => {
-    lastCommentRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    if (comments.length !== initialCommentCount.current) {
+      lastCommentRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [comments]);
 
   return showLessonPlan ? (
