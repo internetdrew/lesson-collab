@@ -1,7 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { subjects } from '../lib';
 
-const navigation = subjects.map(sub => sub.name).sort();
+const navigation = subjects.sort();
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
