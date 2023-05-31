@@ -4,7 +4,6 @@ import { userState } from '../atoms/userAtom';
 
 const Layout = ({ children }) => {
   const currentUser = useRecoilValue(userState);
-  console.log(currentUser);
 
   return (
     <div className='flex min-h-full flex-col'>
