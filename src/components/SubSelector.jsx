@@ -6,7 +6,9 @@ import { subjects } from '../lib';
 import { useRouter } from 'next/router';
 
 const SubSelector = () => {
-  const subs = subjects.map(sub => sub.charAt(0).toUpperCase() + sub.slice(1));
+  const formattedSubs = subjects.map(
+    sub => sub.charAt(0).toUpperCase() + sub.slice(1)
+  );
   const router = useRouter();
 
   const handleChange = e => {
@@ -20,7 +22,7 @@ const SubSelector = () => {
     <div className='mb-6 w-1/2 mx-auto relative md:hidden'>
       <select className='w-full rounded-lg shadow-md' onChange={handleChange}>
         <option value='all'>All</option>
-        {subs.map(sub => (
+        {formattedSubs.map(sub => (
           <option key={sub} value={`${sub}`}>
             {sub}
           </option>
