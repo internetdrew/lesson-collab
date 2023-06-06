@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 
 const SubSelector = () => {
   const subs = subjects.sort();
-
+  console.log(subs);
   const router = useRouter();
 
   const handleChange = e => {
@@ -25,7 +25,7 @@ const SubSelector = () => {
       >
         <option value='all'>all</option>
         {subs.map(sub => (
-          <option key={sub} value={`${sub}`}>
+          <option key={sub} value={`${sub}`} className='capitalize'>
             {sub}
           </option>
         ))}
