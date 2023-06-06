@@ -6,7 +6,7 @@ import { subjects } from '../lib';
 import { useRouter } from 'next/router';
 
 const SubSelector = () => {
-  const subs = subjects.map(sub => sub.name).sort();
+  const subs = subjects.sort();
 
   const router = useRouter();
 
