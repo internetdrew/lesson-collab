@@ -29,9 +29,10 @@ const Login = () => {
         </div>
 
         <div className='right flex flex-col items-center justify-center mb-10'>
-          <h1 className='text-teal-600 text-4xl font-bold p-4'>LessonFeed</h1>
+          <h1 className='text-teal-600 text-4xl font-bold p-4'>LessonCollab</h1>
           <p className='w-3/4 text-center text-gray-400 mb-10'>
-            Improve your lesson plans with feedback from other educators.
+            Improve your lesson plans with collaborative feedback from other
+            educators.
           </p>
 
           <button
