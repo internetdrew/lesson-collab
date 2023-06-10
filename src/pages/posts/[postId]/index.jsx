@@ -14,7 +14,6 @@ import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const PostDetails = ({ post }) => {
-  const [showLessonPlan, setShowLessonPlan] = useState(false);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
@@ -27,9 +26,7 @@ const PostDetails = ({ post }) => {
     router.push('/');
   };
 
-  return showLessonPlan ? (
-    <PdfViewer post={post} show={setShowLessonPlan} />
-  ) : (
+  return (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
@@ -91,7 +88,6 @@ const PostDetails = ({ post }) => {
           <Link
             href={`/posts/${post?.id}/lesson-plan`}
             className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 text-center sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
-            onClick={() => setShowLessonPlan(true)}
           >
             View the Lesson Plan
           </Link>
