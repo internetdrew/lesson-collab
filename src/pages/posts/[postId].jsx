@@ -18,6 +18,7 @@ const PostDetails = ({ post }) => {
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
+  console.log(post);
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
@@ -49,7 +50,7 @@ const PostDetails = ({ post }) => {
               {post?.users?.name}
             </Link>
             <span className='text-gray-500 text-sm'>
-              {moment(post?.created_at).calendar()}
+              Posted {moment(post?.created_at).calendar()}
             </span>
           </div>
           {currentUserIsPostOwner ? (
@@ -88,12 +89,13 @@ const PostDetails = ({ post }) => {
           <h1 className='text-xl font-semibold mb-2'>{post?.title}</h1>
           <p className='mb-4 text-justify'>{post?.desc}</p>
 
-          <button
-            className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
+          <Link
+            href={`/posts/${post?.id}/lesson-plan`}
+            className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 text-center sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
             onClick={() => setShowLessonPlan(true)}
           >
             View the Lesson Plan
-          </button>
+          </Link>
 
           <div className='hidden gap-2 text-gray-400'>
             <span>#topic</span>
@@ -114,11 +116,15 @@ const PostDetails = ({ post }) => {
 export default PostDetails;
 
 export const getServerSideProps = async ({ query }) => {
-  const { postId } = query;
+  try {
+    const { postId } = query;
 
-  const { data: postData } = await axios.get(
-    `${process.env.SITE_URL}/api/posts/${postId}`
-  );
+    const { data: postData } = await axios.get(
+      `${process.env.SITE_URL}/api/posts/${postId}`
+    );
 
-  return { props: { post: postData[0] } };
+    return { props: { post: postData[0] } };
+  } catch (error) {
+    console.error(error);
+  }
 };

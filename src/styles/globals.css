@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: rgb(13 148 136);
+  --primary-color: rgb(13, 148, 136);
 }
 
 body {
