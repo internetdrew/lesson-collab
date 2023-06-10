@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Layout, PdfViewer, Comments } from '@/src/components';
+import { Layout, Comments } from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
