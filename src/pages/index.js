@@ -47,15 +47,19 @@ export default function Home({ posts, newUsers }) {
 }
 
 export const getServerSideProps = async ({ req, res, query }) => {
-  const subject = query.subject ? query.subject.toLowerCase() : null;
+  try {
+    const subject = query.subject ? query.subject.toLowerCase() : null;
 
-  const { data: posts } = await axios.get(
-    `${process.env.SITE_URL}/api/posts${
-      subject ? `/?subject=${subject.toLowerCase()}` : ''
-    }`
-  );
+    const { data: posts } = await axios.get(
+      `${process.env.SITE_URL}/api/posts${
+        subject ? `/?subject=${subject.toLowerCase()}` : ''
+      }`
+    );
 
-  return {
-    props: { posts },
-  };
+    return {
+      props: { posts },
+    };
+  } catch (error) {
+    console.error(error);
+  }
 };
