@@ -6,7 +6,7 @@ import { userState } from '../atoms/userAtom';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 
-export default function Home({ posts, newUsers }) {
+export default function Home({ posts }) {
   const setPosts = useSetRecoilState(postsState);
   const setCurrentUser = useSetRecoilState(userState);
 
