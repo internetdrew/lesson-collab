@@ -18,7 +18,6 @@ const PostDetails = ({ post }) => {
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
-  console.log(post);
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
