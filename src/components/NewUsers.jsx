@@ -12,7 +12,7 @@ const NewUsers = () => {
       const { data: newUsers } = await axios.get('/api/users');
       setNewUsers(newUsers);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
