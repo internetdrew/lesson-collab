@@ -18,7 +18,11 @@ const SubSelector = () => {
 
   return (
     <div className='mb-6 w-1/2 mx-auto relative md:hidden'>
-      <select className='w-full rounded-lg shadow-md' onChange={handleChange}>
+      <select
+        name='subject-nav'
+        className='w-full rounded-lg shadow-md'
+        onChange={handleChange}
+      >
         <option value='all'>All</option>
         {formattedSubs.map(sub => (
           <option key={sub} value={`${sub}`}>
