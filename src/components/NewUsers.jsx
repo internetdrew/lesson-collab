@@ -1,11 +1,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
-import { useRecoilValue } from 'recoil';
-import { newUsersState } from '../atoms/newUsersAtom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const NewUsers = () => {
-  const newUsers = useRecoilValue(newUsersState);
+  const [newUsers, setNewUsers] = useState([]);
+
+  const fetchNewUsers = async () => {
+    try {
+      const { data: newUsers } = await axios.get('/api/users');
+      setNewUsers(newUsers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNewUsers();
+  }, []);
 
   return (
     <div className='mt-6'>
