@@ -88,6 +88,7 @@ const PostDetails = ({ post }) => {
           <Link
             href={`/posts/${post?.id}/lesson-plan`}
             className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 text-center sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
+            target='_blank'
           >
             View the Lesson Plan
           </Link>
