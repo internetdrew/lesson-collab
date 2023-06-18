@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='w-full shrink-0 border-b border-gray-200 bg-white z-10'>
+    <nav className='sticky top-0 w-full shrink-0 border-b border-gray-200 bg-white z-10'>
       <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
         <Link href={'/'} className='font-bold text-2xl text-[--primary-color]'>
           LessonCollab
