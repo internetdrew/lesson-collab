@@ -9,3 +9,8 @@
 body {
   background-color: #eef0f4;
 }
+
+iframe {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+}

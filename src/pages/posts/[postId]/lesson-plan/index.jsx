@@ -5,10 +5,7 @@ const PDFView = ({ post }) => {
   return (
     <>
       <Navbar />
-      <iframe
-        src={post?.file_url}
-        className='w-full h-screen relative'
-      ></iframe>
+      <iframe src={post?.file_url} className='w-full h-screen relative' />
     </>
   );
 };
