@@ -32,7 +32,7 @@ LessonCollab is a valuable platform designed to empower educators. It enables th
 
 ### Protected API Routes with getServerSideProps
 
-- Leverage Next.js' powerful `getServerSideProps` and `supabase authentication` functions to protect your API routes. By authenticating requests at the server side, LessonCollab ensures that only authorized users can access and interact with sensitive APIs.
+- Leverage Next.js' powerful `getServerSideProps` and Supabase authentication functions to protect your API routes. By authenticating requests at the server side, LessonCollab ensures that only authorized users can access and interact with sensitive APIs.
 
 ### Create, Read, Update, and Delete Lesson Posts
 
