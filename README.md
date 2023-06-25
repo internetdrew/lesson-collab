@@ -1,38 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LessonCollab
 
-## Getting Started
+A collaborative platform for educators to improve their lesson plans with feedback from their peers.
 
-First, run the development server:
+![Application screenshot](./public/lesson_collab_screenshot.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Table of contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Introduction](#introduction)
+- [Features](#features)
+- [Roadmap](#roadmap)
+- [Visit LessonCollab](#visit-lessoncollab)
+- [Let's Connect](#lets-connect)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Introduction
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+LessonCollab is a valuable platform designed to empower educators. It enables them to upload their lesson plans, receive constructive feedback from fellow educators, and implement the suggested improvements at their discretion. Additionally, LessonCollab fosters collaboration by providing an opportunity for educators to learn from each other's feedback and integrate valuable insights into their own lessons. By promoting knowledge sharing and continuous improvement, LessonCollab empowers educators to enhance the quality of their teaching materials and create more impactful learning experiences.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+### OAuth for Easy Sign-In
 
-To learn more about Next.js, take a look at the following resources:
+- Enjoy a seamless and hassle-free sign-in experience with OAuth authentication. Say goodbye to passwords and effortlessly join LessonCollab. Currently authenticating with Google to streamline the registration process.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Secure and Protected Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Security is ensured with authentication-based protected routes. LessonCollab safeguards access to sensitive pages, allowing only authenticated users to explore and interact with protected content.
 
-## Deploy on Vercel
+### Dynamic Page Routing and Templating
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Experience dynamic and flexible navigation with our LessonCollab's page routing and templating system. Seamlessly switch between different sections and content, providing a consistent and user-friendly browsing experience.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Protected API Routes with getServerSideProps
+
+- Leverage Next.js' powerful `getServerSideProps` and `supabase authentication` functions to protect your API routes. By authenticating requests at the server side, LessonCollab ensures that only authorized users can access and interact with sensitive APIs.
+
+### Create, Read, Update, and Delete Lesson Posts
+
+- LessonCollab allows educators to effortlessly create lesson posts, update them as needed, and remove outdated content.
+
+---
+
+## Roadmap
+
+1. **Bookmarking Feature:**
+
+   - Implement a bookmarking functionality that allows users to save and revisit lessons for future reference. This feature enhances user convenience and enables easy access to important content.
+
+2. **Comment Reply Functionality:**
+
+   - Enhance the commenting system to enable users to reply directly to specific comments. This promotes more focused and structured discussions, facilitating effective communication among users.
+
+3. **Flagging System:**
+
+   - Introduce a flagging system that empowers the community to address content that may not align with community guidelines or purpose. Users can flag both comments and posts, ensuring a safe and constructive environment for everyone.
+
+4. **Improved PDF Viewing on iOS Mobile:**
+
+   - Address the issue of PDFs displayed within iFrames on iOS mobile devices, particularly in Safari. Implement a solution that ensures the PDFs are fully viewable and scrollable, allowing a seamless and user-friendly experience for iOS users.
+
+5. **In-App Notifications:**
+
+   - Stay connected and manage your interactions with other users seamlessly through our in-app notification system. Receive real-time notifications within the app, keeping you informed about important updates, messages, and interactions. With our intuitive interface, you can effortlessly engage with notifications, ensuring you never miss out on any meaningful conversations or opportunities for collaboration.
+
+6. **Direct Messages:**
+
+   - Enhance your communication and collaboration with seamless one-on-one conversations within LessonCollab.
+
+The roadmap outlines key features and enhancements to be implemented in the future development of the platform. These additions will enhance user engagement, promote a positive community experience, and optimize compatibility across different devices and browsers.
+
+---
+
+## Visit LessonCollab
+
+[Visit LessonCollab today!](https://www.lessoncollab.com/)
+
+---
+
+## Let's Connect
+
+- [Follow me on Twitter](https://twitter.com/_internetdrew_)
+- [Let's connect on LinkedIn](https://www.linkedin.com/in/internetdrew/)

@@ -1,29 +1,7 @@
-import { useEffect } from 'react';
 import axios from 'axios';
 import { Navbar } from '@/src/components';
 
 const PDFView = ({ post }) => {
-  useEffect(() => {
-    const iframe = document.getElementById('iframe');
-    const onLoad = () => {
-      // Get the width and height of the iframe's content.
-      const width = iframe.contentDocument.body.scrollWidth;
-      const height = iframe.contentDocument.body.scrollHeight;
-
-      // Set the width and height of the iframe.
-      iframe.style.width = width + 'px';
-      iframe.style.height = height + 'px';
-    };
-
-    // Set the iframe's onload event listener.
-    iframe.addEventListener('load', onLoad);
-
-    // Return a function to remove the event listener on unmount.
-    return () => {
-      iframe.removeEventListener('load', onLoad);
-    };
-  }, []);
-
   return (
     <>
       <Navbar />
