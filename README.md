@@ -16,8 +16,6 @@ A collaborative platform for educators to improve their lesson plans with feedba
 
 LessonCollab is a valuable platform designed to empower educators. It enables them to upload their lesson plans, receive constructive feedback from fellow educators, and implement the suggested improvements at their discretion. Additionally, LessonCollab fosters collaboration by providing an opportunity for educators to learn from each other's feedback and integrate valuable insights into their own lessons. By promoting knowledge sharing and continuous improvement, LessonCollab empowers educators to enhance the quality of their teaching materials and create more impactful learning experiences.
 
----
-
 ## Features
 
 ### OAuth for Easy Sign-In
@@ -39,8 +37,6 @@ LessonCollab is a valuable platform designed to empower educators. It enables th
 ### Create, Read, Update, and Delete Lesson Posts
 
 - LessonCollab allows educators to effortlessly create lesson posts, update them as needed, and remove outdated content.
-
----
 
 ## Roadmap
 
@@ -70,13 +66,9 @@ LessonCollab is a valuable platform designed to empower educators. It enables th
 
 The roadmap outlines key features and enhancements to be implemented in the future development of the platform. These additions will enhance user engagement, promote a positive community experience, and optimize compatibility across different devices and browsers.
 
----
-
 ## Visit LessonCollab
 
 [Visit LessonCollab today!](https://www.lessoncollab.com/)
-
----
 
 ## Let's Connect
 
