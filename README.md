@@ -59,29 +59,29 @@ LessonCollab is a valuable platform designed to empower educators. It enables th
 
 ## Roadmap
 
-1. **Bookmarking:**
+1.  **Bookmarking:**
 
-   - Implement a bookmarking functionality that allows users to save and revisit lessons for future reference. This feature enhances user convenience and enables easy access to important content.
+    - Implement a bookmarking functionality that allows users to save and revisit lessons for future reference. This feature enhances user convenience and enables easy access to important content.
 
-2. **Comment Reply Functionality:**
+2.  **Comment Replies:**
 
-   - Enhance the commenting system to enable users to reply directly to specific comments. This promotes more focused and structured discussions, facilitating effective communication among users.
+- Enhance the commenting system to enable users to reply directly to specific comments. This promotes more focused and structured discussions, facilitating effective communication among users.
 
-3. **Flagging System:**
+3.  **Flagging System:**
 
-   - Introduce a flagging system that empowers the community to address content that may not align with community guidelines or purpose. Users can flag both comments and posts, ensuring a safe and constructive environment for everyone.
+    - Introduce a flagging system that empowers the community to address content that may not align with community guidelines or purpose. Users can flag both comments and posts, ensuring a safe and constructive environment for everyone.
 
-4. **Improved PDF Viewing on iOS Mobile:**
+4.  **Improved PDF Viewing on iOS Mobile:**
 
-   - Address the issue of PDFs displayed within iFrames on iOS mobile devices, particularly in Safari. Implement a solution that ensures the PDFs are fully viewable and scrollable, allowing a seamless and user-friendly experience for iOS users.
+    - Address the issue of PDFs displayed within iFrames on iOS mobile devices, particularly in Safari. Implement a solution that ensures the PDFs are fully viewable and scrollable, allowing a seamless and user-friendly experience for iOS users.
 
-5. **In-App Notifications:**
+5.  **In-App Notifications:**
 
-   - Stay connected and manage your interactions with other users seamlessly through our in-app notification system. Receive real-time notifications within the app, keeping you informed about important updates, messages, and interactions. With our intuitive interface, you can effortlessly engage with notifications, ensuring you never miss out on any meaningful conversations or opportunities for collaboration.
+    - Stay connected and manage your interactions with other users seamlessly through our in-app notification system. Receive real-time notifications within the app, keeping you informed about important updates, messages, and interactions. With our intuitive interface, you can effortlessly engage with notifications, ensuring you never miss out on any meaningful conversations or opportunities for collaboration.
 
-6. **Direct Messages:**
+6.  **Direct Messages:**
 
-   - Enhance your communication and collaboration with seamless one-on-one conversations within LessonCollab.
+    - Enhance your communication and collaboration with seamless one-on-one conversations within LessonCollab.
 
 The roadmap outlines key features and enhancements to be implemented in the future development of the platform. These additions will enhance user engagement, promote a positive community experience, and optimize compatibility across different devices and browsers.
 
