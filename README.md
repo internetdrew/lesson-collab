@@ -59,7 +59,7 @@ LessonCollab is a valuable platform designed to empower educators. It enables th
 
 ## Roadmap
 
-1. **Bookmarking Feature:**
+1. **Bookmarking:**
 
    - Implement a bookmarking functionality that allows users to save and revisit lessons for future reference. This feature enhances user convenience and enables easy access to important content.
 
