@@ -65,7 +65,7 @@ LessonCollab is a valuable platform designed to empower educators. It enables th
 
 2.  **Comment Replies:**
 
-- Enhance the commenting system to enable users to reply directly to specific comments. This promotes more focused and structured discussions, facilitating effective communication among users.
+    - Enhance the commenting system to enable users to reply directly to specific comments. This promotes more focused and structured discussions, facilitating effective communication among users.
 
 3.  **Flagging System:**
 
