@@ -91,5 +91,5 @@ The roadmap outlines key features and enhancements to be implemented in the futu
 
 ## Let's Connect
 
-- [Follow me on Twitter](https://twitter.com/_internetdrew_)
+- [Follow me on Twitter](https://twitter.com/_internetdrew)
 - [Let's connect on LinkedIn](https://www.linkedin.com/in/internetdrew/)
