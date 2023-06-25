@@ -16,6 +16,24 @@ A collaborative platform for educators to improve their lesson plans with feedba
 
 LessonCollab is a valuable platform designed to empower educators. It enables them to upload their lesson plans, receive constructive feedback from fellow educators, and implement the suggested improvements at their discretion. Additionally, LessonCollab fosters collaboration by providing an opportunity for educators to learn from each other's feedback and integrate valuable insights into their own lessons. By promoting knowledge sharing and continuous improvement, LessonCollab empowers educators to enhance the quality of their teaching materials and create more impactful learning experiences.
 
+## Technology
+
+### Next.js
+
+- Next.js is a versatile React framework that powers LessonCollab, enabling us to deliver a seamless and performant user experience. With Next.js, the LessonCollab platform benefits from efficient rendering, server-side rendering capabilities, and dynamic routing.
+
+### Supabase
+
+- Supabase is a PostgreSQL database-as-a-service, to provide a robust and scalable backend infrastructure. Supabase ensures secure data storage, real-time updates, and easy integration with the frontend.
+
+### React Hook Form
+
+- LessonCollab takes advantage of React Hook Form, a lightweight and flexible form library, to simplify and streamline the process of form data handling within the app.
+
+### Formidable
+
+- Formidable is a powerful tool that streamlines file transfers from the front end to the back end of LessonCollab. With Formidable, handling file uploads becomes effortless, allowing LessonCollab to securely push files to cloud-based storage while efficiently storing relevant file information in the database.
+
 ## Features
 
 ### OAuth for Easy Sign-In
