@@ -7,6 +7,7 @@ A collaborative platform for educators to improve their lesson plans with feedba
 ## Table of contents
 
 - [Introduction](#introduction)
+- [Technology](#technology)
 - [Features](#features)
 - [Roadmap](#roadmap)
 - [Visit LessonCollab](#visit-lessoncollab)
