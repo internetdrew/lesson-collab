@@ -93,3 +93,4 @@ The roadmap outlines key features and enhancements to be implemented in the futu
 
 - [Follow me on Twitter](https://twitter.com/_internetdrew)
 - [Let's connect on LinkedIn](https://www.linkedin.com/in/internetdrew/)
+- Email me: andrew [at] internetdrew [dot] com
