@@ -2,7 +2,7 @@
 
 A collaborative platform for educators to improve their lesson plans with feedback from their peers.
 
-![Application screenshot](./public/lesson_collab_screenshot.png)
+![Application screenshot](./public/screenshot.png)
 
 ## Table of contents
 
