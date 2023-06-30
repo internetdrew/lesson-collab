@@ -61,7 +61,7 @@ export default function Home({ posts }) {
           <Feed posts={posts} />
         ) : (
           <p className='text-center text-2xl font-semibold mt-20'>
-            Sorry, no posts on this subjects... yet.
+            Sorry, no posts on this subject... yet.
           </p>
         )}
       </Layout>
