@@ -38,7 +38,7 @@ export default function Home({ posts }) {
       <Head>
         <meta
           property='og:title'
-          content='LessonCollab: A Platform for Improving Lesson Plans'
+          content='LessonCollab: A Platform for Collaborative Lesson Planning'
         />
         <meta property='og:type' content='website' />
         <meta
