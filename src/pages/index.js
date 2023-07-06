@@ -36,6 +36,9 @@ export default function Home({ posts }) {
   return (
     <>
       <Head>
+        <title>
+          LessonCollab: A Platform for Collaborative Lesson Planning
+        </title>
         <meta
           property='og:title'
           content='LessonCollab: A Platform for Collaborative Lesson Planning'
