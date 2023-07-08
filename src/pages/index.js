@@ -7,7 +7,7 @@ import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import Head from 'next/head';
 
-export default function Home({ posts }) {
+export default async function Home({ posts }) {
   const setPosts = useSetRecoilState(postsState);
   const setCurrentUser = useSetRecoilState(userState);
 
@@ -27,7 +27,7 @@ export default function Home({ posts }) {
 
   useEffect(() => {
     getSetCurrentUser();
-  });
+  }, []);
 
   useEffect(() => {
     setPosts(posts);
