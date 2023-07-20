@@ -20,27 +20,17 @@ export default async function handler(req, res) {
 
     switch (method) {
       case 'GET':
-        if (subject) {
-          const { data } = await supabase
-            .from('posts')
-            .select(
-              `*, users (
-            name, avatar
-            )`
-            )
-            .eq('subject', subject)
-            .order('id', { ascending: false });
-          return res.status(200).json(data);
-        }
-
-        const { data } = await supabase
+        let query = supabase
           .from('posts')
           .select(
-            `*, users (
-            name, avatar
-            )`
-          )
-          .order('id', { ascending: false });
+            `id, created_at, title, grade_level, subject, file_name, file_url, desc, uid, users (name, avatar)`
+          );
+
+        if (subject) {
+          query = query.eq('subject', subject);
+        }
+
+        const { data } = await query.order('id', { ascending: false });
         res.status(200).json(data);
         break;
 
