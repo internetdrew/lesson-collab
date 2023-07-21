@@ -37,7 +37,7 @@ const Navbar = () => {
   const logout = async () => {
     await supabase.auth.signOut();
     setCurrentUser(null);
-    router.push('/');
+    router.reload();
   };
 
   return (
