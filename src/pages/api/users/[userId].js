@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         )
         .eq('id', userId);
 
-      res.status(200).json(userData);
+      res.status(200).json(userData[0]);
       break;
     }
 
