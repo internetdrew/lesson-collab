@@ -265,9 +265,9 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  const res = await axios.get(
+  const { data: user } = await axios.get(
     `${process.env.SITE_URL}/api/users/${session?.user?.id}`
   );
 
-  return { props: { user: res.data[0] } };
+  return { props: { user } };
 };

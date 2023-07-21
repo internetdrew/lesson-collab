@@ -60,6 +60,7 @@ export const getServerSideProps = async ({ query }) => {
   const { data: userData } = await axios.get(
     `${process.env.SITE_URL}/api/users/${userId}`
   );
+  console.log(userData);
 
-  return { props: { userData: userData[0] } };
+  return { props: { userData } };
 };
