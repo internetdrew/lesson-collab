@@ -23,8 +23,7 @@ const Navbar = () => {
     if (!user) return;
     const userId = user?.id;
     try {
-      const res = await axios.get(`/api/users/${userId}`);
-      const userData = res.data;
+      const { data: userData } = await axios.get(`/api/users/${userId}`);
       setCurrentUser(userData);
     } catch (error) {
       console.error(error);
