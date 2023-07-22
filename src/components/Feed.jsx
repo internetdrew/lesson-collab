@@ -3,8 +3,8 @@ import { LessonPost } from './';
 const Feed = ({ posts }) => {
   return (
     <section>
-      {posts?.map((post, idx) => (
-        <LessonPost key={`post-${idx}`} post={post} />
+      {posts?.map(post => (
+        <LessonPost key={`post-${post.id}`} post={post} />
       ))}
     </section>
   );
