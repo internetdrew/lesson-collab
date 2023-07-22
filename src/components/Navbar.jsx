@@ -1,30 +1,16 @@
-'use client';
-
-import { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
-import { useRouter } from 'next/router';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { userState } from '../atoms/userAtom';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const Navbar = () => {
-  const currentUser = useRecoilValue(userState);
-  const setCurrentUser = useSetRecoilState(userState);
-  const user = useUser();
-  const router = useRouter();
-  const supabase = useSupabaseClient();
-
+const Navbar = ({ currentUser }) => {
   const logout = async () => {
     await supabase.auth.signOut();
-    setCurrentUser(null);
     router.reload();
   };
 

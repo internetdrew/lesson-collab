@@ -1,24 +1,13 @@
-'use client';
 import Head from 'next/head';
-import axios from 'axios';
-import { useRecoilState } from 'recoil';
+import { useMemo } from 'react';
 import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
-import { userState } from '../atoms/userAtom';
+import { useUserData } from '../hooks/useUserData';
 import { useUser } from '@supabase/auth-helpers-react';
-import { useEffect } from 'react';
 
 const Layout = ({ children, newUsers }) => {
-  const [currentUser, setCurrentUser] = useRecoilState(userState);
   const user = useUser();
-
-  const fetchUser = async () => {
-    const res = await axios.get(`/api/users/${user?.id}`);
-    setCurrentUser(res.data?.[0]);
-  };
-
-  useEffect(() => {
-    if (user) fetchUser();
-  }, [user]);
+  const userId = user && user.id;
+  const currentUser = useUserData(userId);
 
   return (
     <div className='flex min-h-full flex-col'>
@@ -37,14 +26,14 @@ const Layout = ({ children, newUsers }) => {
           href='/favicon-16x16.png'
         />
       </Head>
-      <Navbar />
+      <Navbar currentUser={currentUser} />
       <div className='mx-auto flex w-full max-w-7xl items-start gap-x-8 px-4 py-28 sm:px-6 lg:px-8'>
         <aside className='sticky top-28 hidden w-72 shrink-0 md:block'>
           {/* Left column area */}
           <div className='shadow bg-white p-4 rounded-3xl'>
             {currentUser ? (
               <>
-                <NavProfile />
+                <NavProfile currentUser={currentUser} />
                 <hr className='mb-8 mt-6 text-gray-500' />
               </>
             ) : null}

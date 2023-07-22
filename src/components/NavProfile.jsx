@@ -5,9 +5,7 @@ import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../atoms/userAtom';
 
-const NavProfile = () => {
-  const currentUser = useRecoilValue(userState);
-
+const NavProfile = ({ currentUser }) => {
   return (
     <div className='flex items-center'>
       <span className='inline-flex h-full w-auto items-center overflow-hidden justify-center rounded-full bg-gray-500'>
