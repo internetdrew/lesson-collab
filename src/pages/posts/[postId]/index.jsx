@@ -13,7 +13,7 @@ import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-const PostDetails = ({ post }) => {
+const PostDetails = ({ post, newUsers }) => {
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
@@ -27,7 +27,7 @@ const PostDetails = ({ post }) => {
   };
 
   return (
-    <Layout>
+    <Layout newUsers={newUsers}>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
           <span className='inline-flex overflow-hidden shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
@@ -119,7 +119,11 @@ export const getServerSideProps = async ({ query }) => {
       `${process.env.SITE_URL}/api/posts/${postId}`
     );
 
-    return { props: { post: postData[0] } };
+    const { data: newUsers } = await axios.get(
+      `${process.env.SITE_URL}/api/users`
+    );
+
+    return { props: { post: postData[0], newUsers } };
   } catch (error) {
     console.error(error);
   }
