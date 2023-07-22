@@ -22,21 +22,6 @@ const Navbar = () => {
   const router = useRouter();
   const supabase = useSupabaseClient();
 
-  const fetchUser = async () => {
-    if (!user) return;
-    const userId = user?.id;
-    try {
-      const { data: userData } = await axios.get(`/api/users/${userId}`);
-      setCurrentUser(userData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, [user]);
-
   const logout = async () => {
     await supabase.auth.signOut();
     setCurrentUser(null);

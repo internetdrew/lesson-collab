@@ -7,7 +7,8 @@ import { userState } from '../atoms/userAtom';
 
 export default function Home({ posts, newUsers, currentUser }) {
   const setCurrentUser = useSetRecoilState(userState);
-  if (currentUser) setCurrentUser(currentUser);
+  console.log(currentUser);
+  if (currentUser) setCurrentUser(currentUser[0]);
 
   return (
     <>
@@ -73,7 +74,7 @@ export const getServerSideProps = async ctx => {
     );
 
     return {
-      props: { posts, newUsers, currentUser: currentUser?.[0] || currentUser },
+      props: { posts, newUsers, currentUser },
     };
   } catch (error) {
     console.error(error);
