@@ -102,7 +102,7 @@ const PostDetails = ({ post }) => {
           </div>
         </div>
         <div className='px-4 py-4 sm:px-6'>
-          <Comments postId={post?.id} />
+          <Comments comments={post?.comments} />
         </div>
       </div>
     </Layout>
