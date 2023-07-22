@@ -55,12 +55,10 @@ export default function UserProfile({ userData }) {
 
 export const getServerSideProps = async ({ query }) => {
   const { userId } = query;
-  console.log(userId);
 
   const { data: userData } = await axios.get(
     `${process.env.SITE_URL}/api/users/${userId}`
   );
-  console.log(userData);
 
   return { props: { userData } };
 };
