@@ -16,7 +16,7 @@ const schema = z.object({
     .max(455, { message: 'Feedback must be less than 455 characters.' }),
 });
 
-const AddCommentForm = ({ postId, setComments }) => {
+const AddCommentForm = () => {
   const setScroll = useSetRecoilState(scrollState);
   const {
     register,
