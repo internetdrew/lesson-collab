@@ -1,15 +1,18 @@
-import { useState } from 'react';
+'use client';
 import {
   EllipsisVerticalIcon,
   HandThumbUpIcon,
 } from '@heroicons/react/24/outline';
+import { useUser } from '@supabase/auth-helpers-react';
 import { HandThumbUpIcon as LikedThumbUp } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import moment from 'moment';
 import Link from 'next/link';
 
 const Comment = ({ comment }) => {
-  const [userLikedPost, setUserLikedPost] = useState(false);
+  const user = useUser();
+
+  const currentUserIsCommentOwner = user?.id === comment?.user?.id;
 
   return (
     <div className='flex flex-col items-start mb-6'>
@@ -17,7 +20,7 @@ const Comment = ({ comment }) => {
         <span className='inline-flex shrink-0 mr-2 h-8 w-8 overflow-hidden items-center justify-center rounded-full bg-gray-500 sm:h-10 sm:w-10'>
           {comment ? (
             <Image
-              src={comment?.users?.avatar}
+              src={comment?.user?.avatar}
               alt='user image'
               width={500}
               height={500}
@@ -34,26 +37,27 @@ const Comment = ({ comment }) => {
           )}
         </span>
         <div>
-          <Link href={`/profile/${comment?.users?.id}`} className='-mb-1 block'>
-            {comment?.users?.name}
+          <Link href={`/profile/${comment?.user?.id}`} className='-mb-1 block'>
+            {comment?.user?.name}
           </Link>
           <span className='text-gray-500 text-sm'>
             {moment(comment?.created_at).calendar()}
           </span>
         </div>
-        <EllipsisVerticalIcon className='h-6 w-6 ml-auto text-gray-500' />
+        {currentUserIsCommentOwner && (
+          <EllipsisVerticalIcon className='h-6 w-6 ml-auto text-gray-500' />
+        )}
       </div>
       <div>
         <p className='mb-2'>{comment?.text}</p>
         <div className='flex items-center gap-4 text-gray-500'>
-          <button onClick={() => setUserLikedPost(!userLikedPost)}>
+          {/* <button onClick={() => setUserLikedPost(!userLikedPost)}>
             {userLikedPost ? (
               <LikedThumbUp className='h-5 w-5 text-blue-600' />
             ) : (
               <HandThumbUpIcon className='h-5 w-5' />
             )}
-          </button>
-          {/* <button type='button'>Reply</button> */}
+          </button> */}
         </div>
       </div>
     </div>
