@@ -14,6 +14,7 @@ import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const PostDetails = ({ post, newUsers }) => {
+  console.log(post);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
