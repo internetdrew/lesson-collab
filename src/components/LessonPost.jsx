@@ -1,20 +1,9 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineComment } from 'react-icons/ai';
 import Image from 'next/image';
-import axios from 'axios';
 
 const LessonPost = ({ post }) => {
-  const [commentCount, setCommentCount] = useState(null);
-
-  const fetchComments = async () => {
-    const comments = await axios(`/api/comments/${post?.id}`);
-    setCommentCount(comments?.data?.length);
-  };
-
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  const { comments } = post;
 
   return (
     <article className='overflow-hidden rounded-lg bg-white shadow py-6 mb-8'>
@@ -47,10 +36,10 @@ const LessonPost = ({ post }) => {
             </Link>
           </div>
           <div className='flex items-center ml-auto gap-4'>
-            {commentCount ? (
+            {comments.length ? (
               <span className='flex items-center'>
                 <AiOutlineComment className='text-lg' />
-                <span className='ml-1'>{commentCount}</span>
+                <span className='ml-1'>{comments.length}</span>
               </span>
             ) : null}
             <button className='my-2 px-3 py-1 bg-teal-600 text-white rounded duration-300 hover:shadow-lg hover:bg-teal-500'>
