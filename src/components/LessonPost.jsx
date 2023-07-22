@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 const LessonPost = ({ post }) => {
   const { comments } = post;
+  const postHasComments = !!comments[0]?.count;
+  const commentCount = comments[0]?.count;
 
   return (
     <article className='overflow-hidden rounded-lg bg-white shadow py-6 mb-8'>
@@ -36,10 +38,10 @@ const LessonPost = ({ post }) => {
             </Link>
           </div>
           <div className='flex items-center ml-auto gap-4'>
-            {comments.length ? (
+            {postHasComments ? (
               <span className='flex items-center'>
                 <AiOutlineComment className='text-lg' />
-                <span className='ml-1'>{comments.length}</span>
+                <span className='ml-1'>{commentCount}</span>
               </span>
             ) : null}
             <button className='my-2 px-3 py-1 bg-teal-600 text-white rounded duration-300 hover:shadow-lg hover:bg-teal-500'>
