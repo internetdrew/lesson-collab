@@ -6,8 +6,7 @@ import { scrollState } from '../atoms/scrollAtom';
 import { useUser } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
 
-const Comments = ({ postId }) => {
-  const [comments, setComments] = useState([]);
+const Comments = ({ comments }) => {
   const [scrollToBottom, setScrollToBottom] = useRecoilState(scrollState);
   const lastCommentRef = useRef(null);
   const user = useUser();
@@ -21,10 +20,6 @@ const Comments = ({ postId }) => {
       setScrollToBottom(false);
     }
   }, [scrollToBottom]);
-
-  useEffect(() => {
-    axios.get(`/api/comments/${postId}`).then(res => setComments(res.data));
-  }, []);
 
   return (
     <div>
@@ -40,8 +35,8 @@ const Comments = ({ postId }) => {
         </div>
       )}
       {comments?.length ? <p className='text-gray-500 mb-2'>Feedback</p> : null}
-      {comments?.map(comment => (
-        <Comment key={comment?.id} comment={comment} />
+      {comments?.map((comment, idx) => (
+        <Comment key={`comment-${idx}`} comment={comment} />
       ))}
       <div ref={lastCommentRef} />
     </div>
