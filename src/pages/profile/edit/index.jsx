@@ -21,6 +21,7 @@ const schema = z.object({
 });
 
 export default function ProfileEditor({ user }) {
+  console.log(user);
   const imgInputRef = useRef(null);
   const router = useRouter();
 
@@ -269,5 +270,5 @@ export const getServerSideProps = async ctx => {
     `${process.env.SITE_URL}/api/users/${session?.user?.id}`
   );
 
-  return { props: { user } };
+  return { props: { user: user[0] } };
 };
