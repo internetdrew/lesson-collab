@@ -46,7 +46,7 @@ const PostDetails = ({ post }) => {
               {post?.users?.name}
             </Link>
             <span className='text-gray-500 text-sm'>
-              Posted {moment(post?.created_at).calendar()}
+              Posted {moment(post?.created_at).fromNow()}
             </span>
           </div>
           {currentUserIsPostOwner ? (
