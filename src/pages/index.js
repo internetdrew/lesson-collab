@@ -2,7 +2,7 @@ import { Layout, Feed, SubSelector } from '../components';
 import axios from 'axios';
 import Head from 'next/head';
 
-export default function Home({ posts, currentUser }) {
+export default function Home({ posts }) {
   return (
     <>
       <Head>
