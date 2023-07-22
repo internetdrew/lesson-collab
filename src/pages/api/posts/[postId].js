@@ -16,7 +16,9 @@ export default async function handler(req, res) {
       case 'GET': {
         const { data, error } = await supabase
           .from('posts')
-          .select(`*, users(id, avatar, name)`)
+          .select(
+            `created_at, title, grade_level, subject, file_name, file_url, desc, users(avatar, name), comments(text, user:users(id, name, avatar)) `
+          )
           .eq('id', postId);
 
         if (error) return res.status(400).json(error);
