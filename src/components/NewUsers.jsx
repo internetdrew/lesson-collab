@@ -1,29 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-const NewUsers = () => {
-  const [newUsers, setNewUsers] = useState([]);
-
-  const fetchNewUsers = async () => {
-    try {
-      const { data: newUsers } = await axios.get('/api/users');
-      setNewUsers(newUsers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchNewUsers();
-  }, []);
-
+const NewUsers = ({ newUsers }) => {
   return (
     <div className='mt-6'>
-      {newUsers?.map(user => (
-        <div key={user?.id} className='flex items-center mb-3'>
+      {newUsers?.map((user, idx) => (
+        <div key={`user-${idx}`} className='flex items-center mb-3'>
           {user?.avatar ? (
             <Image
               width={500}
