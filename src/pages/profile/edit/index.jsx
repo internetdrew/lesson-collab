@@ -21,7 +21,6 @@ const schema = z.object({
 });
 
 export default function ProfileEditor({ user }) {
-  console.log(user);
   const imgInputRef = useRef(null);
   const router = useRouter();
 

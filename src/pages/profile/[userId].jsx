@@ -7,6 +7,8 @@ export default function UserProfile({ userData }) {
   const { posts } = userData[0];
   const user = userData[0];
 
+  const sortedPosts = posts.sort((a, b) => b.id - a.id);
+
   return (
     <div>
       <header>
@@ -46,7 +48,7 @@ export default function UserProfile({ userData }) {
           <h2 className='text-xl font-semibold mb-2 bg-white w-max px-4 py-2 rounded-lg'>
             {user?.name}'s Posts
           </h2>
-          <Feed posts={posts} />
+          <Feed posts={sortedPosts} />
         </div>
       </main>
     </div>

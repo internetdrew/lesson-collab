@@ -6,7 +6,6 @@ import { userState } from '../atoms/userAtom';
 
 export default function Home({ posts, newUsers, currentUser }) {
   const setCurrentUser = useSetRecoilState(userState);
-  console.log(currentUser);
   if (currentUser) setCurrentUser(currentUser[0]);
 
   return (

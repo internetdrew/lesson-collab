@@ -13,10 +13,9 @@ export default async function handler(req, res) {
       const { data: userData } = await supabase
         .from('users')
         .select(
-          `id, name, avatar, about, location, website, posts(title, desc, id, uid, users(id, name, avatar))`
+          `id, name, avatar, about, location, website, posts(title, desc, id, uid, users(id, name, avatar), comments(id, text))`
         )
         .eq('id', userId);
-      console.log(userData);
 
       res.status(200).json(userData);
       break;
