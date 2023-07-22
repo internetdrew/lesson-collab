@@ -6,6 +6,7 @@ import { useUser } from '@supabase/auth-helpers-react';
 
 const Layout = ({ children, newUsers }) => {
   const user = useUser();
+  console.log(user);
   const userId = user && user.id;
   const currentUser = useUserData(userId);
 
