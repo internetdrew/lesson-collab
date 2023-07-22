@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         let query = supabase
           .from('posts')
           .select(
-            `id, created_at, title, grade_level, subject, file_name, file_url, desc, users(name, avatar), comments(count)`
+            `id, created_at, title, grade_level, subject, file_name, file_url, desc, users(id, name, avatar), comments(id, created_at, user_id, text)`
           );
 
         if (subject) {
