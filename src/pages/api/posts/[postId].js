@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         const { data, error } = await supabase
           .from('posts')
           .select(
-            `id, created_at, title, grade_level, subject, file_name, file_url, desc, users(id, avatar, name), comments(text, user:users(id, name, avatar)) `
+            `id, created_at, title, grade_level, subject, file_name, file_url, desc, users(id, avatar, name), comments(id, text, post_id, user:users(id, name, avatar)) `
           )
           .eq('id', postId);
 
