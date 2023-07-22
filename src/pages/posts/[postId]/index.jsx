@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Layout, Comments } from '@/src/components';
+import { Layout, Comments, AddCommentForm } from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
@@ -14,7 +14,6 @@ import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const PostDetails = ({ post, newUsers }) => {
-  console.log(post);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
@@ -88,19 +87,22 @@ const PostDetails = ({ post, newUsers }) => {
 
           <Link
             href={`/posts/${post?.id}/lesson-plan`}
-            className='bg-teal-600 block rounded-md text-white font-semibold mt-10 px-4 py-2 w-full mx-auto duration-300 text-center sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
+            className='bg-teal-600 block rounded-md text-white font-semibold my-10 px-4 py-2 w-full mx-auto duration-300 text-center sm:w-1/2 hover:bg-teal-500 hover:shadow-lg'
             target='_blank'
           >
             View the Lesson Plan
           </Link>
-
-          <div className='hidden gap-2 text-gray-400'>
-            <span>#topic</span>
-            <span>#topic</span>
-            <span>#topic</span>
-            <span>#topic</span>
-            <span>#topic</span>
-          </div>
+          {user ? (
+            <AddCommentForm postId={post?.id} />
+          ) : (
+            <div className='flex justify-center'>
+              <Link href='/login' className='text-teal-600 font-bold my-4'>
+                <button className='bg-teal-600 rounded-md text-white font-semibold px-4 py-2 mb-4 duration-300 text-center hover:bg-teal-500 hover:shadow-lg'>
+                  Sign in to chime in
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
         <div className='px-4 py-4 sm:px-6'>
           <Comments comments={post?.comments} />
@@ -112,9 +114,9 @@ const PostDetails = ({ post, newUsers }) => {
 
 export default PostDetails;
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ctx => {
   try {
-    const { postId } = query;
+    const { postId } = ctx.query;
 
     const { data: postData } = await axios.get(
       `${process.env.SITE_URL}/api/posts/${postId}`
