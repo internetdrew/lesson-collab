@@ -2,7 +2,7 @@ import { Layout, Feed, SubSelector } from '../components';
 import axios from 'axios';
 import Head from 'next/head';
 
-export default function Home({ posts }) {
+export default function Home({ posts, newUsers }) {
   return (
     <>
       <Head>
@@ -28,7 +28,7 @@ export default function Home({ posts }) {
         <meta property='og:site_name' content='LessonCollab' />
         <meta name='twitter:image:alt' content='LessonCollab banner' />
       </Head>
-      <Layout>
+      <Layout newUsers={newUsers}>
         <SubSelector />
         {posts.length ? (
           <Feed posts={posts} />
@@ -52,8 +52,12 @@ export const getServerSideProps = async ({ query }) => {
       }`
     );
 
+    const { data: newUsers } = await axios.get(
+      `${process.env.SITE_URL}/api/users`
+    );
+
     return {
-      props: { posts },
+      props: { posts, newUsers },
     };
   } catch (error) {
     console.error(error);
