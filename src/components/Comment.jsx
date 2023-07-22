@@ -41,7 +41,7 @@ const Comment = ({ comment }) => {
             {comment?.user?.name}
           </Link>
           <span className='text-gray-500 text-sm'>
-            {moment(comment?.created_at).calendar()}
+            {moment(comment?.created_at).fromNow()}
           </span>
         </div>
         {currentUserIsCommentOwner && (
