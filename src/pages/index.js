@@ -1,8 +1,14 @@
 import { Layout, Feed, SubSelector } from '../components';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import axios from 'axios';
 import Head from 'next/head';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../atoms/userAtom';
 
-export default function Home({ posts, newUsers }) {
+export default function Home({ posts, newUsers, currentUser }) {
+  const setCurrentUser = useSetRecoilState(userState);
+  setCurrentUser(currentUser);
+  console.log(currentUser);
   return (
     <>
       <Head>
@@ -28,7 +34,7 @@ export default function Home({ posts, newUsers }) {
         <meta property='og:site_name' content='LessonCollab' />
         <meta name='twitter:image:alt' content='LessonCollab banner' />
       </Head>
-      <Layout newUsers={newUsers}>
+      <Layout currentUser={currentUser} newUsers={newUsers}>
         <SubSelector />
         {posts.length ? (
           <Feed posts={posts} />
@@ -42,10 +48,19 @@ export default function Home({ posts, newUsers }) {
   );
 }
 
-export const getServerSideProps = async ({ query }) => {
-  const subject = query?.subject ? query?.subject.toLowerCase() : null;
+export const getServerSideProps = async ctx => {
+  const subject = ctx.query?.subject ? ctx.query?.subject.toLowerCase() : null;
+  const supabase = createServerSupabaseClient(ctx);
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   try {
+    const { data: currentUser } = await axios.get(
+      `${process.env.SITE_URL}/api/users/${session?.user?.id}`
+    );
+
     const { data: posts } = await axios.get(
       `${process.env.SITE_URL}/api/posts${
         subject ? `/?subject=${subject}` : ''
@@ -56,8 +71,9 @@ export const getServerSideProps = async ({ query }) => {
       `${process.env.SITE_URL}/api/users`
     );
 
+    console.log(currentUser[0]);
     return {
-      props: { posts, newUsers },
+      props: { posts, newUsers, currentUser: currentUser?.[0] },
     };
   } catch (error) {
     console.error(error);

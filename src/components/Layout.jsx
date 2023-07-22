@@ -23,7 +23,7 @@ const Layout = ({ children, newUsers }) => {
           href='/favicon-16x16.png'
         />
       </Head>
-      <Navbar />
+      <Navbar currentUser={currentUser} />
       <div className='mx-auto flex w-full max-w-7xl items-start gap-x-8 px-4 py-28 sm:px-6 lg:px-8'>
         <aside className='sticky top-28 hidden w-72 shrink-0 md:block'>
           {/* Left column area */}
