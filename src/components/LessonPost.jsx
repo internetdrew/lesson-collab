@@ -3,9 +3,7 @@ import { AiOutlineComment } from 'react-icons/ai';
 import Image from 'next/image';
 
 const LessonPost = ({ post }) => {
-  const { comments } = post;
-  const postHasComments = !!comments[0]?.count;
-  const commentCount = comments[0]?.count;
+  const commentCount = post?.comments?.length;
 
   return (
     <article className='overflow-hidden rounded-lg bg-white shadow py-6 mb-8'>
@@ -31,14 +29,14 @@ const LessonPost = ({ post }) => {
           <div>
             <p className='hidden sm:inline-block'>Posted by </p>{' '}
             <Link
-              href={`/profile/${post?.uid}`}
+              href={`/profile/${post?.users?.id}`}
               className='text-teal-600 duration-300 hover:text-teal-500'
             >
               {post?.users?.name}
             </Link>
           </div>
           <div className='flex items-center ml-auto gap-4'>
-            {postHasComments ? (
+            {commentCount ? (
               <span className='flex items-center'>
                 <AiOutlineComment className='text-lg' />
                 <span className='ml-1'>{commentCount}</span>
