@@ -16,6 +16,7 @@ export default async function handler(req, res) {
           `id, name, avatar, about, location, website, posts(title, desc, id, uid, users(id, name, avatar))`
         )
         .eq('id', userId);
+      console.log(userData);
 
       res.status(200).json(userData);
       break;

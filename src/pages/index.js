@@ -1,5 +1,4 @@
 import { Layout, Feed, SubSelector } from '../components';
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import axios from 'axios';
 import Head from 'next/head';
 import { useSetRecoilState } from 'recoil';
@@ -49,20 +48,10 @@ export default function Home({ posts, newUsers, currentUser }) {
   );
 }
 
-export const getServerSideProps = async ctx => {
-  const subject = ctx.query?.subject ? ctx.query?.subject.toLowerCase() : null;
-  const supabase = createServerSupabaseClient(ctx);
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+export const getServerSideProps = async ({ query }) => {
+  const subject = query?.subject ? query?.subject.toLowerCase() : null;
 
   try {
-    const { data: currentUser } = await axios.get(
-      `${process.env.SITE_URL}/api/users/${session?.user?.id}`
-    );
-    console.log(currentUser);
-
     const { data: posts } = await axios.get(
       `${process.env.SITE_URL}/api/posts${
         subject ? `/?subject=${subject}` : ''
@@ -74,7 +63,7 @@ export const getServerSideProps = async ctx => {
     );
 
     return {
-      props: { posts, newUsers, currentUser },
+      props: { posts, newUsers },
     };
   } catch (error) {
     console.error(error);

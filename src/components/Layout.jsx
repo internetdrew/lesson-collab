@@ -1,10 +1,24 @@
+'use client';
 import Head from 'next/head';
-import { useRecoilValue } from 'recoil';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
 import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
 import { userState } from '../atoms/userAtom';
+import { useUser } from '@supabase/auth-helpers-react';
+import { useEffect } from 'react';
 
 const Layout = ({ children, newUsers }) => {
-  const currentUser = useRecoilValue(userState);
+  const [currentUser, setCurrentUser] = useRecoilState(userState);
+  const user = useUser();
+
+  const fetchUser = async () => {
+    const res = await axios.get(`/api/users/${user?.id}`);
+    setCurrentUser(res.data?.[0]);
+  };
+
+  useEffect(() => {
+    if (user) fetchUser();
+  }, [user]);
 
   return (
     <div className='flex min-h-full flex-col'>
@@ -23,7 +37,7 @@ const Layout = ({ children, newUsers }) => {
           href='/favicon-16x16.png'
         />
       </Head>
-      <Navbar currentUser={currentUser} />
+      <Navbar />
       <div className='mx-auto flex w-full max-w-7xl items-start gap-x-8 px-4 py-28 sm:px-6 lg:px-8'>
         <aside className='sticky top-28 hidden w-72 shrink-0 md:block'>
           {/* Left column area */}
