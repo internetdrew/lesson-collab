@@ -8,7 +8,7 @@ import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '../atoms/userAtom';
 
 function classNames(...classes) {
@@ -17,6 +17,7 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const currentUser = useRecoilValue(userState);
+  const setCurrentUser = useSetRecoilState(userState);
   const user = useUser();
   const router = useRouter();
   const supabase = useSupabaseClient();

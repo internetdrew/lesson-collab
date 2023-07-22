@@ -7,8 +7,8 @@ import { userState } from '../atoms/userAtom';
 
 export default function Home({ posts, newUsers, currentUser }) {
   const setCurrentUser = useSetRecoilState(userState);
-  setCurrentUser(currentUser);
-  console.log(currentUser);
+  if (currentUser) setCurrentUser(currentUser);
+
   return (
     <>
       <Head>
@@ -60,6 +60,7 @@ export const getServerSideProps = async ctx => {
     const { data: currentUser } = await axios.get(
       `${process.env.SITE_URL}/api/users/${session?.user?.id}`
     );
+    console.log(currentUser);
 
     const { data: posts } = await axios.get(
       `${process.env.SITE_URL}/api/posts${
@@ -71,9 +72,8 @@ export const getServerSideProps = async ctx => {
       `${process.env.SITE_URL}/api/users`
     );
 
-    console.log(currentUser[0]);
     return {
-      props: { posts, newUsers, currentUser: currentUser?.[0] },
+      props: { posts, newUsers, currentUser: currentUser?.[0] || currentUser },
     };
   } catch (error) {
     console.error(error);
