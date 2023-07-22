@@ -15,41 +15,45 @@ const Comment = ({ comment }) => {
   const currentUserIsCommentOwner = user?.id === comment?.user?.id;
 
   return (
-    <div className='flex flex-col items-start mb-6'>
-      <div className='flex items-center mb-3 w-full'>
-        <span className='inline-flex shrink-0 mr-2 h-8 w-8 overflow-hidden items-center justify-center rounded-full bg-gray-500 sm:h-10 sm:w-10'>
-          {comment ? (
-            <Image
-              src={comment?.user?.avatar}
-              alt='user image'
-              width={500}
-              height={500}
-              style={{ objectFit: 'cover' }}
-            />
-          ) : (
-            <svg
-              className='h-12 w-12 text-gray-300'
-              fill='currentColor'
-              viewBox='0 0 24 24'
-            >
-              <path d='M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z' />
-            </svg>
-          )}
-        </span>
+    <div className='mb-6'>
+      <div className='flex items-start w-full'>
         <div>
-          <Link href={`/profile/${comment?.user?.id}`} className='-mb-1 block'>
+          <span className='inline-flex shrink-0 mr-2 h-8 w-8 overflow-hidden items-center justify-center rounded-full bg-gray-500 sm:h-10 sm:w-10'>
+            {comment ? (
+              <Image
+                src={comment?.user?.avatar}
+                alt='user image'
+                width={500}
+                height={500}
+                style={{ objectFit: 'cover' }}
+              />
+            ) : (
+              <svg
+                className='h-12 w-12 text-gray-300'
+                fill='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path d='M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z' />
+              </svg>
+            )}
+          </span>
+        </div>
+        <div>
+          <Link href={`/profile/${comment?.user?.id}`} className='-mb-2 block'>
             {comment?.user?.name}
           </Link>
           <span className='text-gray-500 text-sm'>
             {moment(comment?.created_at).fromNow()}
           </span>
+          <p className='mb-2'>{comment?.text}</p>
         </div>
         {currentUserIsCommentOwner && (
-          <EllipsisVerticalIcon className='h-6 w-6 ml-auto text-gray-500' />
+          <div className='ml-auto'>
+            <EllipsisVerticalIcon className='h-6 w-6 ml-auto text-gray-500' />
+          </div>
         )}
       </div>
       <div>
-        <p className='mb-2'>{comment?.text}</p>
         <div className='flex items-center gap-4 text-gray-500'>
           {/* <button onClick={() => setUserLikedPost(!userLikedPost)}>
             {userLikedPost ? (

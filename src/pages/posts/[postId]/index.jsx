@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout, Comments, AddCommentForm } from '@/src/components';
 import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
+import { useRef } from 'react';
 import Link from 'next/link';
 import moment from 'moment';
 import { useRouter } from 'next/router';
@@ -14,9 +15,11 @@ import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const PostDetails = ({ post, newUsers }) => {
+  const [comments, setComments] = useState(post?.comments);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
+  const lastCommentRef = useRef(null);
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
 
@@ -93,7 +96,11 @@ const PostDetails = ({ post, newUsers }) => {
             View the Lesson Plan
           </Link>
           {user ? (
-            <AddCommentForm postId={post?.id} />
+            <AddCommentForm
+              postId={post?.id}
+              setComments={setComments}
+              lastCommentRef={lastCommentRef}
+            />
           ) : (
             <div className='flex justify-center'>
               <Link href='/login' className='text-teal-600 font-bold my-4'>
@@ -105,7 +112,8 @@ const PostDetails = ({ post, newUsers }) => {
           )}
         </div>
         <div className='px-4 py-4 sm:px-6'>
-          <Comments comments={post?.comments} />
+          <Comments comments={comments} />
+          <div ref={lastCommentRef} />
         </div>
       </div>
     </Layout>

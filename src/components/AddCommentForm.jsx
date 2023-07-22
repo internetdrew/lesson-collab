@@ -16,17 +16,16 @@ const schema = z.object({
     .max(455, { message: 'Feedback must be less than 455 characters.' }),
 });
 
-const AddCommentForm = () => {
+const AddCommentForm = ({ postId, setComments, lastCommentRef }) => {
   const setScroll = useSetRecoilState(scrollState);
+  const router = useRouter();
+  const user = useUser();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
-
-  const router = useRouter();
-  const user = useUser();
 
   const onSubmit = async data => {
     const { comment } = data;
@@ -40,9 +39,11 @@ const AddCommentForm = () => {
 
     if (commentRes.status === 200) {
       reset();
-      const res = await axios.get(`/api/comments/${postId}`);
-      setComments(res.data);
-      setScroll(true);
+      setComments(prevComments => [...prevComments, commentRes?.data?.[0]]);
+      lastCommentRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
     return;
   };

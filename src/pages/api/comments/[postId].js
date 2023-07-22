@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       const { data, error } = await supabase
         .from('comments')
         .insert({ post_id: postId, user_id: userId, text: comment })
-        .select(`text, user:users(name, avatar)`);
+        .select(`text, user:users(id, name, avatar)`);
       if (!error) res.status(200).json(data);
       break;
     }
