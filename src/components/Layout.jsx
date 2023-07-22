@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
 import { userState } from '../atoms/userAtom';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, newUsers }) => {
   const currentUser = useRecoilValue(userState);
 
   return (
@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
             <h3 className='text-lg text-gray-700 font-semibold text-center'>
               Look who's here!
             </h3>
-            <NewUsers />
+            <NewUsers newUsers={newUsers} />
           </div>
         </aside>
       </div>
