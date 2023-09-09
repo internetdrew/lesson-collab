@@ -1,12 +1,10 @@
 import Head from 'next/head';
-import { useMemo } from 'react';
 import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
 import { useUserData } from '../hooks/useUserData';
 import { useUser } from '@supabase/auth-helpers-react';
 
 const Layout = ({ children, newUsers }) => {
   const user = useUser();
-  console.log(user);
   const userId = user && user.id;
   const currentUser = useUserData(userId);
 

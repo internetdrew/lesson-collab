@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     });
 
     switch (method) {
-      case 'GET':
+      case 'GET': {
         let query = supabase
           .from('posts')
           .select(
@@ -30,9 +30,10 @@ export default async function handler(req, res) {
           query = query.eq('subject', subject);
         }
 
-        const { data } = await query.order('id', { ascending: false });
+        const { data, error } = await query.order('id', { ascending: false });
         res.status(200).json(data);
         break;
+      }
 
       case 'POST':
         const {

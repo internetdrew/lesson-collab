@@ -1,8 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-const NewUsers = ({ newUsers }) => {
+const NewUsers = () => {
+  const [newUsers, setNewUsers] = useState([]);
+  const fetchNewUsers = async () => {
+    const { data } = await axios.get('/api/users');
+    setNewUsers(data);
+  };
+
+  useEffect(() => {
+    fetchNewUsers();
+  }, []);
+
   return (
     <div className='mt-6'>
       {newUsers?.map((user, idx) => (

@@ -1,10 +1,9 @@
 import { Layout, Feed, SubSelector } from '../components';
-import axios from 'axios';
 import Head from 'next/head';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../atoms/userAtom';
 
-export default function Home({ posts, newUsers, currentUser }) {
+export default function Home({ currentUser }) {
   const setCurrentUser = useSetRecoilState(userState);
   if (currentUser) setCurrentUser(currentUser[0]);
 
@@ -33,38 +32,10 @@ export default function Home({ posts, newUsers, currentUser }) {
         <meta property='og:site_name' content='LessonCollab' />
         <meta name='twitter:image:alt' content='LessonCollab banner' />
       </Head>
-      <Layout currentUser={currentUser} newUsers={newUsers}>
+      <Layout currentUser={currentUser}>
         <SubSelector />
-        {posts.length ? (
-          <Feed posts={posts} />
-        ) : (
-          <p className='text-center text-2xl font-semibold mt-20'>
-            Sorry, no posts on this subject... yet.
-          </p>
-        )}
+        <Feed />
       </Layout>
     </>
   );
 }
-
-export const getServerSideProps = async ({ query }) => {
-  const subject = query?.subject ? query?.subject.toLowerCase() : null;
-
-  try {
-    const { data: posts } = await axios.get(
-      `${process.env.SITE_URL}/api/posts${
-        subject ? `/?subject=${subject}` : ''
-      }`
-    );
-
-    const { data: newUsers } = await axios.get(
-      `${process.env.SITE_URL}/api/users`
-    );
-
-    return {
-      props: { posts, newUsers },
-    };
-  } catch (error) {
-    console.error(error);
-  }
-};
