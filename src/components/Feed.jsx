@@ -6,7 +6,7 @@ import axios from 'axios';
 const Feed = () => {
   const router = useRouter();
   const { subject } = router.query;
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   const fetchPosts = async () => {
     const { data } = await axios.get(
