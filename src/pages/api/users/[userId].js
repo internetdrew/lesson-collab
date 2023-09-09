@@ -10,6 +10,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET': {
       const { userId } = req.query;
+      console.log(userId);
       const { data: userData } = await supabase
         .from('users')
         .select(

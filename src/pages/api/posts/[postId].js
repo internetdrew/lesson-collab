@@ -2,6 +2,7 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export default async function handler(req, res) {
   try {
+    console.log(req);
     const { method } = req;
     const { postId } = req.query;
     const { title, gradeLevel, subject, fileName, fileUrl, desc, uid } =
