@@ -3,6 +3,7 @@ import { MapPinIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 export default function UserProfile({ userId }) {
   const [profile, setProfile] = useState([]);
@@ -21,6 +22,9 @@ export default function UserProfile({ userId }) {
 
   return (
     <div>
+      <Head>
+        <title>{profile.name} on LessonCollab</title>
+      </Head>
       <header>
         <Navbar />
       </header>
