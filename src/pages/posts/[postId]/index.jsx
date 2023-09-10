@@ -27,12 +27,6 @@ const PostDetails = ({ postId }) => {
   const user = useUser();
   const lastCommentRef = useRef(null);
 
-  const handleDelete = async id => {
-    if (!currentUserIsPostOwner) return;
-    await axios.delete(`/api/posts/${id}`);
-    router.push('/');
-  };
-
   const {
     isLoading,
     isError,
@@ -48,6 +42,12 @@ const PostDetails = ({ postId }) => {
   if (isError) return <div>Something went wrong... {error}</div>;
 
   const currentUserIsPostOwner = user?.id === post?.users?.id;
+
+  const handleDelete = async id => {
+    if (!currentUserIsPostOwner) return;
+    await axios.delete(`/api/posts/${id}`);
+    router.push('/');
+  };
   return (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
