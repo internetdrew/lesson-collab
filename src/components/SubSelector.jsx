@@ -2,6 +2,8 @@ import { subjects } from '../lib';
 import { useRouter } from 'next/router';
 
 const SubSelector = () => {
+  const router = useRouter();
+
   const formattedSubs = subjects.map(sub => {
     const words = sub.split(' ');
     const capped = words
@@ -9,7 +11,6 @@ const SubSelector = () => {
       .join(' ');
     return capped;
   });
-  const router = useRouter();
 
   const handleChange = e => {
     if (e.target.value === 'all') {
