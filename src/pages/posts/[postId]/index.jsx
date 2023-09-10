@@ -48,6 +48,7 @@ const PostDetails = ({ postId }) => {
     await axios.delete(`/api/posts/${id}`);
     router.push('/');
   };
+
   return (
     <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>

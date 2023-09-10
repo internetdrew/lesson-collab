@@ -2,31 +2,34 @@ import { Layout, Feed, SubSelector } from '../components';
 import Head from 'next/head';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../atoms/userAtom';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Home({ currentUser }) {
   const router = useRouter();
-
   // Figure this out for the layout
   const setCurrentUser = useSetRecoilState(userState);
   if (currentUser) setCurrentUser(currentUser[0]);
   //
-
-  const [posts, setPosts] = useState([]);
   const { subject } = router.query;
 
   const fetchPosts = async () => {
     const { data } = await axios.get(
       `/api/posts${subject ? `/?subject=${subject}` : ''}`
     );
-    setPosts(data);
+    return data;
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, [subject]);
+  const {
+    isLoading,
+    isError,
+    data: posts,
+    error,
+  } = useQuery({
+    queryKey: ['posts', subject],
+    queryFn: fetchPosts,
+  });
 
   return (
     <>
