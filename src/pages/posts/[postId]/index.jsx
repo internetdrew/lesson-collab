@@ -32,6 +32,7 @@ const PostDetails = ({ postId }) => {
     await axios.delete(`/api/posts/${id}`);
     router.push('/');
   };
+
   const {
     isLoading,
     isError,
