@@ -2,17 +2,14 @@ import { Layout, Feed, SubSelector } from '../components';
 import Head from 'next/head';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../atoms/userAtom';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
-export default function Home({ currentUser }) {
-  const router = useRouter();
+export default function Home({ subject, currentUser }) {
   // Figure this out for the layout
   const setCurrentUser = useSetRecoilState(userState);
   if (currentUser) setCurrentUser(currentUser[0]);
   //
-  const { subject } = router.query;
 
   const fetchPosts = async () => {
     const { data } = await axios.get(
@@ -56,10 +53,20 @@ export default function Home({ currentUser }) {
         <meta property='og:site_name' content='LessonCollab' />
         <meta name='twitter:image:alt' content='LessonCollab banner' />
       </Head>
-      <Layout currentUser={currentUser}>
+      <Layout>
         <SubSelector />
-        <Feed posts={posts} />
+        <Feed posts={posts} isLoading={isLoading} />
       </Layout>
     </>
   );
 }
+
+export const getServerSideProps = req => {
+  const { subject } = req.query;
+
+  return {
+    props: {
+      subject: subject ?? null,
+    },
+  };
+};

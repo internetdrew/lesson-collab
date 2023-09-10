@@ -3,16 +3,14 @@ import { MapPinIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import axios from 'axios';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 
-export default function UserProfile() {
-  const router = useRouter();
-  const { userId } = router.query;
-
+export default function UserProfile({ userId }) {
   const fetchUserData = async () => {
-    const { data: profileData } = await axios.get(`/api/users/${userId}`);
-    return profileData[0];
+    const {
+      data: [profileData],
+    } = await axios.get(`/api/users/${userId}`);
+    return profileData;
   };
 
   const { isLoading, isError, data, error } = useQuery({
@@ -32,14 +30,16 @@ export default function UserProfile() {
         <SinglePanelContainer>
           <div className='w-full h-40 bg-gradient-to-r from-orange-200 to-red-500 relative'>
             <div className='w-48 h-48 rounded-full overflow-hidden absolute top-1/2 mt-3 left-1/2 border-4 border-white transform -translate-x-1/2 sm:left-1/4'>
-              <Image
-                src={data?.avatar}
-                alt='user image'
-                width={500}
-                height={500}
-                style={{ objectFit: 'cover' }}
-                priority
-              />
+              {data?.avatar && (
+                <Image
+                  src={data?.avatar}
+                  alt='user image'
+                  width={500}
+                  height={500}
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              )}
             </div>
           </div>
           <div className='pt-36 w-[90%] mx-auto pb-6 relative'>
@@ -62,9 +62,21 @@ export default function UserProfile() {
           <h2 className='text-xl font-semibold mb-2 bg-white w-max px-4 py-2 rounded-lg'>
             {data?.name}'s Posts
           </h2>
-          {data?.posts ? <Feed posts={data?.posts} /> : null}
+          {data?.posts ? (
+            <Feed posts={data?.posts} isLoading={isLoading} />
+          ) : null}
         </div>
       </main>
     </div>
   );
 }
+
+export const getServerSideProps = ctx => {
+  const { userId } = ctx.query;
+
+  return {
+    props: {
+      userId,
+    },
+  };
+};

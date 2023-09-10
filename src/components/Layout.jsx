@@ -3,7 +3,7 @@ import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
 import { useUserData } from '../hooks/useUserData';
 import { useUser } from '@supabase/auth-helpers-react';
 
-const Layout = ({ children, newUsers }) => {
+const Layout = ({ children }) => {
   const user = useUser();
   const userId = user && user.id;
   const currentUser = useUserData(userId);
@@ -47,7 +47,7 @@ const Layout = ({ children, newUsers }) => {
             <h3 className='text-lg text-gray-700 font-semibold text-center'>
               Look who's here!
             </h3>
-            <NewUsers newUsers={newUsers} />
+            <NewUsers />
           </div>
         </aside>
       </div>
