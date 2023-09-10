@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Layout, Comments, AddCommentForm } from '@/src/components';
 import {
   EllipsisVerticalIcon,
@@ -13,24 +13,42 @@ import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { useQuery } from '@tanstack/react-query';
 
-const PostDetails = ({ post, newUsers }) => {
-  const [comments, setComments] = useState(post?.comments);
+const fetchPost = async id => {
+  const { data } = await axios.get(`/api/posts/${id}`);
+  return data[0];
+};
+
+const PostDetails = ({ postId }) => {
+  const [comments, setComments] = useState([]);
   const [showPostMenu, setShowPostMenu] = useState(false);
   const router = useRouter();
   const user = useUser();
   const lastCommentRef = useRef(null);
 
-  const currentUserIsPostOwner = user?.id === post?.users?.id;
-
-  const handleDelete = async () => {
+  const handleDelete = async id => {
     if (!currentUserIsPostOwner) return;
-    await axios.delete(`/api/posts/${post.id}`);
+    await axios.delete(`/api/posts/${id}`);
     router.push('/');
   };
+  const {
+    isLoading,
+    isError,
+    data: post,
+    error,
+  } = useQuery({
+    queryKey: ['post', postId],
+    queryFn: () => fetchPost(postId),
+  });
 
+  if (isLoading) return <div>Loading...</div>;
+
+  if (isError) return <div>Something went wrong... {error}</div>;
+
+  const currentUserIsPostOwner = user?.id === post?.users?.id;
   return (
-    <Layout newUsers={newUsers}>
+    <Layout>
       <div className='overflow-hidden rounded-lg bg-white shadow'>
         <div className='px-4 py-6 sm:px-6 flex items-center gap-2'>
           <span className='inline-flex overflow-hidden shrink-0 h-10 w-10 items-center justify-center rounded-full bg-gray-500'>
@@ -72,7 +90,7 @@ const PostDetails = ({ post, newUsers }) => {
                     </Link>
                     <button
                       className='w-full px-4 py-2 text-left hover:bg-gray-100 duration-300'
-                      onClick={handleDelete}
+                      onClick={() => handleDelete(postId)}
                     >
                       Delete post
                     </button>
@@ -122,20 +140,9 @@ const PostDetails = ({ post, newUsers }) => {
 
 export default PostDetails;
 
-export const getServerSideProps = async ctx => {
-  try {
-    const { postId } = ctx.query;
+export const getServerSideProps = (req, res) => {
+  const { postId } = req.params;
+  console.log(postId);
 
-    const { data: postData } = await axios.get(
-      `${process.env.SITE_URL}/api/posts/${postId}`
-    );
-
-    const { data: newUsers } = await axios.get(
-      `${process.env.SITE_URL}/api/users`
-    );
-
-    return { props: { post: postData[0], newUsers } };
-  } catch (error) {
-    console.error(error);
-  }
+  return { props: { postId: postId } };
 };

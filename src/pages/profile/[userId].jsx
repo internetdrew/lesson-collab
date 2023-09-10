@@ -73,7 +73,7 @@ export default function UserProfile({ userId }) {
   );
 }
 
-export const getServerSideProps = (req, res) => {
+export const getServerSideProps = req => {
   const { userId } = req.params;
 
   return {

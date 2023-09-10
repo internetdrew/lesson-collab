@@ -4,6 +4,9 @@ import { RecoilRoot } from 'recoil';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,14 +19,16 @@ export default function App({
   return (
     <>
       <div className={inter.className}>
-        <SessionContextProvider
-          supabaseClient={supabaseClient}
-          initialSession={pageProps.initialSession}
-        >
-          <RecoilRoot>
-            <Component {...pageProps} />
-          </RecoilRoot>
-        </SessionContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <SessionContextProvider
+            supabaseClient={supabaseClient}
+            initialSession={pageProps.initialSession}
+          >
+            <RecoilRoot>
+              <Component {...pageProps} />
+            </RecoilRoot>
+          </SessionContextProvider>
+        </QueryClientProvider>
       </div>
     </>
   );
