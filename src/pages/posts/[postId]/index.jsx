@@ -18,11 +18,12 @@ import { fetchPostById } from '@/src/utils/fetchPostById';
 
 const PostDetails = () => {
   const router = useRouter();
-  const { postId } = router.query;
-  const [comments, setComments] = useState([]);
-  const [showPostMenu, setShowPostMenu] = useState(false);
   const user = useUser();
   const lastCommentRef = useRef(null);
+  const { postId } = router.query;
+
+  const [comments, setComments] = useState([]);
+  const [showPostMenu, setShowPostMenu] = useState(false);
 
   const {
     isLoading,
