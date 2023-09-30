@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import moment from 'moment';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 const NewUsers = () => {
