@@ -4,10 +4,6 @@ import { useUserData } from '../hooks/useUserData';
 import { useUser } from '@supabase/auth-helpers-react';
 
 const Layout = ({ children }) => {
-  const user = useUser();
-  const userId = user && user.id;
-  const currentUser = useUserData(userId);
-
   return (
     <div className='flex min-h-full flex-col'>
       <Head>
@@ -25,17 +21,12 @@ const Layout = ({ children }) => {
           href='/favicon-16x16.png'
         />
       </Head>
-      <Navbar currentUser={currentUser} />
+      <Navbar />
       <div className='mx-auto flex w-full max-w-7xl items-start gap-x-8 px-4 py-28 sm:px-6 lg:px-8'>
         <aside className='sticky top-28 hidden w-72 shrink-0 md:block'>
           {/* Left column area */}
           <div className='shadow bg-white p-4 rounded-3xl'>
-            {currentUser ? (
-              <>
-                <NavProfile currentUser={currentUser} />
-                <hr className='mb-8 mt-6 text-gray-500' />
-              </>
-            ) : null}
+            <NavProfile />
             <SubjectsNav />
           </div>
         </aside>

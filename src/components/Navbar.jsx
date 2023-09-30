@@ -5,15 +5,36 @@ import Link from 'next/link';
 
 import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const Navbar = ({ currentUser }) => {
+const Navbar = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
+
+  const user = useUser();
+  const userId = user?.id;
+
+  const fetchCurrentUser = async () => {
+    const { data } = await axios.get(`/api/users/${userId}`);
+    return data;
+  };
+
+  const {
+    isLoading,
+    isError,
+    data: currentUser,
+    error,
+  } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: fetchCurrentUser,
+  });
+
   const logout = async () => {
     await supabase.auth.signOut();
     router.reload();

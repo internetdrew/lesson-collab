@@ -3,18 +3,22 @@ import Link from 'next/link';
 import moment from 'moment';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 
 const NewUsers = () => {
-  const [newUsers, setNewUsers] = useState([]);
   const fetchNewUsers = async () => {
     const { data } = await axios.get('/api/users');
-    setNewUsers(data);
+    return data;
   };
 
-  useEffect(() => {
-    fetchNewUsers();
-  }, []);
+  const {
+    isLoading,
+    isError,
+    data: newUsers,
+    error,
+  } = useQuery({
+    queryKey: ['newUsers'],
+    queryFn: fetchNewUsers,
+  });
 
   return (
     <div className='mt-6'>
