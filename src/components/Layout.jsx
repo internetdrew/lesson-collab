@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { NavProfile, SubjectsNav, Navbar, NewUsers } from '.';
-import { useUserData } from '../hooks/useUserData';
 import { useUser } from '@supabase/auth-helpers-react';
 
 const Layout = ({ children }) => {

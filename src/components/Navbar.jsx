@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { useFetchCurrentUser } from '../hooks/fetchCurrentUser';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -20,10 +20,7 @@ const Navbar = () => {
   const user = useUser();
   const userId = user?.id;
 
-  const fetchCurrentUser = async () => {
-    const { data } = await axios.get(`/api/users/${userId}`);
-    return data;
-  };
+  const fetchCurrentUser = useFetchCurrentUser();
 
   const {
     isLoading,
@@ -31,8 +28,8 @@ const Navbar = () => {
     data: currentUser,
     error,
   } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: fetchCurrentUser,
+    queryKey: ['currentUser', user],
+    queryFn: () => fetchCurrentUser(userId),
   });
 
   const logout = async () => {
