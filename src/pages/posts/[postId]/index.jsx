@@ -14,11 +14,9 @@ import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useQuery } from '@tanstack/react-query';
+import { useFetchPostById } from '@/src/hooks/useFetchPostById';
 
-const fetchPost = async id => {
-  const { data } = await axios.get(`/api/posts/${id}`);
-  return data[0];
-};
+const fetchPostById = useFetchPostById();
 
 const PostDetails = () => {
   const router = useRouter();
@@ -35,7 +33,7 @@ const PostDetails = () => {
     error,
   } = useQuery({
     queryKey: ['post', postId],
-    queryFn: () => fetchPost(postId),
+    queryFn: () => fetchPostById(postId),
   });
 
   if (isLoading) return <div>Loading...</div>;
