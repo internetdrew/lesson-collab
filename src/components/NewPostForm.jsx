@@ -4,6 +4,9 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { fetchPostById } from '../utils/fetchPostById';
+import { useQuery } from '@tanstack/react-query';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const subjects = ['math', 'science', 'social studies', 'art', 'history'].sort();
 const gradeLevels = ['elementary', 'middle', 'high'];
@@ -28,7 +31,22 @@ const schema = z.object({
     .min(1, { message: 'Description is required for submission.' }),
 });
 
-export default function NewPostForm({ postData, userData }) {
+export default function NewPostForm() {
+  const router = useRouter();
+  const user = useUser();
+
+  const { edit: postId } = router.query;
+
+  const {
+    isLoading,
+    isError,
+    data: postData,
+    error,
+  } = useQuery({
+    queryKey: ['post', postId],
+    queryFn: () => fetchPostById(postId),
+  });
+
   const {
     register,
     handleSubmit,
@@ -37,9 +55,7 @@ export default function NewPostForm({ postData, userData }) {
   } = useForm();
 
   const fileName = watch('file');
-  const postToEdit = Object.keys(postData).length !== 0;
-
-  const router = useRouter();
+  // const postToEdit = Object.keys(postData).length !== 0;
 
   const onSubmit = async data => {
     try {
@@ -52,7 +68,7 @@ export default function NewPostForm({ postData, userData }) {
 
       const fileName = file?.[0]?.name || postData?.fileUrl;
 
-      if (postToEdit) {
+      if (postData) {
         const res = await axios.put(`/api/posts/${postData?.id}`, {
           title,
           gradeLevel,
@@ -60,14 +76,14 @@ export default function NewPostForm({ postData, userData }) {
           fileName: fileName || postData?.file_name,
           fileUrl,
           desc,
-          uid: userData?.id,
+          uid: user?.id,
         });
 
         if (res.status === 200) router.push(`/posts/${postData?.id}`);
         return;
       }
 
-      if (!postToEdit) {
+      if (!postData) {
         const res = await axios.post('/api/posts', {
           title,
           gradeLevel,
@@ -200,7 +216,7 @@ export default function NewPostForm({ postData, userData }) {
           type='submit'
           className='inline-flex justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700'
         >
-          {postToEdit ? 'Update' : 'Post'}
+          {postData ? 'Update' : 'Post'}
         </button>
       </div>
     </form>

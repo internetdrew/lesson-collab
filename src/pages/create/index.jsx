@@ -21,7 +21,6 @@ export default Create;
 
 export const getServerSideProps = async ctx => {
   const supabase = createServerSupabaseClient(ctx);
-  const { edit: postId } = ctx.query;
 
   const {
     data: { session },
@@ -38,16 +37,6 @@ export const getServerSideProps = async ctx => {
   const userRes = await axios.get(
     `${process.env.SITE_URL}/api/users/${session?.user?.id}`
   );
-
-  if (postId) {
-    const postRes = await axios.get(
-      `${process.env.SITE_URL}/api/posts/${postId}`
-    );
-
-    return {
-      props: { userData: userRes.data[0], postData: postRes.data[0] },
-    };
-  }
 
   return { props: { userData: userRes.data[0], postData: {} } };
 };

@@ -14,9 +14,7 @@ import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { useQuery } from '@tanstack/react-query';
-import { useFetchPostById } from '@/src/hooks/useFetchPostById';
-
-const fetchPostById = useFetchPostById();
+import { fetchPostById } from '@/src/utils/fetchPostById';
 
 const PostDetails = () => {
   const router = useRouter();

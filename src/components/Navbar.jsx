@@ -7,7 +7,7 @@ import { BellIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { Menu, Transition } from '@headlessui/react';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useQuery } from '@tanstack/react-query';
-import { useFetchCurrentUser } from '../hooks/fetchCurrentUser';
+import { fetchCurrentUser } from '../utils/fetchCurrentUser';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -20,17 +20,12 @@ const Navbar = () => {
   const user = useUser();
   const userId = user?.id;
 
-  const fetchCurrentUser = useFetchCurrentUser();
-
-  const {
-    isLoading,
-    isError,
-    data: currentUser,
-    error,
-  } = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ['currentUser', user],
     queryFn: () => fetchCurrentUser(userId),
   });
+
+  const currentUser = data?.[0];
 
   const logout = async () => {
     await supabase.auth.signOut();
@@ -135,10 +130,11 @@ const Navbar = () => {
               </Link>
             </>
           ) : (
-            <Link href={'/login'}>
-              <button className='rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'>
-                Sign in
-              </button>
+            <Link
+              href={'/login'}
+              className='rounded-md bg-[--primary-color] px-3 py-2 text-sm font-semibold text-white shadow-sm duration-300 hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+            >
+              Sign in
             </Link>
           )}
         </div>

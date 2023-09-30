@@ -3,23 +3,18 @@ import Image from 'next/image';
 import { useUser } from '@supabase/auth-helpers-react';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import { useFetchCurrentUser } from '../hooks/fetchCurrentUser';
+import { fetchCurrentUser } from '../utils/fetchCurrentUser';
 
 const NavProfile = () => {
   const user = useUser();
   const userId = user?.id;
 
-  const fetchCurrentUser = useFetchCurrentUser();
-
-  const {
-    isLoading,
-    isError,
-    data: currentUser,
-    error,
-  } = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ['currentUser', user],
     queryFn: () => fetchCurrentUser(userId),
   });
+
+  const currentUser = data?.[0];
 
   if (currentUser)
     return (
