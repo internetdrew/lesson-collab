@@ -33,7 +33,7 @@ export default function UserProfile() {
       <header>
         <Navbar />
       </header>
-      <main className='mt-24 max-w-screen-md mx-auto'>
+      <main className='mt-36 max-w-screen-md mx-auto'>
         <SinglePanelContainer>
           <div className='w-full h-40 bg-gradient-to-r from-orange-200 to-red-500 relative'>
             <div className='w-48 h-48 rounded-full overflow-hidden absolute top-1/2 mt-3 left-1/2 border-4 border-white transform -translate-x-1/2 sm:left-1/4'>
