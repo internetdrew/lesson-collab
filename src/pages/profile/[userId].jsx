@@ -1,4 +1,4 @@
-import { Navbar, SinglePanelContainer, Feed } from '@/src/components';
+import { Navbar, SinglePanelContainer, Feed, Layout } from '@/src/components';
 import { MapPinIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import axios from 'axios';
