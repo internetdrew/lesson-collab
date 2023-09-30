@@ -20,10 +20,11 @@ const fetchPost = async id => {
   return data[0];
 };
 
-const PostDetails = ({ postId }) => {
+const PostDetails = () => {
+  const router = useRouter();
+  const { postId } = router.query;
   const [comments, setComments] = useState([]);
   const [showPostMenu, setShowPostMenu] = useState(false);
-  const router = useRouter();
   const user = useUser();
   const lastCommentRef = useRef(null);
 
@@ -141,10 +142,3 @@ const PostDetails = ({ postId }) => {
 };
 
 export default PostDetails;
-
-export const getServerSideProps = (req, res) => {
-  const { postId } = req.params;
-  console.log(postId);
-
-  return { props: { postId: postId } };
-};

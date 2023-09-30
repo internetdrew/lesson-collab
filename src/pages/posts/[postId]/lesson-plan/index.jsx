@@ -1,7 +1,27 @@
 import axios from 'axios';
 import { Navbar } from '@/src/components';
+import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
 
-const PDFView = ({ post }) => {
+const PDFView = () => {
+  const router = useRouter();
+  const { postId } = router.query;
+
+  const fetchPostData = async postId => {
+    const { data } = await axios.get(`/api/posts/${postId}`);
+    return data[0];
+  };
+
+  const {
+    isLoading,
+    isError,
+    data: post,
+    error,
+  } = useQuery({
+    queryKey: ['currentPost', postId],
+    queryFn: () => fetchPostData(postId),
+  });
+
   return (
     <>
       <Navbar />
@@ -17,17 +37,3 @@ const PDFView = ({ post }) => {
 };
 
 export default PDFView;
-
-export const getServerSideProps = async ({ params }) => {
-  try {
-    const { postId } = params;
-
-    const { data: postData } = await axios.get(
-      `${process.env.SITE_URL}/api/posts/${postId}`
-    );
-
-    return { props: { post: postData[0] } };
-  } catch (error) {
-    console.error(error);
-  }
-};
