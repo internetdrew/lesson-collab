@@ -1,6 +1,29 @@
+import { useRouter } from 'next/router';
 import { LessonPost } from './';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
-const Feed = ({ posts, isLoading }) => {
+const Feed = () => {
+  const router = useRouter();
+  const { subject } = router.query;
+
+  const fetchPosts = async () => {
+    const { data } = await axios.get(
+      `/api/posts${subject ? `/?subject=${subject}` : ''}`
+    );
+    return data;
+  };
+
+  const {
+    isLoading,
+    isError,
+    data: posts,
+    error,
+  } = useQuery({
+    queryKey: ['posts', subject],
+    queryFn: fetchPosts,
+  });
+
   return (
     <section>
       {posts && posts.length ? (
