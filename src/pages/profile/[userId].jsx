@@ -12,18 +12,15 @@ export default function UserProfile() {
 
   const fetchProfileData = async userId => {
     const { data } = await axios.get(`/api/users/${userId}`);
-    return data[0];
+    return data;
   };
 
-  const {
-    isLoading,
-    isError,
-    data: profileData,
-    error,
-  } = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ['profile data', userId],
     queryFn: () => fetchProfileData(userId),
   });
+
+  const profileData = data?.[0];
 
   return (
     <div>
