@@ -35,7 +35,7 @@ export default function NewPostForm() {
   const router = useRouter();
   const user = useUser();
 
-  const { edit: postId } = router.query;
+  const { edit: postId } = router?.query;
 
   const {
     isLoading,
@@ -45,6 +45,7 @@ export default function NewPostForm() {
   } = useQuery({
     queryKey: ['post', postId],
     queryFn: () => fetchPostById(postId),
+    enabled: false,
   });
 
   const {
@@ -91,7 +92,7 @@ export default function NewPostForm() {
           fileName,
           fileUrl,
           desc,
-          uid: userData?.id,
+          uid: user?.id,
         });
         if (res.status === 200) router.push('/');
         return;

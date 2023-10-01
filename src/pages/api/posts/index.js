@@ -1,8 +1,6 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export default async function handler(req, res) {
-  console.log(req);
-
   try {
     const { method } = req;
     const { subject } = req.query;
