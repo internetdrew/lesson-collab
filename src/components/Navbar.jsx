@@ -16,16 +16,18 @@ function classNames(...classes) {
 const Navbar = () => {
   const supabase = useSupabaseClient();
   const router = useRouter();
-
   const user = useUser();
   const userId = user?.id;
 
-  const { isLoading, isError, data, error } = useQuery({
+  const {
+    isLoading,
+    isError,
+    data: currentUser,
+    error,
+  } = useQuery({
     queryKey: ['currentUser', user],
     queryFn: () => fetchCurrentUser(userId),
   });
-
-  const currentUser = data?.[0];
 
   const logout = async () => {
     await supabase.auth.signOut();

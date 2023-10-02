@@ -1,6 +1,11 @@
 import axios from 'axios';
 
 export const fetchCurrentUser = async userId => {
-  const { data } = await axios.get(`/api/users/${userId}`);
-  return data;
+  try {
+    const { data } = await axios.get(`/api/users/${userId}`);
+    const currentUser = data?.[0];
+    return currentUser;
+  } catch (error) {
+    console.error(error);
+  }
 };
